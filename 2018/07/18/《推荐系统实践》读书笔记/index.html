@@ -1,0 +1,1353 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+  <meta name="baidu-site-verification" content="ZzeYB5nB9Y">
+
+
+  <meta name="baidu-site-verification" content="”ZzeYB5nB9Y“/">
+
+
+  <meta name="google-site-verification" content="T3WdGKE58QRxIaM-hmJyQYxQU034EoB3YHlSkgq0a0g">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="google-site-verification" content="true">
+
+
+
+
+
+
+
+
+  <meta name="baidu-site-verification" content="ZzeYB5nB9Y">
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="数据挖掘,推荐系统,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="[toc] 《推荐系统实践》读书笔记第一章，好的推荐系统评价推荐系统好坏的指标 用户的满意度 准确率和召回率 覆盖率。覆盖率描述的是一个模型能够挖掘长尾数据的能力，一般定义为推荐商品的种类比上所有商品的类别，还可以用信息熵和基尼指数来定义。若覆盖率较低，则出现了马太效应，也就是说一个物品越流行，越容易被推荐，越被推荐，它的流行度就越高。 多样性。多样性描述了推荐列表中物品两两之间的不相似性。推荐给">
+<meta name="keywords" content="数据挖掘,推荐系统">
+<meta property="og:type" content="article">
+<meta property="og:title" content="《推荐系统实践》读书笔记">
+<meta property="og:url" content="http://TFeiMa.github.io/2018/07/18/《推荐系统实践》读书笔记/index.html">
+<meta property="og:site_name" content="phi的博客">
+<meta property="og:description" content="[toc] 《推荐系统实践》读书笔记第一章，好的推荐系统评价推荐系统好坏的指标 用户的满意度 准确率和召回率 覆盖率。覆盖率描述的是一个模型能够挖掘长尾数据的能力，一般定义为推荐商品的种类比上所有商品的类别，还可以用信息熵和基尼指数来定义。若覆盖率较低，则出现了马太效应，也就是说一个物品越流行，越容易被推荐，越被推荐，它的流行度就越高。 多样性。多样性描述了推荐列表中物品两两之间的不相似性。推荐给">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://tfeima.github.io/2018/07/18/《推荐系统实践》读书笔记/《推荐系统实践》读书笔记/物品用户倒排表.png">
+<meta property="og:image" content="http://tfeima.github.io/2018/07/18/《推荐系统实践》读书笔记/《推荐系统实践》读书笔记/物品相似性计算.png">
+<meta property="og:updated_time" content="2018-07-27T08:09:40.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="《推荐系统实践》读书笔记">
+<meta name="twitter:description" content="[toc] 《推荐系统实践》读书笔记第一章，好的推荐系统评价推荐系统好坏的指标 用户的满意度 准确率和召回率 覆盖率。覆盖率描述的是一个模型能够挖掘长尾数据的能力，一般定义为推荐商品的种类比上所有商品的类别，还可以用信息熵和基尼指数来定义。若覆盖率较低，则出现了马太效应，也就是说一个物品越流行，越容易被推荐，越被推荐，它的流行度就越高。 多样性。多样性描述了推荐列表中物品两两之间的不相似性。推荐给">
+<meta name="twitter:image" content="http://tfeima.github.io/2018/07/18/《推荐系统实践》读书笔记/《推荐系统实践》读书笔记/物品用户倒排表.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://TFeiMa.github.io/2018/07/18/《推荐系统实践》读书笔记/">
+
+
+
+
+
+  <title>《推荐系统实践》读书笔记 | phi的博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+	<a href="https://github.com/TFeiMa"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"></a>
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">phi的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">慢就是快！</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://TFeiMa.github.io/2018/07/18/《推荐系统实践》读书笔记/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="phi">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/me.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="phi的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">《推荐系统实践》读书笔记</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-18T00:00:00+08:00">
+                2018-07-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/读书笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">读书笔记</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>[toc]</p>
+<h1 id="《推荐系统实践》读书笔记"><a href="#《推荐系统实践》读书笔记" class="headerlink" title="《推荐系统实践》读书笔记"></a>《推荐系统实践》读书笔记</h1><h2 id="第一章，好的推荐系统"><a href="#第一章，好的推荐系统" class="headerlink" title="第一章，好的推荐系统"></a>第一章，好的推荐系统</h2><h3 id="评价推荐系统好坏的指标"><a href="#评价推荐系统好坏的指标" class="headerlink" title="评价推荐系统好坏的指标"></a>评价推荐系统好坏的指标</h3><ol>
+<li>用户的满意度</li>
+<li>准确率和召回率</li>
+<li>覆盖率。覆盖率描述的是一个模型能够挖掘长尾数据的能力，一般定义为推荐商品的种类比上所有商品的类别，还可以用信息熵和基尼指数来定义。若覆盖率较低，则出现了马太效应，也就是说一个物品越流行，越容易被推荐，越被推荐，它的流行度就越高。</li>
+<li>多样性。多样性描述了推荐列表中物品两两之间的不相似性。推荐给用户u的商品列表R(u)的多样性定义为：<br>$$\text{Diversity} = 1-\frac{\sum_{i,j \in R(u),i\neq j}s(i,j)}{\frac{1}{2}|R(u)|(|R(u) | - 1)},$$推荐系统的整体多样性定义为多有用户推荐列表多样性的平均。</li>
+<li>新颖性和惊喜性</li>
+<li>信任性</li>
+<li>实时性</li>
+<li>鲁棒性。一些商家可能为了推广自己的商品，利用推荐系统的漏洞，使得推荐系统推荐自家商品的概率变大，推荐系统应该能识别出这种行为。</li>
+</ol>
+<h2 id="第二章，利用用户行为数据"><a href="#第二章，利用用户行为数据" class="headerlink" title="第二章，利用用户行为数据"></a>第二章，利用用户行为数据</h2><h3 id="用户行为数据简介"><a href="#用户行为数据简介" class="headerlink" title="用户行为数据简介"></a>用户行为数据简介</h3><p>用户的行为数据有<strong>显性反馈行为</strong>（主动打分）和<strong>隐性反馈行为</strong>（浏览商品留下的痕迹）</p>
+<h3 id="用户行为分析"><a href="#用户行为分析" class="headerlink" title="用户行为分析"></a>用户行为分析</h3><h4 id="用户活跃度和物品流行度的分布"><a href="#用户活跃度和物品流行度的分布" class="headerlink" title="用户活跃度和物品流行度的分布"></a>用户活跃度和物品流行度的分布</h4><p>研究发现，互联网中的数据，很多都呈现<strong>长尾数据分布</strong>，具体来说就是，热门商品的数量在所有商品数量中是少数的，活跃用户在所有用户中是少数的。<br><strong>长尾数据分布:</strong><br>$$f(x) = \alpha x^k,$$<br>两边同时取对数，画在坐标轴上接近线性。</p>
+<h4 id="用户活跃度和物品流行度的关系"><a href="#用户活跃度和物品流行度的关系" class="headerlink" title="用户活跃度和物品流行度的关系"></a>用户活跃度和物品流行度的关系</h4><p>一般新用户倾向于浏览热门的物品，因为他们对网站还不熟悉，只能点击首页的热门物品，而老用户会逐渐开始浏览冷门的物品。</p>
+<h3 id="基于用户的协同过滤算法（UserCF）"><a href="#基于用户的协同过滤算法（UserCF）" class="headerlink" title="基于用户的协同过滤算法（UserCF）"></a>基于用户的协同过滤算法（UserCF）</h3><p>基于用户的协同过滤算法主要包括两个步骤。</p>
+<ol>
+<li>找到和目标用户兴趣相似的用户集合。</li>
+<li>找到这个集合中的用户喜欢的，且目标用户没有用过的物品推荐给目标用户。</li>
+</ol>
+<p>N(u)和N(v)分别表示用户u和v有过正反馈的物品集合，用户兴趣相似度的计算：</p>
+<ol>
+<li><strong>Jaccard公式：</strong>$$w_{uv} = \frac{|N(u) \cap N(v) |}{|N(u) \cup N(v) |}$$</li>
+<li><strong>余弦相似度：</strong>$$w_{uv} = \frac{|N(u) \cap N(v) |}{\sqrt{|N(u)| | N(v) |}}$$</li>
+</ol>
+<p>此算法需要维护一个用户相似度矩阵W，为计算用户之间的相似度，首先需要建立物品—用户的倒排表，然后扫描每个物品中的用户，若两用户u，v同时出现在一个物品中，则两用户相似矩阵$W[u][v]+=1,W[v][u]+=1.$<br><img src="《推荐系统实践》读书笔记/物品用户倒排表.png" alt="物品用户倒排表"><br>得到用户之间的兴趣相似度后，UserCF算法会给用户推荐和他兴趣最相似的K个用户喜欢的物品。如下的公式度量了UserCF算法中用户u对物品i的感兴趣程度：<br>$$p(u,i) = \sum_{v\in S(u,K) \cap N(i)} w_{u,v}r_{vi}.$$<br>其中， S(u, K)包含和用户u兴趣最接近的K个用户，N(i)是对物品i有过行为的用户集合， $w_{uv}$是用户u和用户v的兴趣相似度，rvi代表用户v对物品i的兴趣，因为使用的是单一行为的隐反馈数据，所以所有的rvi=1。</p>
+<h4 id="实验结果分析"><a href="#实验结果分析" class="headerlink" title="实验结果分析"></a>实验结果分析</h4><ul>
+<li><strong>准确率和召回率：</strong>推荐系统的准确率和召回率并不和K成正比，K是选择多少相似用户</li>
+<li><strong>流行度：</strong> K越大UserCF推荐结果越热门</li>
+<li><strong>覆盖率：</strong> K越大，覆盖率越低</li>
+</ul>
+<h4 id="用户相似度计算的改进"><a href="#用户相似度计算的改进" class="headerlink" title="用户相似度计算的改进"></a>用户相似度计算的改进</h4><p>上面用余弦计算用户相似度，这个公式有点粗糙，因为对于热门商品，很多人都可能购买，但并不能说明他们相似，相反，对于冷门物品如果他们都购买了，这个更能说明他们兴趣的相似性。因此，使用下式来计算用户兴趣相似度：<br>$$w_{uv} = \frac{\sum_{i\in N(u)\cap N(v)} \frac{1}{\log(1+| N(i) |)}}{\sqrt{|N(u)| | N(v) |}},$$ $\frac{1}{\log(1+| N(i) |}$惩罚了用户u和用户v共同兴趣列表中热门物品对他们相似度的影响。</p>
+<h3 id="基于物品的协同过滤算法（ItemCF）"><a href="#基于物品的协同过滤算法（ItemCF）" class="headerlink" title="基于物品的协同过滤算法（ItemCF）"></a>基于物品的协同过滤算法（ItemCF）</h3><p>基于用户的协同过滤算法在一些网站中得到了应用，但该算法有一些缺点。<strong>首先</strong>，随着网站的用户数目越来越大，计算用户兴趣相似度矩阵将越来越困难，其运算时间复杂度和空间复杂度的增长和用户数的增长近似于平方关系。<strong>其次</strong>，基于用户的协同过滤很难对推荐结果作出解释。</p>
+<p>基于物品的协同过滤算法也主要有两步：</p>
+<ol>
+<li>计算物品之间的相似度。</li>
+<li>根据物品的相似度和用户的历史购买物品给用户生成推荐列表。</li>
+</ol>
+<p>物品相似性度量公式：$$w_{ij} = \frac{|N(i) \cap N(j) |}{\sqrt{|N(i)| | N(j) |}},$$<br>$|N(i)|$是喜欢物品$i$的用户数。这里面蕴涵着一个假设，就是每个用户的兴趣都局限在某几个方面，因此如果两个物品属于一个用户的兴趣列表，那么这两个物品可能就属于有限的几个领域，而如果两个物品属于很多用户的兴趣列表，那么它们就可能属于同一个领域，因而有很大的相似度。</p>
+<p>和UserCF算法类似，ItemCF算法需要维护一个物品相似性矩阵，用ItemCF算法计算物品相似度时也可以<strong>首先</strong>建立用户—物品倒排表（即对每个用户建立一个包含他喜欢的物品的列表），<strong>然后</strong>对于每个用户，将他物品列表中的物品两两在共现矩阵C中加1。<br><img src="《推荐系统实践》读书笔记/物品相似性计算.png" alt="物品相似性计算"></p>
+<p>在得到物品之间的相似度后，ItemCF通过如下公式计算用户u对一个物品j的兴趣：<br>$$p_{uj} = \sum_{i\in N(u)\cap S(j,K)} w_{ji}r_{ui},$$<br>N(u)是用户喜欢的物品的集合， S(j,K)是和物品j最相似的K个物品的集合， wji是物品j和i的相似度， rui是用户u对物品i的兴趣。</p>
+<h4 id="物品相似度计算的改进"><a href="#物品相似度计算的改进" class="headerlink" title="物品相似度计算的改进"></a>物品相似度计算的改进</h4><p>$$w_{ij} = \frac{\sum_{u\in N(i)\cap N(j)} \frac{1}{\log(1+| N(u) |)}}{\sqrt{|N(i)| | N(j) |}},$$</p>
+<h4 id="物品相似度归一化"><a href="#物品相似度归一化" class="headerlink" title="物品相似度归一化"></a>物品相似度归一化</h4><p>Karypis在研究中发现如果将ItemCF的相似度矩阵按最大值归一化，可以提高推荐的准确率。假设物品相似度矩阵为$W$，那么可以用如下公式得到归一化之后的相似度矩阵$W’$：$$w_{ij}’ = \frac{w_{ij}}{\max_{j}w_{ij}},.$$<br>一般来说，热门的类其类内物品相似度一般比较大。如果不进行归一化，就会推荐比较热门的类里面的物品，而这些物品也是比较热门的。因此，推荐的覆盖率就比较低。</p>
+<h3 id="UserCF-和-ItemCF-的比较"><a href="#UserCF-和-ItemCF-的比较" class="headerlink" title="UserCF 和 ItemCF 的比较"></a>UserCF 和 ItemCF 的比较</h3><ol>
+<li>UserCF给用户推荐那些和他有共同兴趣爱好的用户喜欢的物品，而ItemCF给用户推荐那些和他之前喜欢的物品类似的物品。从这个算法的原理可以看到，UserCF的推荐结果着重于反映和用户兴趣相似的小群体的热点，而ItemCF的推荐结果着重于维系用户的历史兴趣。换句话说，UserCF的推荐更社会化，反映了用户所在的小型兴趣群体中物品的热门程度，而ItemCF的推荐更加个性化，反映了用户自己的兴趣。</li>
+<li>UserCF适合用于新闻推荐</li>
+<li>ItemCF适用于图书、电子商务和电影网站</li>
+</ol>
+<h3 id="隐语义模型"><a href="#隐语义模型" class="headerlink" title="隐语义模型"></a>隐语义模型</h3><p>隐语义模型的核心思想是通过隐含特征(latent factor)联系用户兴趣和物品。我们可以从另一个角度考虑如何给用户推荐商品，对于某个用户，首先得到他的兴趣分类，然后从分类中挑选他可能喜欢的物品。这个基于兴趣分类的方法需要解决3个问题：</p>
+<ol>
+<li>如何给<strong>物品进行分类</strong>？</li>
+<li>如何确定<strong>用户对哪些类的物品感兴趣</strong>，以及感兴趣的程度？</li>
+<li>对于一个给定的类，选择哪些属于这个类的物品推荐给用户，以及如何<strong>确定这些物品在一个类中的权重</strong>？</li>
+</ol>
+<p>隐含语义分析技术采取基于用户行为统计的自动聚类，较好地解决了上面提出的几个问题。LFM通过如下公式计算用户u对物品i的兴趣：<br>$$\text{Preference(u,i)} = r_{ui} = p_u^Tq_i = \sum_{k=1}^K p_{uk}q_{ik},$$<br>$p_{uk} $度量了用户u的兴趣和第k个隐类的关系，$q_{ik}$度量了第k个隐类和物品i之间的关系。</p>
+<h4 id="负样本采样"><a href="#负样本采样" class="headerlink" title="负样本采样"></a>负样本采样</h4><p>原则：</p>
+<ol>
+<li>对每个用户，要保证正负样本的平衡（数目相似）。</li>
+<li>对每个用户采样负样本时，要选取那些很热门，而用户却没有行为的物品。一般认为，很热门而用户却没有行为更加代表用户对这个物品不感兴趣。因为对于冷门的物品，用户可能是压根没在网站中发现这个物品，所以谈不上是否感兴趣。</li>
+</ol>
+<h4 id="目标函数"><a href="#目标函数" class="headerlink" title="目标函数"></a>目标函数</h4><p>$$\min_{p_u,q_i} \sum_{(u,i)\in K} \left(r_{ui} - \sum_{k=1}^K p_{uk}q_{ik}\right)^2 + \lambda (|p_u|^2+| q_i |^2),$$<br>其中，$K$为经过采样后得到的用户-物品集，第一项为拟合项，第二项为正则项。</p>
+<h4 id="LFM和基于邻域的方法的比较"><a href="#LFM和基于邻域的方法的比较" class="headerlink" title="LFM和基于邻域的方法的比较"></a>LFM和基于邻域的方法的比较</h4><p>UserCF和ItemCF都是基于邻域的方法，可从以下方面比较与LFM的异同。</p>
+<ol>
+<li><strong>理论基础：</strong> LFM具有较好的理论基础，是一种机器学习方法，而基于邻域的方法是一种统计方法。</li>
+<li><strong>离线计算的空间复杂度：</strong>基于领域的方法需要维护一张用户相关表或者物品相关表，需要较大的存储空间。</li>
+<li><strong>离线计算的时间复杂度：</strong>差不多。</li>
+<li><strong>在线实时推荐：</strong>一旦用户有了新的喜欢物品，ItemCF可以通过查询与此物品相关的其他商品推荐给用户，而LFM则需要计算用户对所有物品的兴趣权重，然后排名，返回权重最大的N个物品，在物品数很多时，这一过程的时间<br>复杂度非常高。</li>
+<li><strong>解释性：</strong> ItemCF有很好的解释性，LFM则没有。</li>
+</ol>
+<h2 id="第三章，推荐系统冷启动问题"><a href="#第三章，推荐系统冷启动问题" class="headerlink" title="第三章，推荐系统冷启动问题"></a>第三章，推荐系统冷启动问题</h2><h3 id="冷启动问题简介"><a href="#冷启动问题简介" class="headerlink" title="冷启动问题简介"></a>冷启动问题简介</h3><p>主要分为3类：</p>
+<ol>
+<li>用户冷启动</li>
+<li>物品冷启动</li>
+<li>系统冷启动</li>
+</ol>
+<p>一般有如下解决方案：</p>
+<ol>
+<li>提供非个性化推荐，比如推荐排行榜</li>
+<li>利用用户注册时提供的年龄、性别等信息</li>
+<li>利用用户的社交网络账号</li>
+<li>要求用户注册时对一些物品进行反馈，收集用户对这些物品的兴趣</li>
+<li><strong>物品冷启动</strong>,对新加入的物品可利用物品的内容信息，可能需要用到文本分析的技术</li>
+<li><strong>系统冷启动，</strong>可引入专家知识</li>
+</ol>
+<h3 id="利用用户注册信息"><a href="#利用用户注册信息" class="headerlink" title="利用用户注册信息"></a>利用用户注册信息</h3><p>基于用户注册信息的推荐算法其核心问题是计算每种特征的用户喜欢的物品。也就是说，对于每种特征$f$，计算具有这种特征的用户对各个物品的喜好程度$p(f, i)$。 $p(f,i)$ 可以简单地定义为物品$i$在具有f的特征的用户中的热门程度：<br>$$p(f,i) = | N(i) \cap U(f)|,$$其中$N(i)$是喜欢物品$i$的用户集合，$U(f)$是具有特征$f$的用户集合。在这种定义下，往往热门的物品会在各种特征的用户中都具有比较高的权重。因此，我们可以将 p(f,i)定义为喜欢物品$i$的用户中具有特征f的比例：<br>$$p(f,i) = \frac{| N(i) \cap U(f)|}{| N(i) | + \alpha},$$<br>参数$\alpha$的目的是解决数据稀疏问题。</p>
+<h3 id="选择合适的物品启动用户的兴趣"><a href="#选择合适的物品启动用户的兴趣" class="headerlink" title="选择合适的物品启动用户的兴趣"></a>选择合适的物品启动用户的兴趣</h3><p>解决用户冷启动问题的另一个方法是在新用户第一次访问推荐系统时，不立即给用户展示推荐结果，而是给用户提供一些物品，让用户反馈他们对这些物品的兴趣，然后根据用户反馈给提供个性化推荐。</p>
+<p>需要选择启动用户兴趣的物品应具有以下特征：</p>
+<ol>
+<li>比较热门的商品</li>
+<li>具有代表性和区分性</li>
+<li>启动物品集合需要有多样性</li>
+</ol>
+<p>一般可以使用决策树算法构建一个这样的选择启动物品集合的系统。给定一群用户，用这群用户对物品评分的方差度量这群用户兴趣的一致程度。如果方差很大，说明这一群用户的兴趣不太一致，反之则说明这群用户的兴趣比较一致。通过如下方式度量一个物品的区分度$D(i):$<br>$$D(i) = \delta_{u \in N^+(i)} + \delta_{u \in N^-(i)}+\delta_{u \in \bar{N}(i)},$$三项分别还是喜欢、不喜欢、不知道商品i的用户对其他物品评分的方差。决策树算法首先会从所有用户中找到具有最高区分度的物品i，然后将用户分成3类。然后在每类用户中再找到最具区分度的物品，然后将每一类用户又各自分为3类，也就是将总用户分成9类，然后这样继续下去，最终可以通过对一系列物品的看法将用户进行分类。而在冷启动时，我们从根节点开始询问用户对该节点物品的看法，然后根据用户的选择将用户放到不同的分枝，直到进入最后的叶子节点，此时我们就已经对用户的兴趣有了比较清楚的了解，从而可以开始对用户进行比较准确地个性化推荐。</p>
+<h3 id="利用物品的内容信息"><a href="#利用物品的内容信息" class="headerlink" title="利用物品的内容信息"></a>利用物品的内容信息</h3><p>对于物品的冷启动呢问题，一般是利用物品的文本信息，计算物品的词向量，然后根据词向量计算物品的相似性，将其加入相似性矩阵。</p>
+<h3 id="发挥专家的作用"><a href="#发挥专家的作用" class="headerlink" title="发挥专家的作用"></a>发挥专家的作用</h3><p>针对系统冷启动问题，一般使用专家进行样本标注。</p>
+<h2 id="第四章，利用用户标签数据"><a href="#第四章，利用用户标签数据" class="headerlink" title="第四章，利用用户标签数据"></a>第四章，利用用户标签数据</h2><p>标签应用一般分为两种：一种是让作者或者专家给物品打标签；另一种是让普通用户给物品打标签，也就是UGC,书中用到的是UGC。当一个用户对一个物品打上一个标签，这个标签一方面描述了用户的兴趣，另一方面则表示了物品的语义，从而将用户和物品联系了起来。</p>
+<h3 id="标签系统中的推荐问题"><a href="#标签系统中的推荐问题" class="headerlink" title="标签系统中的推荐问题"></a>标签系统中的推荐问题</h3><p>两个：</p>
+<ol>
+<li>利用用户的标签为其推荐物品</li>
+<li>用户给物品打标签时，如何给用户推荐标签</li>
+</ol>
+<h4 id="用户为什么打标签"><a href="#用户为什么打标签" class="headerlink" title="用户为什么打标签"></a>用户为什么打标签</h4><p>两个维度：社会维度，便于其他人找到信息；功能维度，方便自己将来查找。</p>
+<h4 id="用户打标签的分布"><a href="#用户打标签的分布" class="headerlink" title="用户打标签的分布"></a>用户打标签的分布</h4><p>标签的流行度：用户在物品上打这个标签的次数。</p>
+<p>标签的流行度分布也呈现非常典型的长尾分布。</p>
+<h4 id="用户打标签的类型"><a href="#用户打标签的类型" class="headerlink" title="用户打标签的类型"></a>用户打标签的类型</h4><ul>
+<li>表明物品是什么</li>
+<li>表明物品的种类</li>
+<li>表明谁拥有物品    </li>
+<li>表达用户的观点</li>
+<li>用户相关的标签</li>
+<li>用户的任务</li>
+</ul>
+<h3 id="基于标签的推荐系统"><a href="#基于标签的推荐系统" class="headerlink" title="基于标签的推荐系统"></a>基于标签的推荐系统</h3><p>$(u,i,b)$表示用户u给物品i打上标签b。</p>
+<p>一个简单的基于标签的推荐算法：</p>
+<ol>
+<li>统计每个用户最常用的标签。</li>
+<li>对于每个标签，统计被打过这个标签次数最多的物品。</li>
+<li>对于一个用户，首先找到他常用的标签，然后找到具有这些标签的最热门物品推荐给这个用户。<br>那么用户u对物品i的兴趣公式为：<br>$$p(u,i) = \sum_b n_{u,b}n_{b,i}$$</li>
+</ol>
+<h4 id="算法的改进"><a href="#算法的改进" class="headerlink" title="算法的改进"></a>算法的改进</h4><p>上述的公式倾向于给热门标签对应的热门物品很大的权重，因此会造成推荐热门的物品给用户，从而降低推荐结果的新颖性。并且，给热门标签过大的权重，从而不能反应用户个性化的兴趣。书中借鉴了TF-IDF的思想，将公式改进为<br>$$p(u,i) = \sum_b \frac{n_{u,b}}{\log(1+n_b^{u})}n_{b,i},$$<br>$n_b^{u}$为标签b被多少不同的用户使用过。同时，也可以对热门物品进行惩罚：<br>$$p(u,i) = \sum_b \frac{n_{u,b}}{\log(1+n_b^{u})}\frac{n_{b,i}}{\log(1+n_i^u)}$$</p>
+<h4 id="数据稀疏性"><a href="#数据稀疏性" class="headerlink" title="数据稀疏性"></a>数据稀疏性</h4><p>对于新用户或者新物品$B(u)\cap B(i)$中的标签会很少，为了提高推荐的准确率，我们可能要对标签集合做扩展，比如若用户曾经用过“推荐系统”这个标签，我们可以将这个标签的相似标签也加入到用户标签集合中，比如“个性化”、“协同过滤”等标签。标签扩展的本质是对每个标签找到和它相似的标签，也就是计算标签之间的相似度。</p>
+<h4 id="标签清理"><a href="#标签清理" class="headerlink" title="标签清理"></a>标签清理</h4><p>不是所有的标签都能反应用户的兴趣，要将这一部分标签清理掉。</p>
+<h3 id="给用户推荐标签"><a href="#给用户推荐标签" class="headerlink" title="给用户推荐标签"></a>给用户推荐标签</h3><ol>
+<li>给用户u推荐物品i上最热门的标签</li>
+<li>给用户u推荐他自己经常使用的标签</li>
+<li>融合前两种方法，该方法通过一个系数将上面的推荐结果线性加权，然后生成最终的推荐结果。</li>
+</ol>
+<h2 id="第五章，利用上下文信息"><a href="#第五章，利用上下文信息" class="headerlink" title="第五章，利用上下文信息"></a>第五章，利用上下文信息</h2><h3 id="时间上下文信息"><a href="#时间上下文信息" class="headerlink" title="时间上下文信息"></a>时间上下文信息</h3><h4 id="时间效应简介"><a href="#时间效应简介" class="headerlink" title="时间效应简介"></a>时间效应简介</h4><ol>
+<li>用户兴趣随时间是变化的</li>
+<li>物品有生命周期</li>
+<li>季节效应</li>
+</ol>
+<h3 id="时间上下文相关的ItemCF算法"><a href="#时间上下文相关的ItemCF算法" class="headerlink" title="时间上下文相关的ItemCF算法"></a>时间上下文相关的ItemCF算法</h3><p>ItemCF由两部分构成：计算物品间的相似性，利用用户历史行为和物品相似性给用户推荐商品，加入时间上下文信息后，可以对这两部分做出改进。<br>加入时间信息后的<strong>物品相似性度量：</strong><br>$$\text{sim}(i,j) = \frac{\sum_{u \in N(j) \cap N(i)}f\left( | t_{ui} - t_{uj}|\right)}{\sqrt{|N(i)| |N(j)|}}$$<br>其中f为衰减函数：<br>$$f\left( | t_{ui} - t_{uj}|\right) = \frac{1}{1+\alpha |t_{ui} - t_{uj}|},$$$\alpha$是时间衰减参数，它的取值在不同系统中不同。相应的，<strong>用户u对物品i的兴趣为</strong><br>$$p(u,i) = \sum_{j \in N(u)\cap S(i,K)} \frac{\text{sim}(i,j)}{1+\beta |t_0 - t_{uj}|}$$</p>
+<h3 id="时间上下文的UserCF算法"><a href="#时间上下文的UserCF算法" class="headerlink" title="时间上下文的UserCF算法"></a>时间上下文的UserCF算法</h3><p>与时间上下文的ITemCF算法类似，UserCF算法需要改进的也有两方面：用户相似性度量的计算改进和用户对物品兴趣计算的改进。<br><strong>用户相似性度量：</strong><br>$$w_{uv}\frac{\sum_{i \in N(u) \cap N(v)}\frac{1}{1+\alpha |t_{ui} - t_{vi}|}}{\sqrt{|N(u)| |N(v)|}},$$<br>上面公式的分子对于用户u和用户v共同喜欢的物品i增加了一个时间衰减因子。用户u和用户v对物品i产生行为的时间越远，那么这两个用户的兴趣相似度就会越小。<br><strong>用户对物品的兴趣：</strong><br>$$p(u,i) = \sum_{v \in S(u,K)} w_{uv}r_{vi}$$<br>或者<br>$$p(u,i) = \sum_{v \in S(u,K)} w_{uv}r_{vi} \frac{1}{1+\alpha (t_0 - t_{vi})}$$</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    phi
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://TFeiMa.github.io/2018/07/18/《推荐系统实践》读书笔记/" title="《推荐系统实践》读书笔记">http://TFeiMa.github.io/2018/07/18/《推荐系统实践》读书笔记/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/数据挖掘/" rel="tag"><i class="fa fa-tag"></i> 数据挖掘</a>
+          
+            <a href="/tags/推荐系统/" rel="tag"><i class="fa fa-tag"></i> 推荐系统</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/07/11/几种常见的无约束优化问题算法/" rel="next" title="几种常见的无约束优化算法">
+                <i class="fa fa-chevron-left"></i> 几种常见的无约束优化算法
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/07/23/KKT条件--约束优化问题的最优性条件/" rel="prev" title="KKT条件是怎么来的--约束优化问题的最优性条件">
+                KKT条件是怎么来的--约束优化问题的最优性条件 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+<span class="jiathis_txt">分享到：</span>
+<a class="jiathis_button_fav">收藏夹</a>
+<a class="jiathis_button_copy">复制网址</a>
+<a class="jiathis_button_email">邮件</a>
+<a class="jiathis_button_weixin">微信</a>
+<a class="jiathis_button_qzone">QQ空间</a>
+<a class="jiathis_button_tqq">腾讯微博</a>
+<a class="jiathis_button_douban">豆瓣</a>
+<a class="jiathis_button_share">一键分享</a>
+
+<a href="http://www.jiathis.com/share?uid=2140465" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+<a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript">
+var jiathis_config={
+  data_track_clickback:true,
+  summary:"",
+  shortUrl:false,
+  hideMore:false
+}
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/me.jpg" alt="phi">
+            
+              <p class="site-author-name" itemprop="name">phi</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">21</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#《推荐系统实践》读书笔记"><span class="nav-number">1.</span> <span class="nav-text">《推荐系统实践》读书笔记</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#第一章，好的推荐系统"><span class="nav-number">1.1.</span> <span class="nav-text">第一章，好的推荐系统</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#评价推荐系统好坏的指标"><span class="nav-number">1.1.1.</span> <span class="nav-text">评价推荐系统好坏的指标</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第二章，利用用户行为数据"><span class="nav-number">1.2.</span> <span class="nav-text">第二章，利用用户行为数据</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#用户行为数据简介"><span class="nav-number">1.2.1.</span> <span class="nav-text">用户行为数据简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#用户行为分析"><span class="nav-number">1.2.2.</span> <span class="nav-text">用户行为分析</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#用户活跃度和物品流行度的分布"><span class="nav-number">1.2.2.1.</span> <span class="nav-text">用户活跃度和物品流行度的分布</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#用户活跃度和物品流行度的关系"><span class="nav-number">1.2.2.2.</span> <span class="nav-text">用户活跃度和物品流行度的关系</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#基于用户的协同过滤算法（UserCF）"><span class="nav-number">1.2.3.</span> <span class="nav-text">基于用户的协同过滤算法（UserCF）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#实验结果分析"><span class="nav-number">1.2.3.1.</span> <span class="nav-text">实验结果分析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#用户相似度计算的改进"><span class="nav-number">1.2.3.2.</span> <span class="nav-text">用户相似度计算的改进</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#基于物品的协同过滤算法（ItemCF）"><span class="nav-number">1.2.4.</span> <span class="nav-text">基于物品的协同过滤算法（ItemCF）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#物品相似度计算的改进"><span class="nav-number">1.2.4.1.</span> <span class="nav-text">物品相似度计算的改进</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#物品相似度归一化"><span class="nav-number">1.2.4.2.</span> <span class="nav-text">物品相似度归一化</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#UserCF-和-ItemCF-的比较"><span class="nav-number">1.2.5.</span> <span class="nav-text">UserCF 和 ItemCF 的比较</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#隐语义模型"><span class="nav-number">1.2.6.</span> <span class="nav-text">隐语义模型</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#负样本采样"><span class="nav-number">1.2.6.1.</span> <span class="nav-text">负样本采样</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#目标函数"><span class="nav-number">1.2.6.2.</span> <span class="nav-text">目标函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#LFM和基于邻域的方法的比较"><span class="nav-number">1.2.6.3.</span> <span class="nav-text">LFM和基于邻域的方法的比较</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第三章，推荐系统冷启动问题"><span class="nav-number">1.3.</span> <span class="nav-text">第三章，推荐系统冷启动问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#冷启动问题简介"><span class="nav-number">1.3.1.</span> <span class="nav-text">冷启动问题简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#利用用户注册信息"><span class="nav-number">1.3.2.</span> <span class="nav-text">利用用户注册信息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#选择合适的物品启动用户的兴趣"><span class="nav-number">1.3.3.</span> <span class="nav-text">选择合适的物品启动用户的兴趣</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#利用物品的内容信息"><span class="nav-number">1.3.4.</span> <span class="nav-text">利用物品的内容信息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#发挥专家的作用"><span class="nav-number">1.3.5.</span> <span class="nav-text">发挥专家的作用</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第四章，利用用户标签数据"><span class="nav-number">1.4.</span> <span class="nav-text">第四章，利用用户标签数据</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#标签系统中的推荐问题"><span class="nav-number">1.4.1.</span> <span class="nav-text">标签系统中的推荐问题</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#用户为什么打标签"><span class="nav-number">1.4.1.1.</span> <span class="nav-text">用户为什么打标签</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#用户打标签的分布"><span class="nav-number">1.4.1.2.</span> <span class="nav-text">用户打标签的分布</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#用户打标签的类型"><span class="nav-number">1.4.1.3.</span> <span class="nav-text">用户打标签的类型</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#基于标签的推荐系统"><span class="nav-number">1.4.2.</span> <span class="nav-text">基于标签的推荐系统</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#算法的改进"><span class="nav-number">1.4.2.1.</span> <span class="nav-text">算法的改进</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#数据稀疏性"><span class="nav-number">1.4.2.2.</span> <span class="nav-text">数据稀疏性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#标签清理"><span class="nav-number">1.4.2.3.</span> <span class="nav-text">标签清理</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#给用户推荐标签"><span class="nav-number">1.4.3.</span> <span class="nav-text">给用户推荐标签</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第五章，利用上下文信息"><span class="nav-number">1.5.</span> <span class="nav-text">第五章，利用上下文信息</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#时间上下文信息"><span class="nav-number">1.5.1.</span> <span class="nav-text">时间上下文信息</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#时间效应简介"><span class="nav-number">1.5.1.1.</span> <span class="nav-text">时间效应简介</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#时间上下文相关的ItemCF算法"><span class="nav-number">1.5.2.</span> <span class="nav-text">时间上下文相关的ItemCF算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#时间上下文的UserCF算法"><span class="nav-number">1.5.3.</span> <span class="nav-text">时间上下文的UserCF算法</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">phi</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count"></span>
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,1253 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+  <meta name="baidu-site-verification" content="ZzeYB5nB9Y">
+
+
+  <meta name="baidu-site-verification" content="”ZzeYB5nB9Y“/">
+
+
+  <meta name="google-site-verification" content="T3WdGKE58QRxIaM-hmJyQYxQU034EoB3YHlSkgq0a0g">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="google-site-verification" content="true">
+
+
+
+
+
+
+
+
+  <meta name="baidu-site-verification" content="ZzeYB5nB9Y">
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="机器学习,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="本文主要从以下方面对比了一下支持向量机和逻辑回归：1.目标函数，2.概率输出，3.核方法，4.对噪声的敏感程度。">
+<meta name="keywords" content="机器学习">
+<meta property="og:type" content="article">
+<meta property="og:title" content="支持向量机 vs 逻辑回归">
+<meta property="og:url" content="http://TFeiMa.github.io/2018/06/28/svm-vs-lr/index.html">
+<meta property="og:site_name" content="phi的博客">
+<meta property="og:description" content="本文主要从以下方面对比了一下支持向量机和逻辑回归：1.目标函数，2.概率输出，3.核方法，4.对噪声的敏感程度。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://tfeima.github.io/2018/06/28/svm-vs-lr/svm-vs-lr/loss.png">
+<meta property="og:updated_time" content="2018-07-27T06:25:46.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="支持向量机 vs 逻辑回归">
+<meta name="twitter:description" content="本文主要从以下方面对比了一下支持向量机和逻辑回归：1.目标函数，2.概率输出，3.核方法，4.对噪声的敏感程度。">
+<meta name="twitter:image" content="http://tfeima.github.io/2018/06/28/svm-vs-lr/svm-vs-lr/loss.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://TFeiMa.github.io/2018/06/28/svm-vs-lr/">
+
+
+
+
+
+  <title>支持向量机 vs 逻辑回归 | phi的博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+	<a href="https://github.com/TFeiMa"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"></a>
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">phi的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">慢就是快！</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://TFeiMa.github.io/2018/06/28/svm-vs-lr/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="phi">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/me.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="phi的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">支持向量机 vs 逻辑回归</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-28T09:12:53+08:00">
+                2018-06-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/学习/" itemprop="url" rel="index">
+                    <span itemprop="name">学习</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+              <div class="post-description">
+                  本文主要从以下方面对比了一下支持向量机和逻辑回归：1.目标函数，2.概率输出，3.核方法，4.对噪声的敏感程度。
+              </div>
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>[TOC]</p>
+<h1 id="支持向量机-vs-逻辑回归"><a href="#支持向量机-vs-逻辑回归" class="headerlink" title="支持向量机 vs 逻辑回归"></a>支持向量机 vs 逻辑回归</h1><p>作为面试中经常问到的一个问题，今天就从理论上作一个总结。</p>
+<h2 id="目标函数"><a href="#目标函数" class="headerlink" title="目标函数"></a>目标函数</h2><p>&emsp;&emsp;一般比较SVM和LR的时候，SVM是指线性软间隔SVM，LR是加了$L_2$正则化的逻辑回归。之前详细推导过<a href="https://tfeima.github.io/2018/03/14/%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA/">SVM</a>和<a href="https://tfeima.github.io/2018/03/12/%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92/">LR</a>，两者的目标函数分别为：</p>
+<p><strong>SVM</strong><br>\begin{equation}<br>\min \frac{| w |^2}{2} + C\sum_{i=1}^m \max\lbrace{ 0,1-y_i(w^Tx_i + b)\rbrace}<br>\end{equation}<br><strong>LR</strong><br>\begin{equation}<br>\min \sum_{i=1}^m \log \left(1+\exp\left(-y_i(w^Tx_i + b)\right) \right) + \lambda | w |^2<br>\end{equation}</p>
+<h3 id="联系"><a href="#联系" class="headerlink" title="联系"></a>联系</h3><p>&emsp;&emsp;loss function 分别叫做<strong>Hinge loss</strong>和<strong>Log loss</strong>,两则都是<strong>0-1 loss</strong>的替代损失函数，从下图可以看出<code>图片来源于《机器学习》，周志华</code>,<img src="svm-vs-lr/loss.png" alt="loss">两者作为替代损失，其效果其实是差不多的，当$y_i(w^Tx + b)\to 0$时，两者都趋向于0，而当 $y_i(w^Tx + b)\to - \infty$时，两者都趋向于 $-y_i(w^Tx + b)$。</p>
+<h3 id="区别"><a href="#区别" class="headerlink" title="区别"></a>区别</h3><ul>
+<li>SVM的目标函数不可微，故无法使用基于梯度的优化算法进行求解；LR的目标函数是二阶可微的，可以使用一些基于梯度的算法直接进行求解</li>
+<li>同样视为正则项$| w |^2$,SVM本身有着极好的<strong>几何解释（最大间隔）</strong>，直接在建模的时候给出了；而LR中的正则项一般将其视为<strong>参数的先验信息</strong>，如取$L_2$范数，则视为参数服从高斯分布的先验分布，目标函数是由最大后验概率(MAP)导出.</li>
+<li>两者的建模过程SVM是从几何的角度出发，而LR则是从统计的角度出发</li>
+</ul>
+<h2 id="概率输出"><a href="#概率输出" class="headerlink" title="概率输出"></a>概率输出</h2><p>&emsp;&emsp;我们知道逻辑回归的输出结果，本身有着极好的概率意义，而SVM的输出却没有。一般来说，如果想让SVM的输出有概率意义，需要将SVM作一个特殊的处理，具体来说，就是需要进行三步。</p>
+<blockquote>
+<p><strong>SVM输出概率的步骤</strong><br><strong>step 1：找到SVM的法向量</strong><br>正常的步骤求出$w_{svm},b_{svm}$<br><strong>step 2：对法向量作一个伸缩变换</strong><br>利用上一步得到的$w_{svm},b_{svm}$，计算数据集中的每一个样本，得到$w_{svm}^Tx_i+b_{svm}$,作为逻辑回归的输入，求解下面参数：<br>\begin{equation}<br>\sum_{i=1}^m \log\left(1+\exp\left(-y_iA(w_{svm}^Tx_i+b_{svm})+B\right) \right)<br>\end{equation}<br><strong>step 3：转换为概率</strong><br>对于每一个样本$x_i$，SVM的概率输出为：<br>\begin{equation}<br>\frac{1}{1+\exp\left(-y_iA(w_{svm}^Tx_i+b_{svm})+B\right)}<br>\end{equation}</p>
+</blockquote>
+<h2 id="核方法"><a href="#核方法" class="headerlink" title="核方法"></a>核方法</h2><p>&emsp;&emsp;SVM很容易通过其对偶问题引入核技巧，而LR就没有那么显然了。</p>
+<h3 id="SVM能够使用核方法的原因"><a href="#SVM能够使用核方法的原因" class="headerlink" title="SVM能够使用核方法的原因"></a>SVM能够使用核方法的原因</h3><p>&emsp;&emsp;首先我们分析一下SVM能够成功引入核技巧的原因：</p>
+<ol>
+<li>对偶问题中出现了$\phi(x)^T\phi(x)$，在训练模型中可引入核技巧</li>
+<li>$w$能够表示成对偶形式：$$w = \sum_{i=1}^m \lambda_iy_i\phi(x_i)$$</li>
+<li>预测时，只需计算$$\sum_{i=1}^m \lambda_iy_i\phi(x_i)^T\phi(x_i) + b$$</li>
+</ol>
+<h3 id="如何将核方法应用到LR（KLR）"><a href="#如何将核方法应用到LR（KLR）" class="headerlink" title="如何将核方法应用到LR（KLR）"></a>如何将核方法应用到LR（KLR）</h3><p>&emsp;&emsp;LR的目标函数中没有类似的第一点，并且由于是无约束的优化问题，也不能转化为对偶问题观察。但是，我们发现如果在LR中的w也能够表示成类似SVM的对偶形式，是不是就可以用核方法了？w能不能表示成$$w = \sum_{i=1}^m \lambda_iy_ix_i$$的形式呢？<br>&emsp;&emsp;假如我们用梯度下降法来求解LR的目标函数，回顾一下梯度下降法的更新公式：$$\theta_{k+1}=\theta_{k}-\alpha g_k,$$ <code>这里假设用固定的步长，$g_k$为目标函数的梯度</code>，更直观点：<br>$$\theta_{k+1}=\theta_{0}-\alpha \left(\sum_{i=0}^k g_i\right)$$<br>回到LR问题中，LR的梯度为：<br>$$g=\sum_{i=1}^m \frac{\sigma(y_i(w^Tx_i+b))}{1+\sigma(y_i(w^Tx_i+b))}(-y_ix_i)+w,$$<br>其中$\sigma(z)=\frac{1}{1+\exp(-z)}$,利用梯度下降的更新公式，求解LR的迭代过程，实际上是对每一步的梯度方向求和，将整个过程每一项$-y_ix_i$合并，我们能够得到$$w = \sum_{i=1}^m \lambda_iy_ix_i$$这个结果，正是我们想要的。这样推导，貌似有点玄乎，实际上是有理论保证的：</p>
+<blockquote>
+<p><strong>定理1</strong> 对于任意一个$L_2$正则化模型<br>$$<br>\sum_{i=1}^m \text{loss} \left(-y_i(w^Tx_i + b)\right) + \lambda | w |^2<br>$$<br>最优解$w^\ast=\sum_{i=1}^m\lambda_ix_i$<br><strong>证明：</strong> 从形式上看，我们就是要证明$w$落在$x_i,i=1,\cdots,m$生成的子空间中，所以可从样本生成的空间，将w分解，然后利用反证法证明w只可能在样本生成的空间中。</p>
+</blockquote>
+<p>&emsp;&emsp;有了这样一个定理，我们就可以将核技巧引入到逻辑回归当中了，将w表示成上述形式，直接求解：<br>\begin{equation}<br>\min_{\beta} \sum_{i=1}^m \log \left(1+\exp\left(-y_i\sum_{j=1}^m\beta_jK(x_i,x_j)\right) \right) + \lambda \sum_{i=1}^m\sum_{j=1}^m\beta_i\beta_jK(x_i,x_j)<br>\end{equation}</p>
+<blockquote>
+<p><strong>注意</strong>上面的有些地方，我们只着重讨论$w$，而没有关注$b$，实际上这并没有什么影响，因为可以对$x$增加一个维度，将$b$合并到$w$中.</p>
+</blockquote>
+<h2 id="对噪声的敏感程度"><a href="#对噪声的敏感程度" class="headerlink" title="对噪声的敏感程度"></a>对噪声的敏感程度</h2><p>先说结论：<strong>相比于LR，SVM对噪声更敏感</strong></p>
+<p>&emsp;&emsp;注意到：SVM和LR中的法向量都可以表示为 $$w=\sum_{i=1}^m\lambda_iy_ix_i,$$但是，在<a href="https://tfeima.github.io/2018/03/14/%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA/">SVM</a>中的推导中我们提到，SVM中的<strong>大部分$\lambda_i$都为0</strong>，只有少数$\lambda_i$不为0，与此对应的样本我们叫做支持向量，也就是说SVM中的解：$w_{svm}=\sum_{i\in S}\lambda_iy_ix_i,$,$w_{svm},$ 只与少部分支持向量有关，若SVM引入噪声，改变了支持向量，对最终的解的影响是非常巨大的，而LR的解就不具备稀疏的性质，引入少部分噪声，并不会对最终的解影响太大。</p>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><p>[1] 周志华，机器学习<br>[2] 林轩田，机器学习技法</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    phi
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://TFeiMa.github.io/2018/06/28/svm-vs-lr/" title="支持向量机 vs 逻辑回归">http://TFeiMa.github.io/2018/06/28/svm-vs-lr/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/机器学习/" rel="tag"><i class="fa fa-tag"></i> 机器学习</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/06/26/ldrq/" rel="next" title="分式二次规划问题的线性时间算法">
+                <i class="fa fa-chevron-left"></i> 分式二次规划问题的线性时间算法
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/07/04/adaboost/" rel="prev" title="理解AdaBoost">
+                理解AdaBoost <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+<span class="jiathis_txt">分享到：</span>
+<a class="jiathis_button_fav">收藏夹</a>
+<a class="jiathis_button_copy">复制网址</a>
+<a class="jiathis_button_email">邮件</a>
+<a class="jiathis_button_weixin">微信</a>
+<a class="jiathis_button_qzone">QQ空间</a>
+<a class="jiathis_button_tqq">腾讯微博</a>
+<a class="jiathis_button_douban">豆瓣</a>
+<a class="jiathis_button_share">一键分享</a>
+
+<a href="http://www.jiathis.com/share?uid=2140465" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+<a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript">
+var jiathis_config={
+  data_track_clickback:true,
+  summary:"",
+  shortUrl:false,
+  hideMore:false
+}
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/me.jpg" alt="phi">
+            
+              <p class="site-author-name" itemprop="name">phi</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">21</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#支持向量机-vs-逻辑回归"><span class="nav-number">1.</span> <span class="nav-text">支持向量机 vs 逻辑回归</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#目标函数"><span class="nav-number">1.1.</span> <span class="nav-text">目标函数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#联系"><span class="nav-number">1.1.1.</span> <span class="nav-text">联系</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#区别"><span class="nav-number">1.1.2.</span> <span class="nav-text">区别</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#概率输出"><span class="nav-number">1.2.</span> <span class="nav-text">概率输出</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#核方法"><span class="nav-number">1.3.</span> <span class="nav-text">核方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#SVM能够使用核方法的原因"><span class="nav-number">1.3.1.</span> <span class="nav-text">SVM能够使用核方法的原因</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#如何将核方法应用到LR（KLR）"><span class="nav-number">1.3.2.</span> <span class="nav-text">如何将核方法应用到LR（KLR）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#对噪声的敏感程度"><span class="nav-number">1.4.</span> <span class="nav-text">对噪声的敏感程度</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number">1.5.</span> <span class="nav-text">References</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">phi</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count"></span>
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>

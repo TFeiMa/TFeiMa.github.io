@@ -1,0 +1,1252 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+  <meta name="baidu-site-verification" content="ZzeYB5nB9Y">
+
+
+  <meta name="baidu-site-verification" content="”ZzeYB5nB9Y“/">
+
+
+  <meta name="google-site-verification" content="T3WdGKE58QRxIaM-hmJyQYxQU034EoB3YHlSkgq0a0g">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="google-site-verification" content="true">
+
+
+
+
+
+
+
+
+  <meta name="baidu-site-verification" content="ZzeYB5nB9Y">
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="机器学习,数据挖掘,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="本文介绍了支持向量机的推导过程、对偶问题和核函数以及 soft margin SVM">
+<meta name="keywords" content="机器学习,数据挖掘">
+<meta property="og:type" content="article">
+<meta property="og:title" content="支持向量机">
+<meta property="og:url" content="http://TFeiMa.github.io/2018/03/14/支持向量机/index.html">
+<meta property="og:site_name" content="phi的博客">
+<meta property="og:description" content="本文介绍了支持向量机的推导过程、对偶问题和核函数以及 soft margin SVM">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-07-25T06:02:50.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="支持向量机">
+<meta name="twitter:description" content="本文介绍了支持向量机的推导过程、对偶问题和核函数以及 soft margin SVM">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://TFeiMa.github.io/2018/03/14/支持向量机/">
+
+
+
+
+
+  <title>支持向量机 | phi的博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+	<a href="https://github.com/TFeiMa"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"></a>
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">phi的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">慢就是快！</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://TFeiMa.github.io/2018/03/14/支持向量机/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="phi">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/me.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="phi的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">支持向量机</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-14T10:06:53+08:00">
+                2018-03-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/学习/" itemprop="url" rel="index">
+                    <span itemprop="name">学习</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+              <div class="post-description">
+                  本文介绍了支持向量机的推导过程、对偶问题和核函数以及 soft margin SVM
+              </div>
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>[TOC]</p>
+<h1 id="支持向量机"><a href="#支持向量机" class="headerlink" title="支持向量机"></a>支持向量机</h1><h2 id="硬间隔支持向量机-hard-margin"><a href="#硬间隔支持向量机-hard-margin" class="headerlink" title="硬间隔支持向量机(hard margin)"></a>硬间隔支持向量机(hard margin)</h2><h3 id="问题的假设和动机"><a href="#问题的假设和动机" class="headerlink" title="问题的假设和动机"></a>问题的假设和动机</h3><p>针对二分类问题，并且假设样本是线性可分的，也就是我能找到一个超平面，一刀下去，正例反例各占一边，不考虑样本不均衡等等一些问题。这个超平面应该怎么找，并且什么样的才是比较好的。假设超平面为 $ w^Tx + b = 0$, 实际上要找的就是 $w$ 和 $b$， 首先，这个超平面最起码要能把样本划分开，也就是说，$x$为正样本，$ w^Tx + b &gt; 0$ , 反之， $ w^Tx + b &lt; 0$。</p>
+<h3 id="空间中一个点到超平面的距离"><a href="#空间中一个点到超平面的距离" class="headerlink" title="空间中一个点到超平面的距离"></a>空间中一个点到超平面的距离</h3><p>假设空间中的点x到平面的投影为$x_0$ ,则<br>$x = x_0 + \frac{rw}{| w|}$, $r$就是x到超平面的距离，来计算一下这个 $r$ <code>需要注意的是：这里的r是有正负号的</code>。同时用 $w^T$ 乘以两边，并且加上 b， 得到<br>$$<br>w^Tx + b = w^Tx_0 + b + \frac{rw^Tw}{| w |}<br>$$<br>由于 $ w^Tx_0 + b = 0$,化简一下得到：<br>$$<br>r = \frac{w^Tx + b}{| w |}<br>$$<br>方便描述一点，令$ f(x) = w^Tx + b $.<br><em>假设</em>,在正样本中，距离超平面最近的点的距离是c，负样本是d<code>d是小于0的</code>，那么所有正样本中 $\frac{f(x_i)}{| w |} \geq c $,而负样本$\frac{f(x_i)}{| w |} \leq d $, <em>再假设</em>，正负样本的标签分别为 $ y_i \in \lbrace 1,-1 \rbrace$, 接下来得到，正样本：$y_i\frac{f(x_i)}{| w |} \geq c $,负样本:$y_i\frac{f(x_i)}{| w |} \geq -d $,对所有的样本$y_i\frac{f(x_i)}{| w |} \geq e = \min\lbrace c,-d \rbrace &gt; 0$. 再改进一下，实际上e为多少不好确定，但这没关系，因为对于一个超平面而言，同时对w和b放大或缩小一个倍数，这个超平面还是这个超平面，所以干脆让 $y_if(x_i) \geq 1 $. 也就是上面假设了距离超平面最近的满足正样本 $ w^Tx_i + b =1 $ ,负样本 $ w^Tx_i + b =-1 $ ,</p>
+<h3 id="目标函数"><a href="#目标函数" class="headerlink" title="目标函数"></a>目标函数</h3><p>到目前为止，我们已经知道了我们要找的这个超平面至少要满足的条件，满足这样的超平面有无数个，我们要找一个我们认为比较好的超平面。那究竟咋样才比较好呢？ 到超平面的距离最近的正负样本的距离分别为$\frac{1}{| w |}$和$\frac{-1}{| w |} $, 两者的间隔为 $\frac{2}{| w |}$（注意并不是它俩的距离，而是$ w^Tx_i + b =1 $ 和$ w^Tx_i + b =-1 $的距离）。直观上来看，两者的间隔越大，模型的泛化性能就越好，可以把最大化间隔当做一个先验假设（有没有更合理的科学解释）。于是就得到了如下优化目标：<br>$$<br>\begin{equation}<br>\begin{array}{c l}<br>\max &amp; \frac{2}{| w |} \<br>\text{subject to} &amp; y_i(w^Tx_i+b) \geq 1, \quad i = 1,2,\cdots m<br>\end{array}<br>\end{equation}<br>$$<br>为了便于求解，转化成<br>$$<br>\begin{equation}<br>\begin{array}{c l}<br>\min &amp; \frac{| w |^2}{2} \<br>\text{subject to} &amp; y_i(w^Tx_i+b) \geq 1, \quad i = 1,2,\cdots m<br>\end{array}<br>\end{equation}<br>$$</p>
+<h3 id="它的对偶问题"><a href="#它的对偶问题" class="headerlink" title="它的对偶问题"></a>它的对偶问题</h3><p>其实从优化的角度来看，非常简单，还是写一下吧，就是用Lagrange 乘子法来求解上面的凸二次规划问题。因为根据它的对偶形式，后面再加上核函数，使得SVM可以很容易的求解非线性问题，让它变得非常强大。</p>
+<p>写出来它的Lagrange函数：<br>$$<br>L(w,b,\lambda) = \frac{| w |^2}{2} - \sum_i^m \lambda_i(y_i(w^Tx_i + b) - 1)<br>$$<br>定义原问题的对偶函数为：<br>$$<br>g(\lambda) = \inf_{w,b}L(w,b,\lambda) \quad subject\quad to \quad\lambda \geq 0<br>$$<br>求Lagrange 函数在（w,b）的最小值,关于w和b求导得到<br>$$<br>\frac{\partial L}{\partial w} = w - \sum_i^m \lambda_i y_i x_i = 0 \<br>\frac{\partial L}{\partial b} = \sum_i^m \lambda_iy_i = 0<br>$$<br>于是我们得到，下列结果，并代入对偶函数：<br>$$<br>g(\lambda) = -\frac{1}{2} \sum_i^m \sum_j^m \lambda_i \lambda_j y_i y_j x_i^T x_j + \sum_i^m \lambda_i<br>\<br>subject \quad to \quad \lambda_i \geq 0<br>\<br>\sum_i^m \lambda_iy_i = 0\quad i = 1,2,\cdots,m<br>$$<br>依旧是一个凸的二次规划问题，可以使用SMO方法高效求解。</p>
+<blockquote>
+<p><strong>KKT条件</strong><br>$$<br>\frac{\partial L}{\partial w} = w - \sum_i^m \lambda_i y_i x_i = 0<br>\<br>(\text{目标函数的梯度在约束函数梯度的锥包})<br>\<br>\frac{\partial L}{\partial b} = \sum_i^m \lambda_iy_i = 0<br>\<br> y_i(w^Tx_i+b) \geq 1, \quad i = 1,2,\cdots m(\text{解应该在原来的可行域})<br> \<br> \lambda_i \geq 0<br> \<br> \lambda_i(y_i(w^Tx_i + b) - 1) = 0, \quad i = 1,2,\cdots m(\text{互补松弛条件})<br>$$<br>由互补松弛性质，lagrange乘子只在边界约束的点上不为0，那些边界约束的点正是支持向量，而其他点对应的lagrange乘子都为0.</p>
+</blockquote>
+<h2 id="为什么要把原问题转换为对偶问题求解？以及核方法的引入"><a href="#为什么要把原问题转换为对偶问题求解？以及核方法的引入" class="headerlink" title="为什么要把原问题转换为对偶问题求解？以及核方法的引入"></a>为什么要把原问题转换为对偶问题求解？以及核方法的引入</h2><p>&emsp;&emsp;上面对SVM的建模基于一个假设就是样本集本身就是线性可分的，当样本集非线性可分的时候，一个超平面就不能完成分类的任务。一般情况下，低维不可分的问题，在高维情况下往往是线性可分的，所以我们可以对原来的特征空间作升维操作。</p>
+<blockquote>
+<p><strong>举个例子</strong>，假设原来是一个二维特征空间，样本$x=(x_1,x_2)$,而真实的分类平面是一个二次的曲面，也就是$ax_1^2 + b x_2^2 + c x_1x_2 + dx_1 + e x_2 + f = 0 $,我们依旧可以将其转化为线性问题，如，令 $ y_1 = x_1^2, y_2 = x_2^2, y_3 = x_1x_2,y_4 = x_1, y_5=x_2 $, 即对原来的特征空间做了一个映射：$\phi(x) \rightarrow y $,我们来寻求这个超平面就行了 $w^Ty + f = 0。$</p>
+</blockquote>
+<p>&emsp;&emsp;但是注意这时候y是4维的，问题由原来的二维问题变成了4维问题，如果样本的分布比较复杂，可能需要将特征空间转化为非常高的维度才可以实现线性可分，这时候很容易出现维数灾难，而且也不太容易确定映射具体长什么样比较好。注意到即使我们将原特征空间映射到高维特征空间，在将其转化为对偶问题的时候，也只是需要求内积 $ \phi(x_i)^T\phi(x_j) $, 如果我们不显示的确定 $ \phi $, 只要能够确定最后的内积，这样就成功避开了维数灾难的发生，也达到了升维的作用。</p>
+<blockquote>
+<p>只要$\phi$满足$[\phi(x_i)^T\phi(x_j)]_{i=1,j=1}^m$为半正定矩阵，$\phi$就能作为核函数使用。</p>
+</blockquote>
+<p>&emsp;&emsp;最后，由法向量和样本之间的对偶表示的关系，最后的分类函数长这个样子：<br>$$<br>f(x) = \sum_i^m \lambda_i y_i \phi(x_i)^T \phi(x_i)<br>$$<br>$ \lambda_i $ 由对偶问题解出来，而内积由事先的核函数给出。由于Lagrange乘子的稀疏性质，对于训练好的支持向量机预测样本的时候应该是很迅速的？</p>
+<h3 id="常用的核函数"><a href="#常用的核函数" class="headerlink" title="常用的核函数"></a>常用的核函数</h3><ol>
+<li><strong>线性核：</strong>$x_i^Tx_j$</li>
+<li><strong>多项式核：</strong>$(x_i^Tx_j)^d$</li>
+<li><strong>高斯核（RBF）:</strong> $\exp(-\frac{|x_i-x_j|^2}{2\sigma^2})$</li>
+</ol>
+<h3 id="核支持向量机-VS-线性支持向量机（这里一般指soft-margin-下节讨论）"><a href="#核支持向量机-VS-线性支持向量机（这里一般指soft-margin-下节讨论）" class="headerlink" title="核支持向量机 VS 线性支持向量机（这里一般指soft margin,下节讨论）"></a>核支持向量机 VS 线性支持向量机（这里一般指soft margin,下节讨论）</h3><p>核支持向量机可以处理非线性可分的问题，模型的容量要大于线性支持向量机，正所谓<code>No Free Lunch</code>，核支持向量机更容易过拟合，而且核支持向量机的计算复杂度要大于线性支持向量机，在数据量比较大的时候表现的尤为明显。</p>
+<p>核SVM计算量大主要表现两方面，一是在模型训练的时候，二是模型预测的时候。主要原因都是核SVM经常需要转换为对偶问题来求解，需要计算出核矩阵，也就是嵌入空间中样本之间的内积。而在预测的时候，$w$又需要表示成其对偶形式：</p>
+<blockquote>
+<p><strong>预测样本x：</strong><br>$$w^Tx+b \quad VS \quad \sum_{i=1}^m \lambda_iy_iK(x_i,x)$$<br>若内积运算需要 $O(n)$，那么线性与核SVM的时间花费分别为$$O(n)\text{和}O(mn)$$</p>
+</blockquote>
+<!-- >**选择函数数的方法:**                         假设样本的特征为n,数据量为m，n相对于m较大时，可先尝试线性核；n-->
+<h2 id="软间隔支持向量机-soft-margin"><a href="#软间隔支持向量机-soft-margin" class="headerlink" title="软间隔支持向量机(soft margin)"></a>软间隔支持向量机(soft margin)</h2><p>硬间隔支持向量机很容易造成过拟合，原因就是，我们在推导的时候，约束条件不能容忍一个样本出错，很容易受outlier的影响。于是，引入软间隔，意思是说，我可以容忍部分样本分类出错，但是也不能出错太多。在这种假设下优化目标变为：<br>$$<br>\min \frac{| w |^2}{2} + C\sum_{i=1}^m \max\lbrace 0,1-y_i(w^Tx_i + b)\rbrace<br>$$<br>令 $ \xi_i = max\lbrace 0,1-y_i(w^Tx_i + b)\rbrace$,则 $ \xi_i \geq 1-y_i(w^Tx_i + b), \xi_i \geq 0$,上式可转化成等价形式<br>$$<br>\min \frac{| w |^2}{2} + C\sum_{i=1}^m \xi_i<br>\<br>subject\quad to \quad<br>\xi_i \geq 1-y_i(w^Tx_i + b),<br>\<br>\xi_i \geq 0.\quad i=1,2,\cdots,m<br>$$<br>$ \xi$可以看作一个松弛变量。软间隔支持向量机的对偶问题和核方法与硬间隔基本一致，但由于出现了松弛变量，使得软间隔的对偶问题变为：<br>\begin{equation}<br>\begin{array}{c,l}<br>\max \quad &amp; g(\lambda) = -\frac{1}{2} \sum_i^m \sum_j^m \lambda_i \lambda_j y_i y_j x_i^T x_j + \sum_i^m \lambda_i<br>\<br>subject \quad to &amp; \quad 0 \leq \lambda_i \leq C<br>\<br>&amp; \sum_i^m \lambda_iy_i = 0\quad i = 1,2,\cdots,m<br>\end{array}<br>\end{equation}<br>与硬间隔支持向量机相比，软间隔的对偶问题只是对Lagrange乘子加个了个约束，有一个上界。</p>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><p>[1]  周志华，机器学习<br>[2] <a href="http://www.csie.ntu.edu.tw/~cjlin/talks/msri.pdf" target="_blank" rel="noopener">Large-scale Linear and Kernel Classification</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    phi
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://TFeiMa.github.io/2018/03/14/支持向量机/" title="支持向量机">http://TFeiMa.github.io/2018/03/14/支持向量机/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/机器学习/" rel="tag"><i class="fa fa-tag"></i> 机器学习</a>
+          
+            <a href="/tags/数据挖掘/" rel="tag"><i class="fa fa-tag"></i> 数据挖掘</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/03/12/逻辑回归/" rel="next" title="逻辑回归">
+                <i class="fa fa-chevron-left"></i> 逻辑回归
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/06/20/算法刷题总结/" rel="prev" title="算法刷题总结（Python实现）">
+                算法刷题总结（Python实现） <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+<span class="jiathis_txt">分享到：</span>
+<a class="jiathis_button_fav">收藏夹</a>
+<a class="jiathis_button_copy">复制网址</a>
+<a class="jiathis_button_email">邮件</a>
+<a class="jiathis_button_weixin">微信</a>
+<a class="jiathis_button_qzone">QQ空间</a>
+<a class="jiathis_button_tqq">腾讯微博</a>
+<a class="jiathis_button_douban">豆瓣</a>
+<a class="jiathis_button_share">一键分享</a>
+
+<a href="http://www.jiathis.com/share?uid=2140465" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+<a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript">
+var jiathis_config={
+  data_track_clickback:true,
+  summary:"",
+  shortUrl:false,
+  hideMore:false
+}
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/me.jpg" alt="phi">
+            
+              <p class="site-author-name" itemprop="name">phi</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">21</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#支持向量机"><span class="nav-number">1.</span> <span class="nav-text">支持向量机</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#硬间隔支持向量机-hard-margin"><span class="nav-number">1.1.</span> <span class="nav-text">硬间隔支持向量机(hard margin)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#问题的假设和动机"><span class="nav-number">1.1.1.</span> <span class="nav-text">问题的假设和动机</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#空间中一个点到超平面的距离"><span class="nav-number">1.1.2.</span> <span class="nav-text">空间中一个点到超平面的距离</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#目标函数"><span class="nav-number">1.1.3.</span> <span class="nav-text">目标函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#它的对偶问题"><span class="nav-number">1.1.4.</span> <span class="nav-text">它的对偶问题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#为什么要把原问题转换为对偶问题求解？以及核方法的引入"><span class="nav-number">1.2.</span> <span class="nav-text">为什么要把原问题转换为对偶问题求解？以及核方法的引入</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#常用的核函数"><span class="nav-number">1.2.1.</span> <span class="nav-text">常用的核函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#核支持向量机-VS-线性支持向量机（这里一般指soft-margin-下节讨论）"><span class="nav-number">1.2.2.</span> <span class="nav-text">核支持向量机 VS 线性支持向量机（这里一般指soft margin,下节讨论）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#软间隔支持向量机-soft-margin"><span class="nav-number">1.3.</span> <span class="nav-text">软间隔支持向量机(soft margin)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number">1.4.</span> <span class="nav-text">References</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">phi</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count"></span>
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>

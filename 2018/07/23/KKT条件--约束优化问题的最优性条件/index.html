@@ -1,0 +1,1280 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+  <meta name="baidu-site-verification" content="ZzeYB5nB9Y">
+
+
+  <meta name="baidu-site-verification" content="”ZzeYB5nB9Y“/">
+
+
+  <meta name="google-site-verification" content="T3WdGKE58QRxIaM-hmJyQYxQU034EoB3YHlSkgq0a0g">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="google-site-verification" content="true">
+
+
+
+
+
+
+
+
+  <meta name="baidu-site-verification" content="ZzeYB5nB9Y">
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="最优化算法,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="最优性条件是最优化理论重要的组成部分，本文详细介绍了带约束优化问题的最优性条件--KKT条件是如何一步步被推导出来的。">
+<meta name="keywords" content="最优化算法">
+<meta property="og:type" content="article">
+<meta property="og:title" content="KKT条件是怎么来的--约束优化问题的最优性条件">
+<meta property="og:url" content="http://TFeiMa.github.io/2018/07/23/KKT条件--约束优化问题的最优性条件/index.html">
+<meta property="og:site_name" content="phi的博客">
+<meta property="og:description" content="最优性条件是最优化理论重要的组成部分，本文详细介绍了带约束优化问题的最优性条件--KKT条件是如何一步步被推导出来的。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://tfeima.github.io/2018/07/23/KKT条件--约束优化问题的最优性条件/KKT条件--约束优化问题的最优性条件/2order-f.png">
+<meta property="og:updated_time" content="2018-07-30T07:52:10.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="KKT条件是怎么来的--约束优化问题的最优性条件">
+<meta name="twitter:description" content="最优性条件是最优化理论重要的组成部分，本文详细介绍了带约束优化问题的最优性条件--KKT条件是如何一步步被推导出来的。">
+<meta name="twitter:image" content="http://tfeima.github.io/2018/07/23/KKT条件--约束优化问题的最优性条件/KKT条件--约束优化问题的最优性条件/2order-f.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://TFeiMa.github.io/2018/07/23/KKT条件--约束优化问题的最优性条件/">
+
+
+
+
+
+  <title>KKT条件是怎么来的--约束优化问题的最优性条件 | phi的博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+	<a href="https://github.com/TFeiMa"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"></a>
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">phi的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">慢就是快！</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://TFeiMa.github.io/2018/07/23/KKT条件--约束优化问题的最优性条件/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="phi">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/me.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="phi的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">KKT条件是怎么来的--约束优化问题的最优性条件</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-23T00:00:00+08:00">
+                2018-07-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/学习/" itemprop="url" rel="index">
+                    <span itemprop="name">学习</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+              <div class="post-description">
+                  最优性条件是最优化理论重要的组成部分，本文详细介绍了带约束优化问题的最优性条件--KKT条件是如何一步步被推导出来的。
+              </div>
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>[toc]</p>
+<h1 id="KKT条件–约束优化问题的最优性条件"><a href="#KKT条件–约束优化问题的最优性条件" class="headerlink" title="KKT条件–约束优化问题的最优性条件"></a>KKT条件–约束优化问题的最优性条件</h1><p>&emsp;&emsp;对于一些问题，利用最优性条件，往往能够求出问题的解析解，所以优化问题的最优性条件是最优化理论的重要组成部分。KKT条件是带约束问题取得最优解的必要条件（目标函数和约束可微的条件下），在某些时候可变为充要条件。</p>
+<p>&emsp;&emsp;首先介绍下什么是充分条件、必要条件和充要条件：</p>
+<ul>
+<li><strong>充分条件：</strong>若条件C为问题P在$x^{\ast}$取得极值的充分条件，那么我们能够利用条件C直接求出$x^{\ast}$，但并不意味着所有的极值点$x^{\ast}$都满足条件C</li>
+<li><strong>必要条件：</strong>若条件C为问题P在$x^{\ast}$取得极值的必要条件，那么要想求出P的极值点$x^{\ast}$,极值点$x^{\ast}$必须满足C，但是满足条件C的点$x$却不一定是极值点</li>
+<li><strong>充要条件：</strong>满足条件C的一定是极值点，极值点一定满足条件C</li>
+</ul>
+<p>&emsp;&emsp;本文要研究的问题的形式为：<br>\begin{equation}<br>\begin{array}{r,l}<br>\min &amp; \quad f(x), x\in R^n \<br>\text{s.t.} &amp; \quad c_i(x) = 0,i \in E=\left( 1,2,\cdots,l \right) \<br> &amp; \quad c_i{x} \geq 0, i \in I = \left( l+1,\cdots,m \right)<br>\end{array}<br>\end{equation}</p>
+<p>即在有等式和不等式约束的条件下极小化一个目标函数，我们记 $D=\left( x \in R^n | c_i(x)=0 , i \in E;c_i(x)\geq 0, i\in I\right)$ 为问题的可行域，$g$为$f$的一阶梯度，$G$为$f$的二阶梯度，并且<strong>我们假设目标函数和约束函数都至少是一阶可微的。</strong></p>
+<h2 id="无约束优化的最优性条件"><a href="#无约束优化的最优性条件" class="headerlink" title="无约束优化的最优性条件"></a>无约束优化的最优性条件</h2><p>&emsp;&emsp;其实从形式上看，带约束的优化问题与无约束优化问题的最优性条件挺相似的，所以首先看下无约束优化问题的最优性条件，即$$\min f(x),\quad x \in R^n$$在取得极值点的时候要满足哪些条件。</p>
+<blockquote>
+<p>定理1 一阶必要条件：若$x^{\ast}$为无约束优化问题的极小点，那么$g(x^{\ast})=0$</p>
+</blockquote>
+<hr>
+<blockquote>
+<p>定理2 二阶必要条件：若$x^{\ast}$为无约束优化问题的极小点，并且$f$二阶连续可微，那么$g(x^{\ast}=0),G(x^{\ast})\text{半正定}$</p>
+</blockquote>
+<p>举个一维函数例子：<br><img src="KKT条件--约束优化问题的最优性条件/2order-f.png" alt="2order-f"><br>&emsp;&emsp;$f_1(x)=x^2, f_2(x)=x^3$,他们的一阶梯度和二阶梯度分别是$g_1(x) = 2x, g_2(x) = 3x^2,G_1(x)=2,G_2(x) = 6x$,在$x=0$处，它们分别等于$g_1(0) = 0, g_2(0) = 0,G_1(0)=2,G_2(0) = 0$,对于$f_1(x)$，它在$x=0$处满足定理1和定理2，$f_2(x)$也满足定理1和定理2，但是它并不是极值点，所以定理1和定理2只是<strong>必要条件</strong>，下面给出一个充分条件。</p>
+<blockquote>
+<p>定理3，二阶充分条件：若$f$为二阶连续可微，并且$g(x^{\ast})=0,G(x^{\ast})$正定，则$x^{\ast}$是极小点。</p>
+</blockquote>
+<p>对于$f_2(x)$满足定理3，所以我们断言$f_1(x)$在$x=0$处取得极小点。</p>
+<h2 id="等式约束的最优性条件"><a href="#等式约束的最优性条件" class="headerlink" title="等式约束的最优性条件"></a>等式约束的最优性条件</h2><p>&emsp;&emsp;对于等式问题：<br>\begin{equation}<br>\begin{array}{r,l}<br>\min &amp; \quad f(x), x\in R^n \<br>\text{s.t.} &amp; \quad c_i(x) = 0,i \in E=\left( 1,2,\cdots,l \right)<br>\end{array}<br>\end{equation}<br>的最优性条件有如下定理。</p>
+<blockquote>
+<p><strong>定理4，等式约束的KKT条件：</strong>若$x^{\ast}$为上述问题的局部极小点，并且$f(x)$和$c_i(x)$在$x^{\ast}$的某邻域内连续可微。若$\nabla c_i(x^{\ast}),i = 1,2,\cdots,l$线性无关，则存在一组实数$\lambda_1^{\ast},\lambda_2^{\ast},\cdots,\lambda_l^{\ast}$，使得$$\nabla f(x^{\ast}) = \sum_{i=1}^l \lambda_i^{\ast} \nabla c_i (x^{\ast})$$</p>
+</blockquote>
+<p><strong>证明：</strong>略。</p>
+<p>此定理为等式约束问题取得最优解的一阶必要条件，令等式约束问题的Lagrange函数为<br>$$L(x,\lambda) = f(x) - \sum_{i=1}^{l} \lambda_i c_i (x),$$<br>此定理表明，等式约束问题的最优解和最优Lagrange乘子为Lagrange函数的驻点：</p>
+<p>\begin{gather}<br>\begin{pmatrix}<br>\nabla_x L(x^{\ast},\lambda^{\ast}) \<br>\nabla_{\lambda} L(x^{\ast},\lambda^{\ast})<br>\end{pmatrix} = 0<br>\end{gather}</p>
+<h2 id="不等式约束问题的最优性条件"><a href="#不等式约束问题的最优性条件" class="headerlink" title="不等式约束问题的最优性条件"></a>不等式约束问题的最优性条件</h2><p>对于不等式约束问题<br>$$<br>\begin{equation}<br>\begin{array}{r,l}<br>\min &amp; \quad f(x), x\in R^n \<br>\text{s.t.} &amp; \quad c_i(x) \geq 0, i \in I = \left( l+1,\cdots,m \right)<br>\end{array}<br>\end{equation}<br>$$<br>首先来看三个引理。</p>
+<h3 id="三个引理"><a href="#三个引理" class="headerlink" title="三个引理"></a>三个引理</h3><blockquote>
+<p><strong>引理1，Fakas引理：</strong>设$a_1,a_2,\cdots,a_r,b$为n维向量。所有满足$a_i^Td&gt;0,i = 1,2,\cdots,r$的向量d，同时满足$b^Td&gt;0$的充要条件是存在非负实数$\lambda_1,\lambda_2,\cdots,\lambda_r$使得$b = \sum_{i=1}^r \lambda_i a_i.$</p>
+</blockquote>
+<p><strong>证明：</strong>略。<br>&emsp;&emsp;可以这样理解这个引理，$d$与所有的向量$a_i$成锐角，所有的$d$生成了一个多面锥，向量b若要与这样的一个d也成锐角，那么b应该在由向量$a_i$生成的凸锥包中。</p>
+<blockquote>
+<p><strong>引理2，Gordan引理：</strong>设$a_1,a_2,\cdots,a_r$为n为向量，则不存在向量$d\in R^n$使得<br>$$a_i^Td&lt;0,i = 1,2,\cdots,r$$<br>的充要条件是，存在不全为0的非负实数组$\lambda_i,i= 1,2,\cdots,r$使得<br>$$\sum_{i=1}^r \lambda_i a_i = 0.$$</p>
+</blockquote>
+<p><strong>证明：</strong> 略，需要用到Fakas引理。<br>&emsp;&emsp;这个定理的几何意义是：假设在一个平面内，如果把$a_i$看成力的话，不存在$d$,使得$a_i^T d&lt;0$表明所有力的方向不可能都在一个180度内，那么总是可以适当对每个力进行放缩，使得合力为0.</p>
+<p>给出一个有效约束的概念。<br><strong>有效约束：</strong>对于所有的不等式约束，$\hat{x}$的有效约束是指那些在$\hat{x}$的某邻域内使得 $c_i(\hat{x}) = 0 $ 的约束，也就是说对于某些约束，$\hat{x}$已经走到了边界上，这些约束对$\hat{x}$起了作用，而那些$c_i(\hat{x})&gt;0$的约束，$\hat{x}$还在内部，暂时还没起约束作用。<br><strong>有效集：</strong>所有在$\hat{x}$处的有效约束的下标组成的集合<br>$$I(\hat{x}) = \lbrace  i | c_i(\hat{x}) = 0\rbrace.$$</p>
+<blockquote>
+<p><strong>引理3：</strong> 对于不等式约束优化问题，$x^{\ast}$为优化问题的局部极小点，$I^{\ast} = \lbrace  i | c_i{x^{\ast}} = 0,i=1,2,\cdots,m \rbrace$,若$f(x)$和$c_i(x_i)(i \in I^{\ast})$在点$x^{\ast}$可微，且 $ c_i(x),(i \in I/ I^{\ast}) $在点$x^{\ast}$连续，则在点$x^{\ast}$的下降方向集S与可行方向集G的交集是空集。$S = \lbrace p\in R^n | \nabla f(x^{\ast})^Tp &lt;0\rbrace,$ $ G = \lbrace p\in R^n | \nabla c_i(x^{\ast})^Tp &gt;0, i \in I^{\ast} \rbrace$</p>
+</blockquote>
+<p><strong>证明：反证法。</strong>假设存在一个向量$p \in S \cap G,$ 即$p$既是下降方向，又是可行方向，那么存在一个$\epsilon$使得$f(x^{\ast}+\epsilon p)&lt;f(x^{\ast})$,与$x^{\ast}$为局部极小点矛盾。</p>
+<h3 id="Fritz-John一阶必要性条件"><a href="#Fritz-John一阶必要性条件" class="headerlink" title="Fritz-John一阶必要性条件"></a>Fritz-John一阶必要性条件</h3><blockquote>
+<p><strong>定理5，Fritz-John一阶必要性条件：</strong>设$x^{\ast}$为不等式约束优化问题的局部极小点，且$f(x),c_i(x)$在$x^{\ast}$点可微，则存在不全为0非零实数$\lambda_0^{\ast},\lambda_1^{\ast},\cdots,\lambda_m^{\ast}$使得<br>\begin{equation}<br>\begin{cases}<br>\lambda_0^{\ast} \nabla f(x^{\ast}) - \sum_{i=1}^m \lambda_i^{\ast} \nabla c_i(x^{\ast}) = 0, \<br>\lambda_i^{\ast} c_i(x^{\ast}) = 0,\quad \lambda_i^{\ast} \geq 0,i = 0,1,\cdots,m<br>\end{cases}<br>\end{equation}</p>
+</blockquote>
+<p><strong>证明：</strong> 设$x^{\ast}$处的有效集为$I^{\ast}$,由引理5知，不存在$d \in R^n,$使得$$ \nabla f(x^{\ast})^Td &lt;0, \quad -\nabla c_i(x^{\ast})^Td &lt;0, i \in I^{\ast},$$再由Gordan引理可得，存在不全为0非零实数$\lambda_0^{\ast},\lambda_i^{\ast},i \in I^{\ast}$使得$\lambda_0^{\ast} \nabla f(x^{\ast}) - \sum_{i \in I^{\ast}} \lambda_i^{\ast} \nabla c_i(x^{\ast}) = 0,$ 另外，规定$i \in I/I^{\ast}$时，$\lambda_i^{\ast}=0, $则得到定理结论。</p>
+<h3 id="KKT一阶必要性条件"><a href="#KKT一阶必要性条件" class="headerlink" title="KKT一阶必要性条件"></a>KKT一阶必要性条件</h3><p>&emsp;&emsp;Fritz-john一阶必要条件有一个缺点，就是当$\lambda_0^{\ast}= 0 $时，目标函数的梯度将从等式中消失，所以需要加一些条件使得目标函数的梯度前面的系数不为0，这样就得到了不等式约束优化问题的KT条件。</p>
+<blockquote>
+<p><strong>定理6，不等式约束的KKT条件：</strong>设$x^{\ast}$为不等式约束优化问题的局部极小点，且$f(x),c_i(x)$在$x^{\ast}$点可微，有效集为$I^{\ast}$, 若$\nabla c_i(x^{\ast})(i \in I^{\ast})$线性无关，则存在不全为0非零实数$\lambda_1^{\ast},\cdots,\lambda_m^{\ast}$使得<br>\begin{equation}<br>\begin{cases}<br>\nabla f(x^{\ast}) - \sum_{i=1}^m \lambda_i^{\ast} \nabla c_i(x^{\ast}) = 0, \<br>\lambda_i^{\ast} c_i(x^{\ast}) = 0,\quad \lambda_i^{\ast} \geq 0,i = 1,\cdots,m<br>\end{cases}<br>\end{equation}</p>
+</blockquote>
+<p><strong>证明：</strong>由Gordan引理，存在不全为0的非负数$\mu_0,\mu_i,i \in I^{\ast}$使得<br>$$\mu_0^{\ast} \nabla f(x^{\ast}) - \sum_{i \in I^{\ast}} \mu_i^{\ast} \nabla c_i(x^{\ast}) = 0,$$<br>若$\mu_0^{\ast}=0,$则$\sum_{i \in I^{\ast}} \mu_i^{\ast} \nabla c_i(x^{\ast}) = 0,$与$\nabla c_i(x^{\ast})(i \in I^{\ast})$线性无关矛盾。故上式两边同时除以$\mu_0^{\ast}$可得结论。</p>
+<h2 id="一般约束问题的最优性条件"><a href="#一般约束问题的最优性条件" class="headerlink" title="一般约束问题的最优性条件"></a>一般约束问题的最优性条件</h2><p>&emsp;&emsp;结合等式约束与不等式约束优化问题的KT条件很容易得到一般约束优化问题的最优性条件。</p>
+<blockquote>
+<p><strong>KKT条件</strong><br>\begin{equation}<br>\begin{cases}<br>\nabla f(x^{\ast}) - \sum_{i \in I} \lambda_i^{\ast} \nabla c_i(x^{\ast}) - \sum_{i \in E}\mu_i^{\ast} \nabla c_i(x^{\ast})= 0, \<br>\lambda_i^{\ast} c_i(x^{\ast}) = 0,c_i(x^{\ast}) \geq 0, \lambda_i^{\ast} \geq 0,\quad i \in I \<br>c_i(x^{\ast})=0,\quad i\in E<br>\end{cases}<br>\end{equation}</p>
+</blockquote>
+<p>$\lambda_i^{\ast} c_i(x^{\ast}) = 0, (i \in I)$又叫做互补松弛条件。</p>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><p>[1] 倪勤，最优化方法与程序设计</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    phi
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://TFeiMa.github.io/2018/07/23/KKT条件--约束优化问题的最优性条件/" title="KKT条件是怎么来的--约束优化问题的最优性条件">http://TFeiMa.github.io/2018/07/23/KKT条件--约束优化问题的最优性条件/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/最优化算法/" rel="tag"><i class="fa fa-tag"></i> 最优化算法</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/07/18/《推荐系统实践》读书笔记/" rel="next" title="《推荐系统实践》读书笔记">
+                <i class="fa fa-chevron-left"></i> 《推荐系统实践》读书笔记
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/08/08/理解主成分分析(PCA)/" rel="prev" title="理解主成分分析（PCA）">
+                理解主成分分析（PCA） <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+<span class="jiathis_txt">分享到：</span>
+<a class="jiathis_button_fav">收藏夹</a>
+<a class="jiathis_button_copy">复制网址</a>
+<a class="jiathis_button_email">邮件</a>
+<a class="jiathis_button_weixin">微信</a>
+<a class="jiathis_button_qzone">QQ空间</a>
+<a class="jiathis_button_tqq">腾讯微博</a>
+<a class="jiathis_button_douban">豆瓣</a>
+<a class="jiathis_button_share">一键分享</a>
+
+<a href="http://www.jiathis.com/share?uid=2140465" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+<a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript">
+var jiathis_config={
+  data_track_clickback:true,
+  summary:"",
+  shortUrl:false,
+  hideMore:false
+}
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/me.jpg" alt="phi">
+            
+              <p class="site-author-name" itemprop="name">phi</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">21</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#KKT条件–约束优化问题的最优性条件"><span class="nav-number">1.</span> <span class="nav-text">KKT条件–约束优化问题的最优性条件</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#无约束优化的最优性条件"><span class="nav-number">1.1.</span> <span class="nav-text">无约束优化的最优性条件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#等式约束的最优性条件"><span class="nav-number">1.2.</span> <span class="nav-text">等式约束的最优性条件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#不等式约束问题的最优性条件"><span class="nav-number">1.3.</span> <span class="nav-text">不等式约束问题的最优性条件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#三个引理"><span class="nav-number">1.3.1.</span> <span class="nav-text">三个引理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Fritz-John一阶必要性条件"><span class="nav-number">1.3.2.</span> <span class="nav-text">Fritz-John一阶必要性条件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#KKT一阶必要性条件"><span class="nav-number">1.3.3.</span> <span class="nav-text">KKT一阶必要性条件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一般约束问题的最优性条件"><span class="nav-number">1.4.</span> <span class="nav-text">一般约束问题的最优性条件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number">1.5.</span> <span class="nav-text">References</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">phi</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count"></span>
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>
