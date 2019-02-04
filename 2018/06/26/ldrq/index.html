@@ -100,14 +100,14 @@
 <meta property="og:site_name" content="phi的博客">
 <meta property="og:description" content="针对分式二次规划问题，通过迭代地求解它的最优拉格朗日乘子，设计出一个线性时间复杂度的算法，并通过数值实验与主流的优化求解器做了一个比较。文章内容为正在投稿的一篇文章的概述(optimization letters 在投)。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://tfeima.github.io/2018/06/26/ldrq/ldrq/alg1.png">
-<meta property="og:image" content="http://tfeima.github.io/2018/06/26/ldrq/ldrq/cvx.png">
-<meta property="og:image" content="http://tfeima.github.io/2018/06/26/ldrq/ldrq/cvxpy.png">
+<meta property="og:image" content="http://tfeima.github.io/2018/06/26/ldrq/alg1.png">
+<meta property="og:image" content="http://tfeima.github.io/2018/06/26/ldrq/cvx.png">
+<meta property="og:image" content="http://tfeima.github.io/2018/06/26/ldrq/cvxpy.png">
 <meta property="og:updated_time" content="2018-06-29T09:36:12.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="分式二次规划问题的线性时间算法">
 <meta name="twitter:description" content="针对分式二次规划问题，通过迭代地求解它的最优拉格朗日乘子，设计出一个线性时间复杂度的算法，并通过数值实验与主流的优化求解器做了一个比较。文章内容为正在投稿的一篇文章的概述(optimization letters 在投)。">
-<meta name="twitter:image" content="http://tfeima.github.io/2018/06/26/ldrq/ldrq/alg1.png">
+<meta name="twitter:image" content="http://tfeima.github.io/2018/06/26/ldrq/alg1.png">
 
 
 
@@ -395,7 +395,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  
+                  558
                 </span>
               
 
@@ -430,10 +430,10 @@
 <p>Here $\rho &gt; 0$ is a regularization parameter and $L \in R^{r\times n}$. The (RTLS) approach was extensively used in a variety of scientiflc disciplines such as signal processing, statistics, etc. Therefore, it is of great practical significance to study this (RQ) problem.</p>
 <h2 id="Lagrange-dual-frame-for-RQ"><a href="#Lagrange-dual-frame-for-RQ" class="headerlink" title="Lagrange dual frame for RQ"></a>Lagrange dual frame for RQ</h2><p>we first show that problem (RQ) is equivalent to solving a Lagrange dual formulation by applying strong duality.</p>
 <p>It’s clear to see that problem (RQ) is equivalent to<br>\begin{equation}<br>(\text{RQ}): \quad<br>\begin{array}{c l}<br>\min &amp;f(x) = \displaystyle\frac{ f_1(x)}{1+ | x|^2}, \<br>\text{s.t.} &amp; \displaystyle\frac{c(x)}{1+ | x|^2}  \leq 0.\<br>\end{array}<br>\end{equation}<br>For convenience, (RQ) problem in the following refers to above foumulation<br>The Lagrange function of (RQ) is writed that<br>\begin{equation}<br>    L(x,\lambda) = \frac{f_1(x)}{1+ | x|^2} + \lambda \frac{c(x)}{1+ | x|^2},<br>\end{equation}<br>then the dual function is given by<br>\begin{equation}<br>    g(\lambda) = \inf_x L(x,\lambda),\quad \lambda \geq 0.<br>\end{equation}<br>The Lagrange dual problem is thus<br>\begin{equation}<br>(\text{LD-RQ}): \quad<br>    \begin{array}{c l}<br>    \max &amp; g(\lambda) \<br>    \text{s.t.} &amp; \lambda \geq 0.<br>    \end{array}<br>\end{equation}</p>
-<h2 id="Algorithm"><a href="#Algorithm" class="headerlink" title="Algorithm"></a>Algorithm</h2><p>we utilize the bisection search to solve the Lagrange dual problem. Then, it allows us to compute a (RQ) optimal solution from a dual optimal solution.<br><img src="ldrq\alg1.png" alt="alg1"></p>
+<h2 id="Algorithm"><a href="#Algorithm" class="headerlink" title="Algorithm"></a>Algorithm</h2><p>we utilize the bisection search to solve the Lagrange dual problem. Then, it allows us to compute a (RQ) optimal solution from a dual optimal solution.<br><img src="/2018/06/26/ldrq/alg1.png" alt="alg1"></p>
 <h2 id="Numerical-Results"><a href="#Numerical-Results" class="headerlink" title="Numerical Results"></a>Numerical Results</h2><p>Generally speaking, we can find the optimal function value of the nonconvex problem (RQ) by firstly solving the following convex SDP problem:<br>\begin{equation}<br>    (\text{SDP}): \quad<br>    \begin{array}{c l}<br>    \max\limits_{\lambda \geq 0} &amp; t \<br>    \text{s.t.} &amp; \begin{bmatrix}<br>    A_1  &amp; b_1 \<br>    b_1^T &amp; c_1  \<br>    \end{bmatrix} + \lambda \begin{bmatrix}<br>    A_2 &amp; 0 \<br>    0 &amp; -c_2<br>    \end{bmatrix} \succeq tI.      \<br>    \end{array}<br>\end{equation}<br>Therefore, we solve the optimal multiplier to compare the running time by some software packages and our method. These packages mainly include SeDuMi , SDPT3 within CVX as well as SCS , CVXOPT within CVXPY . Some of the experimental results are as follows.</p>
-<h3 id="Compare-with-CVX"><a href="#Compare-with-CVX" class="headerlink" title="Compare with CVX"></a>Compare with CVX</h3><p><img src="ldrq\cvx.png" alt="cvx"></p>
-<h3 id="Compare-with-CVXPY"><a href="#Compare-with-CVXPY" class="headerlink" title="Compare with CVXPY"></a>Compare with CVXPY</h3><p><img src="ldrq\cvxpy.png" alt="cvxpy"></p>
+<h3 id="Compare-with-CVX"><a href="#Compare-with-CVX" class="headerlink" title="Compare with CVX"></a>Compare with CVX</h3><p><img src="/2018/06/26/ldrq/cvx.png" alt="cvx"></p>
+<h3 id="Compare-with-CVXPY"><a href="#Compare-with-CVXPY" class="headerlink" title="Compare with CVXPY"></a>Compare with CVXPY</h3><p><img src="/2018/06/26/ldrq/cvxpy.png" alt="cvxpy"></p>
 
       
     </div>
@@ -601,7 +601,7 @@ var jiathis_config={
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">21</span>
+                  <span class="site-state-item-count">23</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -623,7 +623,7 @@ var jiathis_config={
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-count">10</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -690,7 +690,7 @@ var jiathis_config={
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count"></span>
+    <span title="Site words total count">45.2k</span>
   
 </div>
 

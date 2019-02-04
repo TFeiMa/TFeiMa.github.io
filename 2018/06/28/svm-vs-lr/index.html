@@ -100,12 +100,12 @@
 <meta property="og:site_name" content="phi的博客">
 <meta property="og:description" content="本文主要从以下方面对比了一下支持向量机和逻辑回归：1.目标函数，2.概率输出，3.核方法，4.对噪声的敏感程度。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://tfeima.github.io/2018/06/28/svm-vs-lr/svm-vs-lr/loss.png">
+<meta property="og:image" content="http://tfeima.github.io/2018/06/28/svm-vs-lr/loss.png">
 <meta property="og:updated_time" content="2018-07-27T06:25:46.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="支持向量机 vs 逻辑回归">
 <meta name="twitter:description" content="本文主要从以下方面对比了一下支持向量机和逻辑回归：1.目标函数，2.概率输出，3.核方法，4.对噪声的敏感程度。">
-<meta name="twitter:image" content="http://tfeima.github.io/2018/06/28/svm-vs-lr/svm-vs-lr/loss.png">
+<meta name="twitter:image" content="http://tfeima.github.io/2018/06/28/svm-vs-lr/loss.png">
 
 
 
@@ -393,7 +393,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  
+                  1.5k
                 </span>
               
 
@@ -426,7 +426,7 @@
 <h1 id="支持向量机-vs-逻辑回归"><a href="#支持向量机-vs-逻辑回归" class="headerlink" title="支持向量机 vs 逻辑回归"></a>支持向量机 vs 逻辑回归</h1><p>作为面试中经常问到的一个问题，今天就从理论上作一个总结。</p>
 <h2 id="目标函数"><a href="#目标函数" class="headerlink" title="目标函数"></a>目标函数</h2><p>&emsp;&emsp;一般比较SVM和LR的时候，SVM是指线性软间隔SVM，LR是加了$L_2$正则化的逻辑回归。之前详细推导过<a href="https://tfeima.github.io/2018/03/14/%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA/">SVM</a>和<a href="https://tfeima.github.io/2018/03/12/%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92/">LR</a>，两者的目标函数分别为：</p>
 <p><strong>SVM</strong><br>\begin{equation}<br>\min \frac{| w |^2}{2} + C\sum_{i=1}^m \max\lbrace{ 0,1-y_i(w^Tx_i + b)\rbrace}<br>\end{equation}<br><strong>LR</strong><br>\begin{equation}<br>\min \sum_{i=1}^m \log \left(1+\exp\left(-y_i(w^Tx_i + b)\right) \right) + \lambda | w |^2<br>\end{equation}</p>
-<h3 id="联系"><a href="#联系" class="headerlink" title="联系"></a>联系</h3><p>&emsp;&emsp;loss function 分别叫做<strong>Hinge loss</strong>和<strong>Log loss</strong>,两则都是<strong>0-1 loss</strong>的替代损失函数，从下图可以看出<code>图片来源于《机器学习》，周志华</code>,<img src="svm-vs-lr/loss.png" alt="loss">两者作为替代损失，其效果其实是差不多的，当$y_i(w^Tx + b)\to 0$时，两者都趋向于0，而当 $y_i(w^Tx + b)\to - \infty$时，两者都趋向于 $-y_i(w^Tx + b)$。</p>
+<h3 id="联系"><a href="#联系" class="headerlink" title="联系"></a>联系</h3><p>&emsp;&emsp;loss function 分别叫做<strong>Hinge loss</strong>和<strong>Log loss</strong>,两则都是<strong>0-1 loss</strong>的替代损失函数，从下图可以看出<code>图片来源于《机器学习》，周志华</code>,<img src="/2018/06/28/svm-vs-lr/loss.png" alt="loss">两者作为替代损失，其效果其实是差不多的，当$y_i(w^Tx + b)\to 0$时，两者都趋向于0，而当 $y_i(w^Tx + b)\to - \infty$时，两者都趋向于 $-y_i(w^Tx + b)$。</p>
 <h3 id="区别"><a href="#区别" class="headerlink" title="区别"></a>区别</h3><ul>
 <li>SVM的目标函数不可微，故无法使用基于梯度的优化算法进行求解；LR的目标函数是二阶可微的，可以使用一些基于梯度的算法直接进行求解</li>
 <li>同样视为正则项$| w |^2$,SVM本身有着极好的<strong>几何解释（最大间隔）</strong>，直接在建模的时候给出了；而LR中的正则项一般将其视为<strong>参数的先验信息</strong>，如取$L_2$范数，则视为参数服从高斯分布的先验分布，目标函数是由最大后验概率(MAP)导出.</li>
@@ -619,7 +619,7 @@ var jiathis_config={
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">21</span>
+                  <span class="site-state-item-count">23</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -641,7 +641,7 @@ var jiathis_config={
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-count">10</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -708,7 +708,7 @@ var jiathis_config={
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count"></span>
+    <span title="Site words total count">45.2k</span>
   
 </div>
 

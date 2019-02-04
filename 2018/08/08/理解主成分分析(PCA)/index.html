@@ -393,7 +393,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  
+                  1.2k
                 </span>
               
 
@@ -425,7 +425,7 @@
 </blockquote>
 <p>本文介绍PCA的两种推导方式，分别是基于最小重构残差和最大投影方差推导出PCA的最终形式,为了便于讨论，以下均假设样本是经过中心化的结果，也就是说样本的均值为0。</p>
 <h2 id="最小重构残差"><a href="#最小重构残差" class="headerlink" title="最小重构残差"></a>最小重构残差</h2><p>假设我们有m个样本，每个样本具有n维特征，这m个样本所构成的样本矩阵为$X = [x_1, x_2, \cdots, x_m] \in R^{m\times n}.$ 现在我们知道每个样本都是在一个n维特征空间中，n可能是一个比较大的数字，由于某些原因我们需要对这些样本进行降维，不妨假设降维到$k$维，我们肯定不希望降维前后丢失太多的信息，也就是说对于所有的样本降维之后损失的信息应该极小化。那么，如何进行降维呢，正如我们假设的已经将每个样本降维至$k$维了，降维后每个样本落在一个k维子空间，所以我们需要找到这样一个k维子空间，并且保证原样本投影到这个k维子空间中，损失的信息最少。如何描述一个k维空间呢？答案就是只需找到一组k个互相正交的向量即可。具体来说，假设要找的k维子空间的k个正交向量为$\lbrace    w_1,w_2,\cdots,w_k \rbrace$,他所构成的矩阵为$W = [w_1,w_2,\cdots,w_k],$那么对于每一个样本$x_i$，它在这个子空间下的投影坐标为$z_i = W^T x_i$ （注意：$z_i$ 是 $x_i$ 投影后的坐标！）,有了坐标，便很容易计算出$x_i$在$k$维子空间的投影向量为$y_i = z_{i1}w_1 + z_{i2}w_2 + \cdots + z_{ik} w_k = Wz_i$. </p>
-<p>举一个具体的例子，如下图所示，在一个二维坐标系内，$w=(\frac{\sqrt{2}}{2},\frac{\sqrt{2}}{2})$是一个单位向量，$x_1 = (4,3)$是一个点，$y_1 = (\frac{7}{2}\sqrt{2},\frac{7}{2}\sqrt{2})$是$x_1$在方向向量$w$上的一个投影向量，若以$w$为坐标轴，那么$y_1$在$w$坐标轴上的坐标为<strong>7</strong>,所以7就是上面公式中的$z_i$，$\overrightarrow{y_1} = 7\overrightarrow{w}$就是$w$对于$x$的重构，那么我们可以计算出它对于$x_1$的重构残差为$| y_1 - x_1 |^2 .$<br><img src="理解主成分分析(PCA" alt="project-emp">project-emp.png)</p>
+<p>举一个具体的例子，如下图所示，在一个二维坐标系内，$w=(\frac{\sqrt{2}}{2},\frac{\sqrt{2}}{2})$是一个单位向量，$x_1 = (4,3)$是一个点，$y_1 = (\frac{7}{2}\sqrt{2},\frac{7}{2}\sqrt{2})$是$x_1$在方向向量$w$上的一个投影向量，若以$w$为坐标轴，那么$y_1$在$w$坐标轴上的坐标为<strong>7</strong>,所以7就是上面公式中的$z_i$，$\overrightarrow{y_1} = 7\overrightarrow{w}$就是$w$对于$x$的重构，那么我们可以计算出它对于$x_1$的重构残差为$| y_1 - x_1 |^2 .$<br><img src="/2018/08/08/理解主成分分析(PCA)/理解主成分分析(PCA" alt="project-emp">project-emp.png)</p>
 <p>回到n维m个样本的情况，我们希望这m个样本的投影后的重构残差$\sum_{i=1}^m \lVert y_i - x_i\rVert^2$最小，并且对于这个$k$维子空间的正交基我们只关心它们的方向，不关心它们的大小，于是约定$w_i^Tw_i= 1$,并且令$y_i = Wz_i$故得到如下优化目标：</p>
 <p>\begin{equation}<br>\begin{array}{r,l}<br>\min &amp; \sum_{i=1}^m \lVert y_i - x_i\rVert^2 \<br>\text{s.t.} &amp; W^TW = I<br>\end{array}<br>\end{equation}</p>
 <p>化简下目标函数,因为<br>\begin{equation}<br>\begin{array}{r,l}<br> &amp; \lVert y_i - x_i\rVert^2  \<br> = &amp; y_i^Ty_i - 2y_i^Tx_i + const \<br> = &amp;-z_i^Tz_i + const \<br> = &amp;- x_i^TWW^Tx_i + const \<br>\end{array}<br>\end{equation}<br>并且<br>\begin{equation}<br>\begin{array}{r,l}<br>&amp; \sum_{i=1}^m-x_i^TWW^Tx_i  \<br>= &amp; \sum_{i=1}^mTr(-x_i^TWW^Tx_i) \<br>= &amp; \sum_{i=1}^mTr(-W^Tx_ix_i^TW) \<br>= &amp; Tr(\sum_{i=1}^m-W^Tx_ix_i^TW) \<br>= &amp; -Tr(W^TXX^TW)<br>\end{array}<br>\end{equation}</p>
@@ -595,7 +595,7 @@ var jiathis_config={
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">21</span>
+                  <span class="site-state-item-count">23</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -617,7 +617,7 @@ var jiathis_config={
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-count">10</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -684,7 +684,7 @@ var jiathis_config={
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count"></span>
+    <span title="Site words total count">45.2k</span>
   
 </div>
 
