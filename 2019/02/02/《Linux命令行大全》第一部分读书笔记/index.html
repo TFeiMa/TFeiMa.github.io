@@ -100,7 +100,7 @@
 <meta property="og:site_name" content="phi的博客">
 <meta property="og:description" content="本文记录了Linux命令行大全的读书摘要">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-02-04T08:21:49.909Z">
+<meta property="og:updated_time" content="2019-02-07T07:28:40.344Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="《Linux命令行大全》读书笔记">
 <meta name="twitter:description" content="本文记录了Linux命令行大全的读书摘要">
@@ -391,7 +391,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  942
+                  1.2k
                 </span>
               
 
@@ -683,6 +683,25 @@
 </tbody>
 </table>
 <p>Linux系统没有复原命令，一旦用rm删除一些东西，就永远消失了，所以无论啥时候，rm命令用到通配符的时候，先用<code>ls</code>测试通配符。</p>
+<h1 id="使用命令"><a href="#使用命令" class="headerlink" title="使用命令"></a>使用命令</h1><h2 id="命令是什么"><a href="#命令是什么" class="headerlink" title="命令是什么"></a>命令是什么</h2><p>命令可以是下列4种形式之一：</p>
+<ol>
+<li>是一个可执行程序</li>
+<li>是一个内建于shell自身的命令</li>
+<li>是一个shell函数</li>
+<li>是一个命令别名</li>
+</ol>
+<h2 id="显示命令的类型"><a href="#显示命令的类型" class="headerlink" title="显示命令的类型"></a>显示命令的类型</h2><p><code>type</code>是shell的内部命令，它会显示命令的类别，给出一个特定的命令名。</p>
+<h2 id="显示一个可执行程序的位置"><a href="#显示一个可执行程序的位置" class="headerlink" title="显示一个可执行程序的位置"></a>显示一个可执行程序的位置</h2><p>使用<code>which</code>命令可以确定所给定的执行程序的准确位置。</p>
+<h2 id="得到shell内部命令的帮助文档"><a href="#得到shell内部命令的帮助文档" class="headerlink" title="得到shell内部命令的帮助文档"></a>得到shell内部命令的帮助文档</h2><p>使用<code>help command</code>命令得到命令的帮助文档；许多可执行程序支持<code>--help</code>选项，显示此命令支持的语法和选项说明。</p>
+<h2 id="man-显示程序手册页"><a href="#man-显示程序手册页" class="headerlink" title="man 显示程序手册页"></a>man 显示程序手册页</h2><h2 id="whatis-显示非常简洁的命令说明"><a href="#whatis-显示非常简洁的命令说明" class="headerlink" title="whatis 显示非常简洁的命令说明"></a>whatis 显示非常简洁的命令说明</h2><h2 id="info-显示程序的Info条目"><a href="#info-显示程序的Info条目" class="headerlink" title="info 显示程序的Info条目"></a>info 显示程序的Info条目</h2><h2 id="创建别名"><a href="#创建别名" class="headerlink" title="创建别名"></a>创建别名</h2><p>使用<code>alias</code>命令创建命令的别名，使用方法</p>
+<blockquote>
+<p>alias name=’string’</p>
+</blockquote>
+<p>注意：name与string之间没有空格。string是一系列的命令，name是这一系列命令的别名，下次输入name时等价于输入string。</p>
+<p>使用<code>unalias</code>命令删除别名。</p>
+<h1 id="References"><a href="#References" class="headerlink" title="References"></a>References</h1><ol>
+<li>William E.Shotts,Linux命令行大全</li>
+</ol>
 
       
     </div>
@@ -903,7 +922,7 @@ var jiathis_config={
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#第一章-什么是shell"><span class="nav-number">1.</span> <span class="nav-text">第一章 什么是shell</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#一些简单的命令"><span class="nav-number">1.1.</span> <span class="nav-text">一些简单的命令</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第二章-文件系统中跳转"><span class="nav-number">2.</span> <span class="nav-text">第二章 文件系统中跳转</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#显示当前工作目录"><span class="nav-number">2.1.</span> <span class="nav-text">显示当前工作目录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#列出目录内容"><span class="nav-number">2.2.</span> <span class="nav-text">列出目录内容</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#更改当前工作目录"><span class="nav-number">2.3.</span> <span class="nav-text">更改当前工作目录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#相对路径"><span class="nav-number">2.4.</span> <span class="nav-text">相对路径</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第三章-研究操作系统"><span class="nav-number">3.</span> <span class="nav-text">第三章 研究操作系统</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#ls命令选项和参数"><span class="nav-number">3.1.</span> <span class="nav-text">ls命令选项和参数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#深入研究长格式"><span class="nav-number">3.1.1.</span> <span class="nav-text">深入研究长格式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#确定文件类型"><span class="nav-number">3.2.</span> <span class="nav-text">确定文件类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#用less浏览文件内容"><span class="nav-number">3.3.</span> <span class="nav-text">用less浏览文件内容</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第四章-操作文件和目录"><span class="nav-number">4.</span> <span class="nav-text">第四章 操作文件和目录</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#通配符"><span class="nav-number">4.1.</span> <span class="nav-text">通配符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mkdir创建目录"><span class="nav-number">4.2.</span> <span class="nav-text">mkdir创建目录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cp-复制文件和目录"><span class="nav-number">4.3.</span> <span class="nav-text">cp 复制文件和目录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mv-移动和重命名文件"><span class="nav-number">4.4.</span> <span class="nav-text">mv 移动和重命名文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#rm-删除文件和目录"><span class="nav-number">4.5.</span> <span class="nav-text">rm 删除文件和目录</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#第一章-什么是shell"><span class="nav-number">1.</span> <span class="nav-text">第一章 什么是shell</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#一些简单的命令"><span class="nav-number">1.1.</span> <span class="nav-text">一些简单的命令</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第二章-文件系统中跳转"><span class="nav-number">2.</span> <span class="nav-text">第二章 文件系统中跳转</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#显示当前工作目录"><span class="nav-number">2.1.</span> <span class="nav-text">显示当前工作目录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#列出目录内容"><span class="nav-number">2.2.</span> <span class="nav-text">列出目录内容</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#更改当前工作目录"><span class="nav-number">2.3.</span> <span class="nav-text">更改当前工作目录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#相对路径"><span class="nav-number">2.4.</span> <span class="nav-text">相对路径</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第三章-研究操作系统"><span class="nav-number">3.</span> <span class="nav-text">第三章 研究操作系统</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#ls命令选项和参数"><span class="nav-number">3.1.</span> <span class="nav-text">ls命令选项和参数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#深入研究长格式"><span class="nav-number">3.1.1.</span> <span class="nav-text">深入研究长格式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#确定文件类型"><span class="nav-number">3.2.</span> <span class="nav-text">确定文件类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#用less浏览文件内容"><span class="nav-number">3.3.</span> <span class="nav-text">用less浏览文件内容</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第四章-操作文件和目录"><span class="nav-number">4.</span> <span class="nav-text">第四章 操作文件和目录</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#通配符"><span class="nav-number">4.1.</span> <span class="nav-text">通配符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mkdir创建目录"><span class="nav-number">4.2.</span> <span class="nav-text">mkdir创建目录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cp-复制文件和目录"><span class="nav-number">4.3.</span> <span class="nav-text">cp 复制文件和目录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mv-移动和重命名文件"><span class="nav-number">4.4.</span> <span class="nav-text">mv 移动和重命名文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#rm-删除文件和目录"><span class="nav-number">4.5.</span> <span class="nav-text">rm 删除文件和目录</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#使用命令"><span class="nav-number">5.</span> <span class="nav-text">使用命令</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#命令是什么"><span class="nav-number">5.1.</span> <span class="nav-text">命令是什么</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#显示命令的类型"><span class="nav-number">5.2.</span> <span class="nav-text">显示命令的类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#显示一个可执行程序的位置"><span class="nav-number">5.3.</span> <span class="nav-text">显示一个可执行程序的位置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#得到shell内部命令的帮助文档"><span class="nav-number">5.4.</span> <span class="nav-text">得到shell内部命令的帮助文档</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#man-显示程序手册页"><span class="nav-number">5.5.</span> <span class="nav-text">man 显示程序手册页</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#whatis-显示非常简洁的命令说明"><span class="nav-number">5.6.</span> <span class="nav-text">whatis 显示非常简洁的命令说明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#info-显示程序的Info条目"><span class="nav-number">5.7.</span> <span class="nav-text">info 显示程序的Info条目</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#创建别名"><span class="nav-number">5.8.</span> <span class="nav-text">创建别名</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#References"><span class="nav-number">6.</span> <span class="nav-text">References</span></a></li></ol></div>
             
 
           </div>
@@ -937,7 +956,7 @@ var jiathis_config={
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">45.2k</span>
+    <span title="Site words total count">45.5k</span>
   
 </div>
 
