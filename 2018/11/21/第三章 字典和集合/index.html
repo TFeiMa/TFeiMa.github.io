@@ -100,7 +100,7 @@
 <meta property="og:site_name" content="phi的博客">
 <meta property="og:description" content="本文为《流畅的Python》第三章，字典和集合的读书笔记">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-01-31T12:29:39.657Z">
+<meta property="og:updated_time" content="2019-02-07T12:28:58.770Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="《流畅的Python》----第三章 字典和集合">
 <meta name="twitter:description" content="本文为《流畅的Python》第三章，字典和集合的读书笔记">
@@ -420,7 +420,7 @@
       
 
       
-        <p>[toc]</p>
+        <p>[TOC]</p>
 <h1 id="第三章-字典和集合"><a href="#第三章-字典和集合" class="headerlink" title="第三章 字典和集合"></a>第三章 字典和集合</h1><h2 id="泛化映射类型"><a href="#泛化映射类型" class="headerlink" title="泛化映射类型"></a>泛化映射类型</h2><p>标准库里所有的映射类型都是利用dict实现的，只有可散列的数据类型才可以用作这些映射的键。</p>
 <p>什么是可散列的数据类型?</p>
 <ol>
@@ -447,9 +447,9 @@
 <li>把这个列表作为值，key作为键放到dd中</li>
 <li>返回这个列表的引用</li>
 </ol>
-<p>上面的python语句可修改为<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">index = collections.defaultdict</span><br><span class="line"></span><br><span class="line">index[word].append(location)</span><br></pre></td></tr></table></figure></p>
+<p>上面的python语句可修改为<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">index = collections.defaultdict(list)</span><br><span class="line"></span><br><span class="line">index[word].append(location)</span><br></pre></td></tr></table></figure></p>
 <h2 id="特殊方法-missing"><a href="#特殊方法-missing" class="headerlink" title="特殊方法__missing__"></a>特殊方法<code>__missing__</code></h2><p>所有的映射类型在找不到键的时候，即在<code>__getitem__</code>找不到键的时候，Python会自动调用<code>__missing__</code>方法。<code>__missing__</code>方法只会被<code>__getitem__</code>调用。</p>
-<p>例子StrKeyDict0类,这个类可以同时非字符和字符类型<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">StrKeyDict0</span><span class="params">(dict)</span>:</span></span><br><span class="line">    <span class="comment"># 这里继承了dict类</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__missing__</span><span class="params">(self,str)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> isinstance(key,str):</span><br><span class="line">            <span class="keyword">raise</span> KeyError(key)</span><br><span class="line">        <span class="comment"># 如果key本身就是str类型，则抛出异常，这里是为了防止死循环</span></span><br><span class="line">        <span class="keyword">return</span> self[str(key)]</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get</span><span class="params">(self,default=None)</span>:</span></span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            <span class="keyword">return</span> self[key]</span><br><span class="line">        <span class="keyword">except</span> KeyError:</span><br><span class="line">            <span class="keyword">return</span> default</span><br><span class="line">        <span class="comment"># 如果抛出异常，说明__missing__也失败了</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__contains__</span><span class="params">(self,key)</span>:</span></span><br><span class="line">        retrurn key <span class="keyword">in</span> self.keys() <span class="keyword">or</span> str(key) <span class="keyword">in</span> self.keys()</span><br></pre></td></tr></table></figure></p>
+<p>例子StrKeyDict0类,这个类可以同时使用非字符和字符类型<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">StrKeyDict0</span><span class="params">(dict)</span>:</span></span><br><span class="line">    <span class="comment"># 这里继承了dict类</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__missing__</span><span class="params">(self,str)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> isinstance(key,str):</span><br><span class="line">            <span class="keyword">raise</span> KeyError(key)</span><br><span class="line">        <span class="comment"># 如果key本身就是str类型，则抛出异常，这里是为了防止死循环</span></span><br><span class="line">        <span class="keyword">return</span> self[str(key)]</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get</span><span class="params">(self,default=None)</span>:</span></span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            <span class="keyword">return</span> self[key]</span><br><span class="line">        <span class="keyword">except</span> KeyError:</span><br><span class="line">            <span class="keyword">return</span> default</span><br><span class="line">        <span class="comment"># 如果抛出异常，说明__missing__也失败了</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__contains__</span><span class="params">(self,key)</span>:</span></span><br><span class="line">        retrurn key <span class="keyword">in</span> self.keys() <span class="keyword">or</span> str(key) <span class="keyword">in</span> self.keys()</span><br></pre></td></tr></table></figure></p>
 <h2 id="字典的变种"><a href="#字典的变种" class="headerlink" title="字典的变种"></a>字典的变种</h2><ol>
 <li>collections.OrderedDict<br>这个类型在添加键的时候会保持键顺序，所以在迭代的时候，键的次序总是一致的。</li>
 <li>collections.ChainMap<br>这个类型可以容纳数个不同的映射对象，当进行键查找的时候，这些对象会被当做一个整体，逐个被查找，直到找到建为止。</li>
@@ -723,7 +723,7 @@ var jiathis_config={
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">45.5k</span>
+    <span title="Site words total count">46k</span>
   
 </div>
 
