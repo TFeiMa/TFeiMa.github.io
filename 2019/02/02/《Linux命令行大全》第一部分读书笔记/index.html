@@ -100,7 +100,7 @@
 <meta property="og:site_name" content="phi的博客">
 <meta property="og:description" content="本文记录了Linux命令行大全的读书摘要">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-02-12T11:28:06.570Z">
+<meta property="og:updated_time" content="2019-02-16T12:28:39.189Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="《Linux命令行大全》读书笔记">
 <meta name="twitter:description" content="本文记录了Linux命令行大全的读书摘要">
@@ -391,7 +391,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  2.3k
+                  3.1k
                 </span>
               
 
@@ -907,6 +907,105 @@
 <p>!行号</p>
 </blockquote>
 <p>来执行历史命令中此行号对应的命令。</p>
+<h1 id="第九章-权限"><a href="#第九章-权限" class="headerlink" title="第九章 权限"></a>第九章 权限</h1><p>创建一个文件并显示它的详细信息</p>
+<blockquote>
+<p>$ &gt; foo.txt</p>
+<p>$ ls -l foo.txt</p>
+<p>-rw-r–r–  1 ma  staff  0  2 16 19:46 foo.txt</p>
+</blockquote>
+<p>显示的前十个字符是文件的属性，第一个字符表示文件的类型。下表是文件常见的类型：</p>
+<table>
+<thead>
+<tr>
+<th>属性</th>
+<th>文件类型</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>-</td>
+<td>普通文件</td>
+</tr>
+<tr>
+<td>d</td>
+<td>目录</td>
+</tr>
+<tr>
+<td>l</td>
+<td>符号链接</td>
+</tr>
+<tr>
+<td>c</td>
+<td>字符设备文件</td>
+</tr>
+<tr>
+<td>b</td>
+<td>快设备文件</td>
+</tr>
+</tbody>
+</table>
+<p>剩下的九个字符代表文件所有者、文件组所有者、其他人的读写和执行权限。</p>
+<h2 id="chmod-更改文件模式"><a href="#chmod-更改文件模式" class="headerlink" title="chmod 更改文件模式"></a>chmod 更改文件模式</h2><p>可以使用两种方法改变文件模式：八进制数字表示法和符号表示法。</p>
+<h3 id="数字表示法"><a href="#数字表示法" class="headerlink" title="数字表示法"></a>数字表示法</h3><p>因为对所有者、群组和其他人分别有r、w、x三种权限，所以假如对于所有者的权限来讲，所有者对文件有r权限和w权限，但是x权限没有，那么他有的权限的位置就置为1，反之为0，那么对应地二进制表示为110，与此对应的八进制为6，即所有者的权限用一个4表示，其它群组和其他人时同理，所以一个文件可以用3个八进制数字表示它的权限模式。例如改变foo.txt的文件权限：</p>
+<blockquote>
+<p>$ chmod 600 foo.txt</p>
+<p>$ ls -l foo.txt</p>
+<p>-rw——-  1 ma  staff  0  2 16 19:46 foo.txt</p>
+</blockquote>
+<h3 id="符号表示法"><a href="#符号表示法" class="headerlink" title="符号表示法"></a>符号表示法</h3><p>符号表示法分为3个部分：更改会影响谁，要执行那个操作，要设置哪种权限。</p>
+<table>
+<thead>
+<tr>
+<th>符号</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>u</td>
+<td>文件所有者</td>
+</tr>
+<tr>
+<td>g</td>
+<td>用户组</td>
+</tr>
+<tr>
+<td>o</td>
+<td>其他人</td>
+</tr>
+<tr>
+<td>a</td>
+<td>u、g、o三者的组合</td>
+</tr>
+</tbody>
+</table>
+<p>若没有指定字符，则假定使用a。</p>
+<p>执行的操作有两种：<code>+</code>增加一个权限，<code>-</code>删掉一个权限。</p>
+<p>权限用r、w、x指定。例如</p>
+<blockquote>
+<p>$ chmod g+r foo.txt </p>
+<p>$ ls -l foo.txt </p>
+<p>-rw-r—–  1 ma  staff  0  2 16 19:46 foo.txt</p>
+</blockquote>
+<h2 id="更改身份"><a href="#更改身份" class="headerlink" title="更改身份"></a>更改身份</h2><h2 id="su-以其他用户和组ID运行一个shell"><a href="#su-以其他用户和组ID运行一个shell" class="headerlink" title="su 以其他用户和组ID运行一个shell"></a>su 以其他用户和组ID运行一个shell</h2><p>su命令以另一个用户的身份来启动shell：</p>
+<blockquote>
+<p>su [-[l]] [user]</p>
+</blockquote>
+<p>如果包含-l选项，那么会为指定用户启动一个需要登录的shell，意味着会加载这个用户的shell环境，并且工作目录会更改到这个用户的家目录。如果不指定用户，则默认启动超级用户。-l可以缩写为-，例如启动超级用户：</p>
+<blockquote>
+<p>su -</p>
+</blockquote>
+<p>当工作完成后，输入<code>exit</code>返回原来的shell。也可以只执行单个命令，而不是启动一个新的可交互的shell，</p>
+<blockquote>
+<p>su -c ‘command’</p>
+</blockquote>
+<p>命令用单引号括起来。</p>
+<h3 id="sudo-以另一个用户身份执行命令"><a href="#sudo-以另一个用户身份执行命令" class="headerlink" title="sudo 以另一个用户身份执行命令"></a>sudo 以另一个用户身份执行命令</h3><p>sudo很多方面类似于su，但sudo还有其他一些总要的功能。管理员可以配置sudo命令，从而使用户以不同身份通过一种可控的方式来执行命令。sudo命令不要求超级用户的密码，而是需要自己的密码来认证。sudo命令不会重新启动一个shell，命令不必用单引号括起来。</p>
+<h2 id="chown-更改文件所有者和用户组"><a href="#chown-更改文件所有者和用户组" class="headerlink" title="chown 更改文件所有者和用户组"></a>chown 更改文件所有者和用户组</h2><p>使用这个命令需要超级用户权限。命令语法：</p>
+<blockquote>
+<p>chown [owner][:[grou]] file…</p>
+</blockquote>
+<h2 id="更改用户密码"><a href="#更改用户密码" class="headerlink" title="更改用户密码"></a>更改用户密码</h2><p>只要输入<code>passwd</code>命令，就能更改你的密码。</p>
 <h1 id="References"><a href="#References" class="headerlink" title="References"></a>References</h1><ol>
 <li>William E.Shotts,Linux命令行大全</li>
 </ol>
@@ -1130,7 +1229,7 @@ var jiathis_config={
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#第一章-什么是shell"><span class="nav-number">1.</span> <span class="nav-text">第一章 什么是shell</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#一些简单的命令"><span class="nav-number">1.1.</span> <span class="nav-text">一些简单的命令</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第二章-文件系统中跳转"><span class="nav-number">2.</span> <span class="nav-text">第二章 文件系统中跳转</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#显示当前工作目录"><span class="nav-number">2.1.</span> <span class="nav-text">显示当前工作目录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#列出目录内容"><span class="nav-number">2.2.</span> <span class="nav-text">列出目录内容</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#更改当前工作目录"><span class="nav-number">2.3.</span> <span class="nav-text">更改当前工作目录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#相对路径"><span class="nav-number">2.4.</span> <span class="nav-text">相对路径</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第三章-研究操作系统"><span class="nav-number">3.</span> <span class="nav-text">第三章 研究操作系统</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#ls命令选项和参数"><span class="nav-number">3.1.</span> <span class="nav-text">ls命令选项和参数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#深入研究长格式"><span class="nav-number">3.1.1.</span> <span class="nav-text">深入研究长格式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#确定文件类型"><span class="nav-number">3.2.</span> <span class="nav-text">确定文件类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#用less浏览文件内容"><span class="nav-number">3.3.</span> <span class="nav-text">用less浏览文件内容</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第四章-操作文件和目录"><span class="nav-number">4.</span> <span class="nav-text">第四章 操作文件和目录</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#通配符"><span class="nav-number">4.1.</span> <span class="nav-text">通配符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mkdir创建目录"><span class="nav-number">4.2.</span> <span class="nav-text">mkdir创建目录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cp-复制文件和目录"><span class="nav-number">4.3.</span> <span class="nav-text">cp 复制文件和目录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mv-移动和重命名文件"><span class="nav-number">4.4.</span> <span class="nav-text">mv 移动和重命名文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#rm-删除文件和目录"><span class="nav-number">4.5.</span> <span class="nav-text">rm 删除文件和目录</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第五章-使用命令"><span class="nav-number">5.</span> <span class="nav-text">第五章 使用命令</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#命令是什么"><span class="nav-number">5.1.</span> <span class="nav-text">命令是什么</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#显示命令的类型"><span class="nav-number">5.2.</span> <span class="nav-text">显示命令的类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#显示一个可执行程序的位置"><span class="nav-number">5.3.</span> <span class="nav-text">显示一个可执行程序的位置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#得到shell内部命令的帮助文档"><span class="nav-number">5.4.</span> <span class="nav-text">得到shell内部命令的帮助文档</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#man-显示程序手册页"><span class="nav-number">5.5.</span> <span class="nav-text">man 显示程序手册页</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#whatis-显示非常简洁的命令说明"><span class="nav-number">5.6.</span> <span class="nav-text">whatis 显示非常简洁的命令说明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#info-显示程序的Info条目"><span class="nav-number">5.7.</span> <span class="nav-text">info 显示程序的Info条目</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#创建别名"><span class="nav-number">5.8.</span> <span class="nav-text">创建别名</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第六章-重定向"><span class="nav-number">6.</span> <span class="nav-text">第六章 重定向</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#标准输入输出"><span class="nav-number">6.1.</span> <span class="nav-text">标准输入输出</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#重定向标准输出"><span class="nav-number">6.2.</span> <span class="nav-text">重定向标准输出</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#重定向标准错误"><span class="nav-number">6.3.</span> <span class="nav-text">重定向标准错误</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#重定向标准输出和错误到同一个文件"><span class="nav-number">6.4.</span> <span class="nav-text">重定向标准输出和错误到同一个文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#处理不需要的输出"><span class="nav-number">6.5.</span> <span class="nav-text">处理不需要的输出</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#重定向标准输入"><span class="nav-number">6.6.</span> <span class="nav-text">重定向标准输入</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#cat-连接文件"><span class="nav-number">6.6.1.</span> <span class="nav-text">cat 连接文件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#管道线"><span class="nav-number">6.7.</span> <span class="nav-text">管道线</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#过滤器"><span class="nav-number">6.8.</span> <span class="nav-text">过滤器</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第七章-从shell眼中看世界"><span class="nav-number">7.</span> <span class="nav-text">第七章 从shell眼中看世界</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#字符展开"><span class="nav-number">7.1.</span> <span class="nav-text">字符展开</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#算术表达式展开"><span class="nav-number">7.2.</span> <span class="nav-text">算术表达式展开</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#花括号展开"><span class="nav-number">7.3.</span> <span class="nav-text">花括号展开</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参数展开"><span class="nav-number">7.4.</span> <span class="nav-text">参数展开</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#命令替换"><span class="nav-number">7.5.</span> <span class="nav-text">命令替换</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#双引号"><span class="nav-number">7.6.</span> <span class="nav-text">双引号</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#单引号"><span class="nav-number">7.7.</span> <span class="nav-text">单引号</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#转义字符"><span class="nav-number">7.8.</span> <span class="nav-text">转义字符</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第八章-键盘高级技巧"><span class="nav-number">8.</span> <span class="nav-text">第八章 键盘高级技巧</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#移动光标"><span class="nav-number">8.1.</span> <span class="nav-text">移动光标</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#修改文本"><span class="nav-number">8.2.</span> <span class="nav-text">修改文本</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#剪切和粘贴"><span class="nav-number">8.3.</span> <span class="nav-text">剪切和粘贴</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#历史命令"><span class="nav-number">8.4.</span> <span class="nav-text">历史命令</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#References"><span class="nav-number">9.</span> <span class="nav-text">References</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#第一章-什么是shell"><span class="nav-number">1.</span> <span class="nav-text">第一章 什么是shell</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#一些简单的命令"><span class="nav-number">1.1.</span> <span class="nav-text">一些简单的命令</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第二章-文件系统中跳转"><span class="nav-number">2.</span> <span class="nav-text">第二章 文件系统中跳转</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#显示当前工作目录"><span class="nav-number">2.1.</span> <span class="nav-text">显示当前工作目录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#列出目录内容"><span class="nav-number">2.2.</span> <span class="nav-text">列出目录内容</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#更改当前工作目录"><span class="nav-number">2.3.</span> <span class="nav-text">更改当前工作目录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#相对路径"><span class="nav-number">2.4.</span> <span class="nav-text">相对路径</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第三章-研究操作系统"><span class="nav-number">3.</span> <span class="nav-text">第三章 研究操作系统</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#ls命令选项和参数"><span class="nav-number">3.1.</span> <span class="nav-text">ls命令选项和参数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#深入研究长格式"><span class="nav-number">3.1.1.</span> <span class="nav-text">深入研究长格式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#确定文件类型"><span class="nav-number">3.2.</span> <span class="nav-text">确定文件类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#用less浏览文件内容"><span class="nav-number">3.3.</span> <span class="nav-text">用less浏览文件内容</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第四章-操作文件和目录"><span class="nav-number">4.</span> <span class="nav-text">第四章 操作文件和目录</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#通配符"><span class="nav-number">4.1.</span> <span class="nav-text">通配符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mkdir创建目录"><span class="nav-number">4.2.</span> <span class="nav-text">mkdir创建目录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cp-复制文件和目录"><span class="nav-number">4.3.</span> <span class="nav-text">cp 复制文件和目录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mv-移动和重命名文件"><span class="nav-number">4.4.</span> <span class="nav-text">mv 移动和重命名文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#rm-删除文件和目录"><span class="nav-number">4.5.</span> <span class="nav-text">rm 删除文件和目录</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第五章-使用命令"><span class="nav-number">5.</span> <span class="nav-text">第五章 使用命令</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#命令是什么"><span class="nav-number">5.1.</span> <span class="nav-text">命令是什么</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#显示命令的类型"><span class="nav-number">5.2.</span> <span class="nav-text">显示命令的类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#显示一个可执行程序的位置"><span class="nav-number">5.3.</span> <span class="nav-text">显示一个可执行程序的位置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#得到shell内部命令的帮助文档"><span class="nav-number">5.4.</span> <span class="nav-text">得到shell内部命令的帮助文档</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#man-显示程序手册页"><span class="nav-number">5.5.</span> <span class="nav-text">man 显示程序手册页</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#whatis-显示非常简洁的命令说明"><span class="nav-number">5.6.</span> <span class="nav-text">whatis 显示非常简洁的命令说明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#info-显示程序的Info条目"><span class="nav-number">5.7.</span> <span class="nav-text">info 显示程序的Info条目</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#创建别名"><span class="nav-number">5.8.</span> <span class="nav-text">创建别名</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第六章-重定向"><span class="nav-number">6.</span> <span class="nav-text">第六章 重定向</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#标准输入输出"><span class="nav-number">6.1.</span> <span class="nav-text">标准输入输出</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#重定向标准输出"><span class="nav-number">6.2.</span> <span class="nav-text">重定向标准输出</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#重定向标准错误"><span class="nav-number">6.3.</span> <span class="nav-text">重定向标准错误</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#重定向标准输出和错误到同一个文件"><span class="nav-number">6.4.</span> <span class="nav-text">重定向标准输出和错误到同一个文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#处理不需要的输出"><span class="nav-number">6.5.</span> <span class="nav-text">处理不需要的输出</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#重定向标准输入"><span class="nav-number">6.6.</span> <span class="nav-text">重定向标准输入</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#cat-连接文件"><span class="nav-number">6.6.1.</span> <span class="nav-text">cat 连接文件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#管道线"><span class="nav-number">6.7.</span> <span class="nav-text">管道线</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#过滤器"><span class="nav-number">6.8.</span> <span class="nav-text">过滤器</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第七章-从shell眼中看世界"><span class="nav-number">7.</span> <span class="nav-text">第七章 从shell眼中看世界</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#字符展开"><span class="nav-number">7.1.</span> <span class="nav-text">字符展开</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#算术表达式展开"><span class="nav-number">7.2.</span> <span class="nav-text">算术表达式展开</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#花括号展开"><span class="nav-number">7.3.</span> <span class="nav-text">花括号展开</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参数展开"><span class="nav-number">7.4.</span> <span class="nav-text">参数展开</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#命令替换"><span class="nav-number">7.5.</span> <span class="nav-text">命令替换</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#双引号"><span class="nav-number">7.6.</span> <span class="nav-text">双引号</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#单引号"><span class="nav-number">7.7.</span> <span class="nav-text">单引号</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#转义字符"><span class="nav-number">7.8.</span> <span class="nav-text">转义字符</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第八章-键盘高级技巧"><span class="nav-number">8.</span> <span class="nav-text">第八章 键盘高级技巧</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#移动光标"><span class="nav-number">8.1.</span> <span class="nav-text">移动光标</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#修改文本"><span class="nav-number">8.2.</span> <span class="nav-text">修改文本</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#剪切和粘贴"><span class="nav-number">8.3.</span> <span class="nav-text">剪切和粘贴</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#历史命令"><span class="nav-number">8.4.</span> <span class="nav-text">历史命令</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第九章-权限"><span class="nav-number">9.</span> <span class="nav-text">第九章 权限</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#chmod-更改文件模式"><span class="nav-number">9.1.</span> <span class="nav-text">chmod 更改文件模式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#数字表示法"><span class="nav-number">9.1.1.</span> <span class="nav-text">数字表示法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#符号表示法"><span class="nav-number">9.1.2.</span> <span class="nav-text">符号表示法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#更改身份"><span class="nav-number">9.2.</span> <span class="nav-text">更改身份</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#su-以其他用户和组ID运行一个shell"><span class="nav-number">9.3.</span> <span class="nav-text">su 以其他用户和组ID运行一个shell</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#sudo-以另一个用户身份执行命令"><span class="nav-number">9.3.1.</span> <span class="nav-text">sudo 以另一个用户身份执行命令</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#chown-更改文件所有者和用户组"><span class="nav-number">9.4.</span> <span class="nav-text">chown 更改文件所有者和用户组</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#更改用户密码"><span class="nav-number">9.5.</span> <span class="nav-text">更改用户密码</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#References"><span class="nav-number">10.</span> <span class="nav-text">References</span></a></li></ol></div>
             
 
           </div>
@@ -1164,7 +1263,7 @@ var jiathis_config={
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">46.6k</span>
+    <span title="Site words total count">47.4k</span>
   
 </div>
 
