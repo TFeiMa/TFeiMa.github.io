@@ -100,7 +100,7 @@
 <meta property="og:site_name" content="phi的博客">
 <meta property="og:description" content="本文详细介绍了GBDT的提出背景以及推导过程，详细说明了对于不同的损失函数，每一步迭代的回归树究竟在拟合什么。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-07-17T12:59:10.000Z">
+<meta property="og:updated_time" content="2019-03-09T09:33:41.979Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="GBDT(Gradient Boosting Decision Tree)">
 <meta name="twitter:description" content="本文详细介绍了GBDT的提出背景以及推导过程，详细说明了对于不同的损失函数，每一步迭代的回归树究竟在拟合什么。">
@@ -420,10 +420,10 @@
       
 
       
-        <p>[toc]</p>
+        <p>[TOC]</p>
 <h1 id="GBDT"><a href="#GBDT" class="headerlink" title="GBDT"></a>GBDT</h1><h2 id="GBDT的提出"><a href="#GBDT的提出" class="headerlink" title="GBDT的提出"></a>GBDT的提出</h2><h3 id="什么是GBDT？"><a href="#什么是GBDT？" class="headerlink" title="什么是GBDT？"></a>什么是GBDT？</h3><p>&emsp;&emsp;这里讲GBDT其实是GBM（Gradient Boosting Machine）基学习器使用回归树时的一种具体实现形式,简单来讲，GBDT与上一节讲的<a href="https://tfeima.github.io/2018/07/04/adaboost/">AdaBoost</a>类似，它也是一种前向分步加性模型，假设它要学习M个学习器，那么在第$m$次迭代的时候，第m个学习器的学习要经过前$m-1$个学习器的指导，并且每个学习器有一个对应的权重，最后加权相乘求和就是最后要求解的模型:<br>$$<br>\hat{f}(x) = \sum_{m=1}^M \beta_mG_m(x).<br>$$<br>$\hat{f}(x)\text{是完美函数}f(x)$在数据集上的近似。</p>
 <h3 id="为什么要提出GBDT"><a href="#为什么要提出GBDT" class="headerlink" title="为什么要提出GBDT?"></a>为什么要提出GBDT?</h3><p>&emsp;&emsp;为了求出$\beta_m$和$G_m(x)$，一般情况下我们需要给出一个用来度量$\hat{f}(x)$在数据集上的表现、拟合情况，也就是所谓的损失函数。我们知道AdaBoost在样本集上极小化指数损失函数来求得权重$\beta_m$和$G_m(x)$，在上一节的讨论中，我们发现指数损失函数有时候鲁棒性没有那么好，对于不同的数据集，我们可能有尝试其他损失函数的需求，比如说对率损失，在做回归任务的时候也需要不同的损失函数。回顾<a href="https://tfeima.github.io/2018/07/04/adaboost/">AdaBoost</a>，在每一步迭代的时候，指数损失很自然地把前$m-1$次的结果作为了样本的权重。对于一般的损失函数，我们得到下面优化目标：<br>\begin{equation}<br>\begin{array}{c l}<br>\min &amp; \sum_{i=1}^n L(y_i,f_{m-1}(x_i)+\beta_mG_m(x_i))<br>\end{array}<br>\end{equation}<br>在回归任务中，当损失函数为平方损失时，也是比较容易优化的，因为使用平方损失函数，上式就变为<br>\begin{equation}<br>\begin{array}{c l}<br>\min &amp; \sum_{i=1}^n \left(\left(y_i-f_{m-1}(x_i)\right)-\beta_mG_m(x_i))\right)^2\<br>\end{array}<br>\end{equation}<br>实际上是在拟合前$m-1$次的结果与真实因变量的残差。</p>
-<h2 id="算法流程和推导"><a href="#算法流程和推导" class="headerlink" title="算法流程和推导"></a>算法流程和推导</h2><h3 id="从函数空间的角度去优化-f-x"><a href="#从函数空间的角度去优化-f-x" class="headerlink" title="从函数空间的角度去优化$f(x)$"></a>从函数空间的角度去优化$f(x)$</h3><p>&emsp;&emsp;假设我们要优化如下目标函数<br>$$L(f)$$<br>对于这样一个无约束的优化问题，使用梯度下降法来求最优解，$f_0$为初始点，那么得到如下迭代序列：<br>$$f_m = f_{m-1} - \rho_m g_m，$$<br>其中<br>\begin{equation}<br>g_m = \frac{\partial L(f)}{\partial f}\Big|_ { f = f_ {m-1}}<br>\end{equation}<br>$\rho_m $由线搜索得到：<br>$$\rho_m = \arg \min_{\rho} L(f_{m-1} - \rho g_m)$$<br>最终得到<br>\begin{equation}<br>\begin{array}{c l}<br>f_m &amp; = f_{m-1} - \rho_m g_m \<br>    &amp; = f_{m-2} - \rho_{m-1}g_{m-1} - \rho_{m}g_m \<br>    &amp; \cdots \<br>    &amp; = f_0 + \sum_{i=1}^m -\rho_i g_i<br>\end{array}<br>\end{equation}</p>
+<h2 id="算法流程和推导"><a href="#算法流程和推导" class="headerlink" title="算法流程和推导"></a>算法流程和推导</h2><h3 id="从函数空间的角度去优化-f-x"><a href="#从函数空间的角度去优化-f-x" class="headerlink" title="从函数空间的角度去优化$f(x)$"></a>从函数空间的角度去优化$f(x)$</h3><p>&emsp;&emsp;假设我们要优化如下目标函数<br>$$L(f)$$<br>对于这样一个无约束的优化问题，使用梯度下降法来求最优解，$f_0$为初始点，那么得到如下迭代序列：<br>$$f_m = f_{m-1} - \rho_m g_m，$$<br>其中<br>\begin{equation}<br>g_m = \frac{\partial L(f)}{\partial f}\Big|_ { f = f_ {m-1}}<br>\end{equation}<br>$\rho_m $由线搜索得到：<br>$$\rho_m = \arg \min_{\rho} L(f_{m-1} - \rho g_m)$$<br>最终得到<br>$$<br>\begin{array}{c l}<br>f_m &amp; = f_{m-1} - \rho_m g_m \<br>    &amp; = f_{m-2} - \rho_{m-1}g_{m-1} - \rho_{m}g_m \<br>    &amp; \cdots \<br>    &amp; = f_0 + \sum_{i=1}^m -\rho_i g_i<br>\end{array}<br>$$</p>
 <blockquote>
 <p><strong>分析</strong></p>
 <ol>
@@ -624,7 +624,7 @@ var jiathis_config={
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-count">24</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -635,7 +635,7 @@ var jiathis_config={
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-count">5</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -713,7 +713,7 @@ var jiathis_config={
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">47.4k</span>
+    <span title="Site words total count">48.6k</span>
   
 </div>
 

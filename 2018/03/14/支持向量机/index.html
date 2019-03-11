@@ -100,7 +100,7 @@
 <meta property="og:site_name" content="phi的博客">
 <meta property="og:description" content="本文介绍了支持向量机的推导过程、对偶问题和核函数以及 soft margin SVM">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-07-25T06:02:50.000Z">
+<meta property="og:updated_time" content="2019-03-09T09:31:32.779Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="支持向量机">
 <meta name="twitter:description" content="本文介绍了支持向量机的推导过程、对偶问题和核函数以及 soft margin SVM">
@@ -449,7 +449,7 @@
 <p><strong>预测样本x：</strong><br>$$w^Tx+b \quad VS \quad \sum_{i=1}^m \lambda_iy_iK(x_i,x)$$<br>若内积运算需要 $O(n)$，那么线性与核SVM的时间花费分别为$$O(n)\text{和}O(mn)$$</p>
 </blockquote>
 <!-- >**选择函数数的方法:**                         假设样本的特征为n,数据量为m，n相对于m较大时，可先尝试线性核；n-->
-<h2 id="软间隔支持向量机-soft-margin"><a href="#软间隔支持向量机-soft-margin" class="headerlink" title="软间隔支持向量机(soft margin)"></a>软间隔支持向量机(soft margin)</h2><p>硬间隔支持向量机很容易造成过拟合，原因就是，我们在推导的时候，约束条件不能容忍一个样本出错，很容易受outlier的影响。于是，引入软间隔，意思是说，我可以容忍部分样本分类出错，但是也不能出错太多。在这种假设下优化目标变为：<br>$$<br>\min \frac{| w |^2}{2} + C\sum_{i=1}^m \max\lbrace 0,1-y_i(w^Tx_i + b)\rbrace<br>$$<br>令 $ \xi_i = max\lbrace 0,1-y_i(w^Tx_i + b)\rbrace$,则 $ \xi_i \geq 1-y_i(w^Tx_i + b), \xi_i \geq 0$,上式可转化成等价形式<br>$$<br>\min \frac{| w |^2}{2} + C\sum_{i=1}^m \xi_i<br>\<br>subject\quad to \quad<br>\xi_i \geq 1-y_i(w^Tx_i + b),<br>\<br>\xi_i \geq 0.\quad i=1,2,\cdots,m<br>$$<br>$ \xi$可以看作一个松弛变量。软间隔支持向量机的对偶问题和核方法与硬间隔基本一致，但由于出现了松弛变量，使得软间隔的对偶问题变为：<br>\begin{equation}<br>\begin{array}{c,l}<br>\max \quad &amp; g(\lambda) = -\frac{1}{2} \sum_i^m \sum_j^m \lambda_i \lambda_j y_i y_j x_i^T x_j + \sum_i^m \lambda_i<br>\<br>subject \quad to &amp; \quad 0 \leq \lambda_i \leq C<br>\<br>&amp; \sum_i^m \lambda_iy_i = 0\quad i = 1,2,\cdots,m<br>\end{array}<br>\end{equation}<br>与硬间隔支持向量机相比，软间隔的对偶问题只是对Lagrange乘子加个了个约束，有一个上界。</p>
+<h2 id="软间隔支持向量机-soft-margin"><a href="#软间隔支持向量机-soft-margin" class="headerlink" title="软间隔支持向量机(soft margin)"></a>软间隔支持向量机(soft margin)</h2><p>硬间隔支持向量机很容易造成过拟合，原因就是，我们在推导的时候，约束条件不能容忍一个样本出错，很容易受outlier的影响。于是，引入软间隔，意思是说，我可以容忍部分样本分类出错，但是也不能出错太多。在这种假设下优化目标变为：<br>$$<br>\min \frac{| w |^2}{2} + C\sum_{i=1}^m \max\lbrace 0,1-y_i(w^Tx_i + b)\rbrace<br>$$<br>令 $ \xi_i = max\lbrace 0,1-y_i(w^Tx_i + b)\rbrace$,则 $ \xi_i \geq 1-y_i(w^Tx_i + b), \xi_i \geq 0$,上式可转化成等价形式<br>$$<br>\min \frac{| w |^2}{2} + C\sum_{i=1}^m \xi_i<br>\<br>subject\quad to \quad<br>\xi_i \geq 1-y_i(w^Tx_i + b),<br>\<br>\xi_i \geq 0.\quad i=1,2,\cdots,m<br>$$<br>$ \xi$可以看作一个松弛变量。软间隔支持向量机的对偶问题和核方法与硬间隔基本一致，但由于出现了松弛变量，使得软间隔的对偶问题变为：<br>$$<br>\begin{array}{c,l}<br>\max \quad &amp; g(\lambda) = -\frac{1}{2} \sum_i^m \sum_j^m \lambda_i \lambda_j y_i y_j x_i^T x_j + \sum_i^m \lambda_i<br>\<br>subject \quad to &amp; \quad 0 \leq \lambda_i \leq C<br>\<br>&amp; \sum_i^m \lambda_iy_i = 0\quad i = 1,2,\cdots,m<br>\end{array}<br>$$<br>与硬间隔支持向量机相比，软间隔的对偶问题只是对Lagrange乘子加个了个约束，有一个上界。</p>
 <h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><p>[1]  周志华，机器学习<br>[2] <a href="http://www.csie.ntu.edu.tw/~cjlin/talks/msri.pdf" target="_blank" rel="noopener">Large-scale Linear and Kernel Classification</a></p>
 
       
@@ -618,7 +618,7 @@ var jiathis_config={
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-count">24</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -629,7 +629,7 @@ var jiathis_config={
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-count">5</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -707,7 +707,7 @@ var jiathis_config={
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">47.4k</span>
+    <span title="Site words total count">48.6k</span>
   
 </div>
 
