@@ -100,17 +100,17 @@
 <meta property="og:site_name" content="phi的博客">
 <meta property="og:description" content="构造特征、特征之间的组合往往是推荐系统成功的关键，而人工构造特征是一件费时费力的事情，所以已经有一些模型用来构造特征之间的交叉组合，比如FM模型可以学习到二阶交叉特征，基于DNN的模型能够学到更高阶的特征，而DeepFM和Wide&amp;Deep等模型同时利用低阶和高阶特征，所以这篇论文的目标也是希望能够同时学习低阶和高阶的特征而不需要太多地人工构造特征。这篇论文提出了一种新的网络结构---CIN（Co">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://tfeima.github.io/2019/03/08/xDeepFM/Users/ma/Documents/blog/source/_posts/xDeepFM/cat_onehot.png">
-<meta property="og:image" content="http://tfeima.github.io/2019/03/08/xDeepFM/Users/ma/Documents/blog/source/_posts/xDeepFM/embedding.png">
-<meta property="og:image" content="http://tfeima.github.io/2019/03/08/xDeepFM/Users/ma/Documents/blog/source/_posts/xDeepFM/deepFM&pnn.png">
-<meta property="og:image" content="http://tfeima.github.io/2019/03/08/xDeepFM/Users/ma/Documents/blog/source/_posts/xDeepFM/crossNet.png">
-<meta property="og:image" content="http://tfeima.github.io/2019/03/08/xDeepFM/Users/ma/Documents/blog/source/_posts/xDeepFM/CIN.png">
-<meta property="og:image" content="http://tfeima.github.io/2019/03/08/xDeepFM/Users/ma/Documents/blog/source/_posts/xDeepFM/xdeepfm.png">
-<meta property="og:updated_time" content="2019-03-11T07:21:07.612Z">
+<meta property="og:image" content="http://tfeima.github.io/Users/ma/Documents/blog/source/_posts/xDeepFM/cat_onehot.png">
+<meta property="og:image" content="http://tfeima.github.io/Users/ma/Documents/blog/source/_posts/xDeepFM/embedding.png">
+<meta property="og:image" content="http://tfeima.github.io/Users/ma/Documents/blog/source/_posts/xDeepFM/deepFM&pnn.png">
+<meta property="og:image" content="http://tfeima.github.io/Users/ma/Documents/blog/source/_posts/xDeepFM/crossNet.png">
+<meta property="og:image" content="http://tfeima.github.io/Users/ma/Documents/blog/source/_posts/xDeepFM/CIN.png">
+<meta property="og:image" content="http://tfeima.github.io/Users/ma/Documents/blog/source/_posts/xDeepFM/xdeepfm.png">
+<meta property="og:updated_time" content="2019-03-11T08:09:03.511Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="xDeepFM--Combining Explicit and Implicit Feature Interactions for Recommender Systems阅读笔记">
 <meta name="twitter:description" content="构造特征、特征之间的组合往往是推荐系统成功的关键，而人工构造特征是一件费时费力的事情，所以已经有一些模型用来构造特征之间的交叉组合，比如FM模型可以学习到二阶交叉特征，基于DNN的模型能够学到更高阶的特征，而DeepFM和Wide&amp;Deep等模型同时利用低阶和高阶特征，所以这篇论文的目标也是希望能够同时学习低阶和高阶的特征而不需要太多地人工构造特征。这篇论文提出了一种新的网络结构---CIN（Co">
-<meta name="twitter:image" content="http://tfeima.github.io/2019/03/08/xDeepFM/Users/ma/Documents/blog/source/_posts/xDeepFM/cat_onehot.png">
+<meta name="twitter:image" content="http://tfeima.github.io/Users/ma/Documents/blog/source/_posts/xDeepFM/cat_onehot.png">
 
 
 
@@ -428,12 +428,12 @@
 
       
         <h1 id="预备知识"><a href="#预备知识" class="headerlink" title="预备知识"></a>预备知识</h1><h2 id="嵌入层"><a href="#嵌入层" class="headerlink" title="嵌入层"></a>嵌入层</h2><p>​    一般我们会对离散特征进行热编码，比如论文中给的例子：</p>
-<p><img src="/2019/03/08/xDeepFM/Users/ma/Documents/blog/source/_posts/xDeepFM/cat_onehot.png" alt="cat_onehot"></p>
+<p><img src="/Users/ma/Documents/blog/source/_posts/xDeepFM/cat_onehot.png" alt="cat_onehot"></p>
 <p>使用FM可以为每一个特征（热编码后的）学习一个隐向量（假设每个隐向量都固定维度D），因为一个field（热编码前的特征）包含多个编码，所以每一个field就包含多个隐向量。对于一个样本，每一个field只有一个或几个隐向量出现，即热编码后特征为1的特征的隐向量，若field中只有一个隐向量出现，那么这个特征的隐向量就作为field的隐向量，若有多个隐向量出现，多个隐向量的和作为field的隐向量。</p>
-<p><img src="/2019/03/08/xDeepFM/Users/ma/Documents/blog/source/_posts/xDeepFM/embedding.png" alt="embedding"></p>
+<p><img src="/Users/ma/Documents/blog/source/_posts/xDeepFM/embedding.png" alt="embedding"></p>
 <h2 id="隐式高阶交叉特征"><a href="#隐式高阶交叉特征" class="headerlink" title="隐式高阶交叉特征"></a>隐式高阶交叉特征</h2><p>​    由DNN学习到的特征就叫做隐式的高阶交叉特征（Implicit High-order Interactions），如下图，DeepFM和PNN的结构画在了一起，两者都可以学习到低阶特征和隐式的高阶特征，但他俩的区别在于DeepFM是用FM层学习低阶交叉特征，PNN用product层学习低阶交叉特征。</p>
-<p><img src="/2019/03/08/xDeepFM/Users/ma/Documents/blog/source/_posts/xDeepFM/deepFM&amp;pnn.png" alt="deepFM&amp;pnn"></p>
-<h2 id="显式高阶交叉特征"><a href="#显式高阶交叉特征" class="headerlink" title="显式高阶交叉特征"></a>显式高阶交叉特征</h2><p>​    CrossNet能够学习到显式高阶交叉特征（Explicit High-order Interactions），它的网络结构如下图，<img src="/2019/03/08/xDeepFM/Users/ma/Documents/blog/source/_posts/xDeepFM/crossNet.png" alt="crossNet"></p>
+<p><img src="/Users/ma/Documents/blog/source/_posts/xDeepFM/deepFM&amp;pnn.png" alt="deepFM&amp;pnn"></p>
+<h2 id="显式高阶交叉特征"><a href="#显式高阶交叉特征" class="headerlink" title="显式高阶交叉特征"></a>显式高阶交叉特征</h2><p>​    CrossNet能够学习到显式高阶交叉特征（Explicit High-order Interactions），它的网络结构如下图，<img src="/Users/ma/Documents/blog/source/_posts/xDeepFM/crossNet.png" alt="crossNet"></p>
 <p>网络之间的传播公式为</p>
 <p>$$x_k = x_0x_{k-1}^Tw_k + b_k + x_{k-1}$$</p>
 <p>本文提出的CIN的结构就借鉴了CrossNet的网络结构。</p>
@@ -443,22 +443,22 @@
 <li>显式的高阶特征交互</li>
 <li>网络的复杂度不能随着交叉的阶数指数增长</li>
 </ol>
-<p>CIN的网络结构可以种下列三个图解释：<img src="/2019/03/08/xDeepFM/Users/ma/Documents/blog/source/_posts/xDeepFM/CIN.png" alt="CIN"></p>
-<p>​    如（c）图所示，网络的输入为field的嵌入，并且用矩阵$X^0 \in R^{m\times D}$表示，其中m表示field的个数，D表示嵌入的维度，它的第i行即为第i个field的嵌入。网络的输出用$X^k \in R^{H_k\times D}$表示，$H_k$表示第k层特征向量的个数。网络之间的传播公式为</p>
-<p>$$X_{h,<em>}^k = \sum_{i=1}^{H_{k-1}} \sum_{j=1}^m W_{i,j}^{k,h}(X_{i,</em>}^{k-1}\circ X_{j,*}^{0})$$</p>
-<p>$\circ$的定义为$(a,b,c)\circ(x,y,z)=(ax,by,cz)$。由于下一个隐藏层的输出依赖于上一个隐藏层的输入，所以CIN的结构与RNN非常类似。</p>
-<p>​    从上面的传播公式还能够看出CIN还有类似CNN的结构，如上图（a）所示，$x^k​$的一列（$H_k=3​$维）与$x^0​$的一列（$m=4​$维）作用可以生成一个$3<em>4​$的矩形，总共有D列，所以最终生成了D个这样的矩形，也就是一个$H_k</em>m<em>D​$维的tensor，所生成到每个矩阵的权重矩阵$W^{k,h}​$可以视作一个滤波器，最终如图（b）所示，每个生成的$H_k </em>m​$矩阵映射为一个$H_{k+1}​$维向量。</p>
+<p>CIN的网络结构可以种下列三个图解释：<img src="/Users/ma/Documents/blog/source/_posts/xDeepFM/CIN.png" alt="CIN"></p>
+<p>​    如（c）图所示，网络的输入为field的嵌入，并且用矩阵$X^0 \in R^{m\times D}​$表示，其中m表示field的个数，D表示嵌入的维度，它的第i行即为第i个field的嵌入。网络的输出用$X^k \in R^{H_k\times D}​$表示，$H_k​$表示第k层特征向量的个数。网络之间的传播公式为</p>
+<p>$$<br>X_{h,\ast}^k = \sum_{i=1}^{H_{k-1}} \sum_{j=1}^m W_{i,j}^{k,h}(X_{i,\ast}^{k-1}\circ X_{j,\ast}^{0})<br>$$</p>
+<p>$\circ​$的定义为$(a,b,c)\circ(x,y,z)=(ax,by,cz)​$。由于下一个隐藏层的输出依赖于上一个隐藏层的输入，所以CIN的结构与RNN非常类似。</p>
+<p>​    从上面的传播公式还能够看出CIN还有类似CNN的结构，如上图（a）所示，$x^k​$的一列（$H_k=3​$维）与$x^0​$的一列（$m=4​$维）作用可以生成一个$3*4​$的矩形，总共有D列，所以最终生成了D个这样的矩形，也就是一个$H_k \times m \times D​$维的tensor，所生成到每个矩阵的权重矩阵$W^{k,h}​$可以视作一个滤波器，最终如图（b）所示，每个生成的 $H_k \times m​$ 矩阵映射为一个 $H_{k+1}​$ 维向量。</p>
 <p>​    假设CIN有T个隐藏层，每个隐藏层的$X^k$的行向量都做一个sum pooling：</p>
 <p>$$p_i^k = \sum_{j=1}^DX^k_{i,j}$$,最终能够得到一个pooling后的向量，$p^k = [p^k_1,\cdots,p^k_{H_k}]$,正如图（c）的输出层所示，T个这样的隐藏层的输出单元即为$p^+ = [p^1,\cdots,p^T]$.如果使用CIN直接只用作二分类，则输出单元可以为</p>
-<p>$y = \frac{1}{1+\exp(p^+Tw^o)}$.</p>
-<h2 id="CIN分析"><a href="#CIN分析" class="headerlink" title="CIN分析"></a>CIN分析</h2><h3 id="空间复杂度"><a href="#空间复杂度" class="headerlink" title="空间复杂度"></a>空间复杂度</h3><p>CIN共包含$\sum_{k=1}^T H_k <em> H_{k-1} </em> m + \sum_{k=1}^T H_k$个参数</p>
+<p>$$<br>y = \frac{1}{1+\exp(p^+Tw^o)}<br>$$</p>
+<h2 id="CIN分析"><a href="#CIN分析" class="headerlink" title="CIN分析"></a>CIN分析</h2><h3 id="空间复杂度"><a href="#空间复杂度" class="headerlink" title="空间复杂度"></a>空间复杂度</h3><p>CIN共包含$\sum_{k=1}^T H_k \times H_{k-1} \times m + \sum_{k=1}^T H_k$个参数</p>
 <h3 id="时间复杂度"><a href="#时间复杂度" class="headerlink" title="时间复杂度"></a>时间复杂度</h3><p>$O(mHD+H^2T)$</p>
 <h3 id="多项式近似"><a href="#多项式近似" class="headerlink" title="多项式近似"></a>多项式近似</h3><p>​    假设每一层特征映射的维度都为m。第一层第h个特征映射：</p>
 <p>$$x^1_h = \sum_{i,j}^m W_{i,j}^{1,h}(x_i^0\circ x_j^0),​$$</p>
 <p>可以看出这是一个二阶特征交叉。第二层的第h个特征映射为：<br>$$<br>\begin{array}{c l}<br>x^2_h &amp;= \sum_{i,j}^m W_{i,j}^{2,h}(x_i^1\circ x_j^0),\<br>      &amp;= \sum_{i,j}^m \sum_{l,k}^m W_{i,j}^{2,h}W_{l,k}^{1,i}(x_l^0 \circ x_k^0 \circ x_j^0)<br>\end{array}<br>$$</p>
 <p>容易看出这是输入特征的3阶特征交互。能够推出第k层的特征为输入特征的k+1阶特征交互，这也叫做CIN的显示高阶特征交互的特性。</p>
-<h2 id="与隐式网络的组合"><a href="#与隐式网络的组合" class="headerlink" title="与隐式网络的组合"></a>与隐式网络的组合</h2><p>​    DNN能够学习出隐式高阶特征，所以DNN与CIN再加上线性模型就一起构成了xDeepFM，如下图所示即为xDeepFM的结构。<br><img src="/2019/03/08/xDeepFM/Users/ma/Documents/blog/source/_posts/xDeepFM/xdeepfm.png" alt="xdeepfm"></p>
-<p>整个xDeepFM的输出单元为<br>$$<br>\hat{y}=\sigma(w_{linear}^Ta + w_{dnn}^Tx_{dnn}^k+w_{cin}^Tp^+ + b)<br>$$<br>损失函数为<br>$$<br>L = -\frac{1}{N}\sum_{i=1}^N {y_i \log\hat{y}_i + (1-y_i) \log(1-\hat{y}<em>i)}+\lambda</em>{*}|\Theta |<br>$$<br>后面一项为正则项。</p>
+<h2 id="与隐式网络的组合"><a href="#与隐式网络的组合" class="headerlink" title="与隐式网络的组合"></a>与隐式网络的组合</h2><p>​    DNN能够学习出隐式高阶特征，所以DNN与CIN再加上线性模型就一起构成了xDeepFM，如下图所示即为xDeepFM的结构。<br><img src="/Users/ma/Documents/blog/source/_posts/xDeepFM/xdeepfm.png" alt="xdeepfm"></p>
+<p>整个xDeepFM的输出单元为<br>$$<br>\hat{y}=\sigma(w_{linear}^Ta + w_{dnn}^Tx_{dnn}^k+w_{cin}^Tp^+ + b)<br>$$<br>损失函数为<br>$$<br>L = -\frac{1}{N}\sum_{i=1}^N {y_i \log\hat{y}_i + (1-y_i) \log(1-\hat{y}<em>i)}+\lambda</em>{\ast}|\Theta |<br>$$<br>后面一项为正则项。</p>
 
       
     </div>
