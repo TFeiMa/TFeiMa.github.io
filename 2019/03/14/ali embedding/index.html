@@ -104,7 +104,7 @@
 <meta property="og:image" content="http://tfeima.github.io/2019/03/14/ali%20embedding/skip%20context.png">
 <meta property="og:image" content="http://tfeima.github.io/2019/03/14/ali%20embedding/join%20embedding.png">
 <meta property="og:image" content="http://tfeima.github.io/2019/03/14/ali%20embedding/trans%20domanin.png">
-<meta property="og:updated_time" content="2019-03-19T07:01:14.678Z">
+<meta property="og:updated_time" content="2019-03-19T07:09:35.970Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Learning and Transferring IDs Representation in E-commerce阅读笔记">
 <meta name="twitter:description" content="在机器智能技术中，ID类特征的表示是非常重要的一部分，经典的编码方法，比如onehot编码，经常是无效的，因为它带来了高维稀疏问题，并且这种编码方式不能反映出ID类特征之间的关系。这篇论文提出一种基于嵌入的学习和迁移编码表示的框架。">
@@ -441,7 +441,7 @@
 <h2 id="IDs-以及他们他们之间的结构连接"><a href="#IDs-以及他们他们之间的结构连接" class="headerlink" title="IDs 以及他们他们之间的结构连接"></a>IDs 以及他们他们之间的结构连接</h2><h3 id="Item-ID-以及它的属性IDs"><a href="#Item-ID-以及它的属性IDs" class="headerlink" title="Item ID 以及它的属性IDs"></a>Item ID 以及它的属性IDs</h3><p>item是交互的核心单位，它有许多属性id，包括<code>product id</code>,<code>store id</code>,<code>brand id</code>,<code>category id</code>等。</p>
 <h3 id="User-ID"><a href="#User-ID" class="headerlink" title="User ID"></a>User ID</h3><h2 id="属性IDs的联合嵌入"><a href="#属性IDs的联合嵌入" class="headerlink" title="属性IDs的联合嵌入"></a>属性IDs的联合嵌入</h2><p>论文提出了一个层次化的嵌入模型，去联合学习item ID以及它们的属性ID之间的低维表示，如下图</p>
 <p><img src="/2019/03/14/ali embedding/join embedding.png" alt="join embedding"></p>
-<p>假设K类IDs，令$IDs(item_i) = [id_1{item_i},\cdots,id_K(item_i)]$,那么可以得到<br>$$<br>p(IDs(item_j) | IDs(item_i)) \<br>= \sigma \big(\sum_{k=1}^K (w_{jk}e^{‘}<em>{jk})^T(w</em>{ik}e_{ik})\big) \Pi_{s=1}^S\sigma \big(-\sum_{k=1}^K (w_{sk}e^{‘}<em>{sk})^T(w</em>{ik}e_{ik})\big)<br>$$<br>其中$w_{ik}$为$id_k(item_i)$的权重，计算方法为：<br>$$<br>w_{ik} = \frac{1}{\sum_{j=1}^D I(id_k(item_i) = id_k(item_j))}<br>$$</p>
+<p>假设K类IDs，令$IDs(item_i) = [id_1{item_i},\cdots,id_K(item_i)]$,那么可以得到<br>$$<br>\begin{align}<br>&amp;p(IDs(item_j) | IDs(item_i)) \<br>=&amp; \sigma \big(\sum_{k=1}^K (w_{jk}e^{‘}<em>{jk})^T(w</em>{ik}e_{ik})\big) \Pi_{s=1}^S\sigma \big(-\sum_{k=1}^K (w_{sk}e^{‘}<em>{sk})^T(w</em>{ik}e_{ik})\big)<br>\end{align}<br>$$<br>其中$w_{ik}$为$id_k(item_i)$的权重，计算方法为：<br>$$<br>w_{ik} = \frac{1}{\sum_{j=1}^D I(id_k(item_i) = id_k(item_j))}<br>$$</p>
 <p>定义<br>$$<br>p(item_i|ID(item_i)) = \sigma \big( \sum_{k=2}^K w_{ik}e^T_{i1} M_k e_{ik} \big),<br>$$<br>其中$M_k \in R^{m_1 \times m_k}(k=2\cdots K)$是为了使$e_{i1}$变换到$e_{ik}$相同维度的矩阵。然后最大化<br>$$<br>J = \frac{1}{N} \sum_{n=1}^N \big( \sum_{-C\leq j \leq C}^{1 \leq n+j \leq N,j\neq 0} \log p(IDs(item_{n+j})| IDs(item_n)) + \alpha \log p(item_n| IDs(item_n)) - \beta \sum_{k=1}^K \Vert M_k \Vert_2 \big)<br>$$<br>这种方法将Item ID 和属性ID 嵌入到一个同语义空间。</p>
 <h2 id="嵌入用户ID"><a href="#嵌入用户ID" class="headerlink" title="嵌入用户ID"></a>嵌入用户ID</h2><p>使用简单平均法：<br>$$<br>Embedding(u) = \frac{1}{T} \sum_{t=1}^T e_t<br>$$<br>$e_t$是$item_t$的嵌入向量。</p>
 <h1 id="利用ID的表示"><a href="#利用ID的表示" class="headerlink" title="利用ID的表示"></a>利用ID的表示</h1><h2 id="item相似性度量"><a href="#item相似性度量" class="headerlink" title="item相似性度量"></a>item相似性度量</h2><p>$$<br>sim(item_i,item_j) = cos(v_i,v_j) = \frac{v_i^Tv_j}{\Vert v_i \Vert_2\Vert v_j \Vert_2}<br>$$</p>
