@@ -81,7 +81,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT">
+  <meta name="keywords" content="数据挖掘,推荐系统,">
 
 
 
@@ -92,13 +92,23 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="phi的博客">
-<meta property="og:url" content="http://TFeiMa.github.io/archives/2018/06/index.html">
+<meta name="description" content="在机器智能技术中，ID类特征的表示是非常重要的一部分，经典的编码方法，比如onehot编码，经常是无效的，因为它带来了高维稀疏问题，并且这种编码方式不能反映出ID类特征之间的关系。这篇论文提出一种基于嵌入的学习和迁移编码表示的框架。">
+<meta name="keywords" content="数据挖掘,推荐系统">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Learning and Transferring IDs Representation in E-commerce阅读笔记">
+<meta property="og:url" content="http://TFeiMa.github.io/2019/03/14/ali embedding/index.html">
 <meta property="og:site_name" content="phi的博客">
+<meta property="og:description" content="在机器智能技术中，ID类特征的表示是非常重要的一部分，经典的编码方法，比如onehot编码，经常是无效的，因为它带来了高维稀疏问题，并且这种编码方式不能反映出ID类特征之间的关系。这篇论文提出一种基于嵌入的学习和迁移编码表示的框架。">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://tfeima.github.io/2019/03/14/ali%20embedding/conected.png">
+<meta property="og:image" content="http://tfeima.github.io/2019/03/14/ali%20embedding/skip%20context.png">
+<meta property="og:image" content="http://tfeima.github.io/2019/03/14/ali%20embedding/join%20embedding.png">
+<meta property="og:image" content="http://tfeima.github.io/2019/03/14/ali%20embedding/trans%20domanin.png">
+<meta property="og:updated_time" content="2019-03-19T07:01:14.678Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="phi的博客">
+<meta name="twitter:title" content="Learning and Transferring IDs Representation in E-commerce阅读笔记">
+<meta name="twitter:description" content="在机器智能技术中，ID类特征的表示是非常重要的一部分，经典的编码方法，比如onehot编码，经常是无效的，因为它带来了高维稀疏问题，并且这种编码方式不能反映出ID类特征之间的关系。这篇论文提出一种基于嵌入的学习和迁移编码表示的框架。">
+<meta name="twitter:image" content="http://tfeima.github.io/2019/03/14/ali%20embedding/conected.png">
 
 
 
@@ -128,13 +138,13 @@
 
 
 
-  <link rel="canonical" href="http://TFeiMa.github.io/archives/2018/06/">
+  <link rel="canonical" href="http://TFeiMa.github.io/2019/03/14/ali embedding/">
 
 
 
 
 
-  <title>归档 | phi的博客</title>
+  <title>Learning and Transferring IDs Representation in E-commerce阅读笔记 | phi的博客</title>
   
 
 
@@ -153,7 +163,7 @@
     
   
 
-  <div class="container sidebar-position-left page-archive">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 	<a href="https://github.com/TFeiMa"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"></a>
     <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
@@ -289,142 +299,269 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block archive">
-    <div id="posts" class="posts-collapse">
-      <span class="archive-move-on"></span>
+  <div id="posts" class="posts-expand">
+    
 
-      <span class="archive-page-counter">
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://TFeiMa.github.io/2019/03/14/ali embedding/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="phi">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/me.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="phi的博客">
+    </span>
+
+    
+      <header class="post-header">
+
         
         
+          <h1 class="post-title" itemprop="name headline">Learning and Transferring IDs Representation in E-commerce阅读笔记</h1>
         
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-14T00:00:00+08:00">
+                2019-03-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
           
-        
-        嗯..! 目前共计 25 篇日志。 继续努力。
-      </span>
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/论文阅读/" itemprop="url" rel="index">
+                    <span itemprop="name">论文阅读</span>
+                  </a>
+                </span>
 
-      
-
-        
-        
-        
-
-        
+                
+                
+              
+            </span>
           
-          <div class="collection-title">
-            <h1 class="archive-year" id="archive-year-2018">2018</h1>
-          </div>
-        
-        
 
-        
+          
+            
+          
 
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
+          
+          
 
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/06/28/svm-vs-lr/" itemprop="url">
+          
+
+          
+            <div class="post-wordcount">
               
-                <span itemprop="name">支持向量机 vs 逻辑回归</span>
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1.5k
+                </span>
               
-            </a>
-        
-      </h2>
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2018-06-28T09:12:53+08:00" content="2018-06-28">
-          06-28
-        </time>
-      </div>
+              
 
-    </header>
-  </article>
+              
+            </div>
+          
 
+          
+              <div class="post-description">
+                  在机器智能技术中，ID类特征的表示是非常重要的一部分，经典的编码方法，比如onehot编码，经常是无效的，因为它带来了高维稀疏问题，并且这种编码方式不能反映出ID类特征之间的关系。这篇论文提出一种基于嵌入的学习和迁移编码表示的框架。
+              </div>
+          
 
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/06/26/ldrq/" itemprop="url">
-              
-                <span itemprop="name">分式二次规划问题的线性时间算法</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2018-06-26T09:22:36+08:00" content="2018-06-26">
-          06-26
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
       
 
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/06/20/算法刷题总结/" itemprop="url">
-              
-                <span itemprop="name">算法刷题总结（Python实现）</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2018-06-20T19:49:29+08:00" content="2018-06-20">
-          06-20
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
+      
+        <p>除了用户的隐式反馈，论文还考虑了不同ID类特征之间的连接结构，通过这些连接，在ItemID序列中的信息可以传播到其它类型的ID特征，并且可以同时学习这些ID特征的表示，如下图</p>
+<p><img src="/2019/03/14/ali embedding/conected.png" alt="conected"></p>
+<h1 id="hema-的推荐框架"><a href="#hema-的推荐框架" class="headerlink" title="hema 的推荐框架"></a>hema 的推荐框架</h1><p>这篇论文是应用在盒马鲜生这个APP中的，在这个APP中，推荐的过程主要分为4个过程：</p>
+<ol>
+<li><strong>准备阶段：</strong>离线计算出user-to-trigger和trigger-to-item的评分，并且把结果存储在数据库中。</li>
+<li><strong>匹配：</strong>首先根据用户的ID取出他们的<code>triggers</code>，然后基于这些<code>triggers</code>产生一些<code>items</code>的推荐候选集。</li>
+<li><strong>筛选：</strong>移除无效和重复的<code>items</code>.</li>
+<li><strong>排序：</strong>综合一些评分指标，给这些筛选后的<code>items</code>排序。</li>
+</ol>
+<h1 id="学习IDs的表示"><a href="#学习IDs的表示" class="headerlink" title="学习IDs的表示"></a>学习IDs的表示</h1><h2 id="用户交互序列的Skip-gram模型"><a href="#用户交互序列的Skip-gram模型" class="headerlink" title="用户交互序列的Skip-gram模型"></a>用户交互序列的Skip-gram模型</h2><p>将用户的一个交互会话视作一个<code>documents</code>，形式上来讲就是，给定一个item IDs ${ item_1,\cdots,itme_i,\cdots,item_N },$skip-gram模型最大化：<br>$$<br>J = \frac{1}{N} \sum_{n=1}^N \sum_{-C\leq j \leq C}^{1 \leq n+j \leq N} \log p(item_{n+j}| item_n)<br>$$<br>C是上下文窗口的长度。比如文中给的例子,每个用户都有一个序列，第一个用户的梨子就是上面公式中的$item_n$：</p>
+<p><img src="/2019/03/14/ali embedding/skip context.png" alt="skip context"></p>
+<p>在基本的skip-gram模型中，$p(item_{j}| item_i)​$是由softmax函数定义的：<br>$$<br>p(item_{j}| item_i) = \frac{\exp(e^{‘T}_je_i)}{\sum_{d=1}^D\exp(e^{‘T}_de_i)}<br>$$<br>其中$e^{‘} \in E^{‘}\subset R^{m\times D}, e \in E\subset R^{m\times D}$.$E^{‘},E$分别是与上下文和目标相关的表示矩阵。$m，D$是分别是嵌入向量的维度和包含所有item IDs字典的大小。</p>
+<h2 id="Log-uniform-负采样"><a href="#Log-uniform-负采样" class="headerlink" title="Log-uniform 负采样"></a>Log-uniform 负采样</h2><p>上式中计算$\nabla p(item_{j}| item_i)$的时间复杂度与D成正比，当D很大的时候，上面的模型很难实际使用。所以这篇论文使用负采样的方法代替softmax函数：<br>$$<br>p(item_{j}| item_i) = \sigma(e^{‘T}_je_i) \Pi_{s=1}^S \sigma(-e^{‘T}_se_i)<br>$$<br>负样本是从$P_{neg}(item)$的分布采样得到，$P_{neg}(item)$最简单的选择是均匀分布，但是对于样本不均衡的情况下，均匀分布并不是一个好的选择，因为往往流行的item IDs都提供了很少的信息，这样的样本在目标样本的上下文窗口中出现多次却提供较少信息，这篇论文中选择了<a href="https://en.wikipedia.org/wiki/Zipf%27s_law" target="_blank" rel="noopener">Zipfian</a>分布作为$P_{neg}(item)​$.<br>$$<br>p(index) = \frac{\log(index+2) - \log(index+1)}{\log(D+1)}<br>$$<br>首先根据items的频率按照降序排序，然后每个item都对应着一个index，index的范围从0到D-1。累积概率分布为<br>$$<br>\begin{align}<br>F(x) &amp;= p(x \leq index) \<br>&amp;= \sum_{i=1}^{index} \frac{\log(i+2) - \log(i+1)}{\log(D+1)} \<br>&amp;= \frac{\log(index +2 )}{\log(D+1)}<br>\end{align}<br>$$<br>令$F(x)=r$,r为$(0,1]$之间的一个随机数，那么我们可以随机抽到一个index为<br>$$<br>index = \lceil (D+1)^r \rceil - 2.<br>$$</p>
+<h2 id="IDs-以及他们他们之间的结构连接"><a href="#IDs-以及他们他们之间的结构连接" class="headerlink" title="IDs 以及他们他们之间的结构连接"></a>IDs 以及他们他们之间的结构连接</h2><h3 id="Item-ID-以及它的属性IDs"><a href="#Item-ID-以及它的属性IDs" class="headerlink" title="Item ID 以及它的属性IDs"></a>Item ID 以及它的属性IDs</h3><p>item是交互的核心单位，它有许多属性id，包括<code>product id</code>,<code>store id</code>,<code>brand id</code>,<code>category id</code>等。</p>
+<h3 id="User-ID"><a href="#User-ID" class="headerlink" title="User ID"></a>User ID</h3><h2 id="属性IDs的联合嵌入"><a href="#属性IDs的联合嵌入" class="headerlink" title="属性IDs的联合嵌入"></a>属性IDs的联合嵌入</h2><p>论文提出了一个层次化的嵌入模型，去联合学习item ID以及它们的属性ID之间的低维表示，如下图</p>
+<p><img src="/2019/03/14/ali embedding/join embedding.png" alt="join embedding"></p>
+<p>假设K类IDs，令$IDs(item_i) = [id_1{item_i},\cdots,id_K(item_i)]$,那么可以得到<br>$$<br>p(IDs(item_j) | IDs(item_i)) \<br>= \sigma \big(\sum_{k=1}^K (w_{jk}e^{‘}<em>{jk})^T(w</em>{ik}e_{ik})\big) \Pi_{s=1}^S\sigma \big(-\sum_{k=1}^K (w_{sk}e^{‘}<em>{sk})^T(w</em>{ik}e_{ik})\big)<br>$$<br>其中$w_{ik}$为$id_k(item_i)$的权重，计算方法为：<br>$$<br>w_{ik} = \frac{1}{\sum_{j=1}^D I(id_k(item_i) = id_k(item_j))}<br>$$</p>
+<p>定义<br>$$<br>p(item_i|ID(item_i)) = \sigma \big( \sum_{k=2}^K w_{ik}e^T_{i1} M_k e_{ik} \big),<br>$$<br>其中$M_k \in R^{m_1 \times m_k}(k=2\cdots K)$是为了使$e_{i1}$变换到$e_{ik}$相同维度的矩阵。然后最大化<br>$$<br>J = \frac{1}{N} \sum_{n=1}^N \big( \sum_{-C\leq j \leq C}^{1 \leq n+j \leq N,j\neq 0} \log p(IDs(item_{n+j})| IDs(item_n)) + \alpha \log p(item_n| IDs(item_n)) - \beta \sum_{k=1}^K \Vert M_k \Vert_2 \big)<br>$$<br>这种方法将Item ID 和属性ID 嵌入到一个同语义空间。</p>
+<h2 id="嵌入用户ID"><a href="#嵌入用户ID" class="headerlink" title="嵌入用户ID"></a>嵌入用户ID</h2><p>使用简单平均法：<br>$$<br>Embedding(u) = \frac{1}{T} \sum_{t=1}^T e_t<br>$$<br>$e_t$是$item_t$的嵌入向量。</p>
+<h1 id="利用ID的表示"><a href="#利用ID的表示" class="headerlink" title="利用ID的表示"></a>利用ID的表示</h1><h2 id="item相似性度量"><a href="#item相似性度量" class="headerlink" title="item相似性度量"></a>item相似性度量</h2><p>$$<br>sim(item_i,item_j) = cos(v_i,v_j) = \frac{v_i^Tv_j}{\Vert v_i \Vert_2\Vert v_j \Vert_2}<br>$$</p>
+<h2 id="从已知item迁移到未知item"><a href="#从已知item迁移到未知item" class="headerlink" title="从已知item迁移到未知item"></a>从已知item迁移到未知item</h2><p>为了解决冷启动问题，论文提出了一个迁移方法，对新的item ID构建一个近似的嵌入向量。因为即使是一个新的item ID，通常它的属性id也有历史记录，论文的想法是最大化概率<br>$$<br>\max p(item_i | IDs(items_i))<br>$$<br>也就是令<br>$$<br>p(item_i | IDs(items_i)) \rightarrow 1<br>$$<br>所以令<br>$$<br>e_{i1} = \sum_{k=2}^K w_{ik}e^T_{i1} M_k e_{ik}<br>$$<br>实际中只使用那些有历史记录的$id_k$.</p>
+<h2 id="从不同的领域迁移"><a href="#从不同的领域迁移" class="headerlink" title="从不同的领域迁移"></a>从不同的领域迁移</h2><p>本节讲了如何从淘宝用户喜好迁移到盒马平台。</p>
+<p><img src="/2019/03/14/ali embedding/trans domanin.png" alt="trans domanin"></p>
+<p>$U^s,U^t$分别表示<code>source domain</code>和<code>target domain</code>的用户集合，$U^i = U^s \bigcap U^t$。如上图所示，迁移的过程为</p>
+<ol>
+<li>在淘宝计算出$U^s$的嵌入向量</li>
+<li>基于嵌入向量的相似度，$U^i$中的用户使用k-means聚类为1000个组</li>
+<li>对于每个组，选择出 top N 个盒马中的item作为候选集</li>
+<li>根据相似性度量，将新用户分配到最相近的组中</li>
+<li>新用户被分配到组中后，组里使用第3步选出来的候选集筛选排序后推荐给他</li>
+</ol>
+<h2 id="迁移到不同的任务"><a href="#迁移到不同的任务" class="headerlink" title="迁移到不同的任务"></a>迁移到不同的任务</h2><p>可以使用嵌入向量和历史销售作为输入做销售预测任务，使用的模型为全连接神经网络。</p>
 
       
-
     </div>
+    
+    
+    
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    phi
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://TFeiMa.github.io/2019/03/14/ali embedding/" title="Learning and Transferring IDs Representation in E-commerce阅读笔记">http://TFeiMa.github.io/2019/03/14/ali embedding/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/数据挖掘/" rel="tag"><i class="fa fa-tag"></i> 数据挖掘</a>
+          
+            <a href="/tags/推荐系统/" rel="tag"><i class="fa fa-tag"></i> 推荐系统</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/03/08/xDeepFM/" rel="next" title="xDeepFM--Combining Explicit and Implicit Feature Interactions for Recommender Systems阅读笔记">
+                <i class="fa fa-chevron-left"></i> xDeepFM--Combining Explicit and Implicit Feature Interactions for Recommender Systems阅读笔记
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
 
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+<span class="jiathis_txt">分享到：</span>
+<a class="jiathis_button_fav">收藏夹</a>
+<a class="jiathis_button_copy">复制网址</a>
+<a class="jiathis_button_email">邮件</a>
+<a class="jiathis_button_weixin">微信</a>
+<a class="jiathis_button_qzone">QQ空间</a>
+<a class="jiathis_button_tqq">腾讯微博</a>
+<a class="jiathis_button_douban">豆瓣</a>
+<a class="jiathis_button_share">一键分享</a>
+
+<a href="http://www.jiathis.com/share?uid=2140465" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+<a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript">
+var jiathis_config={
+  data_track_clickback:true,
+  summary:"",
+  shortUrl:false,
+  hideMore:false
+}
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+      
+    </div>
+  </div>
 
 
           </div>
@@ -432,6 +569,10 @@
 
 
           
+
+  
+
+
 
         </div>
         
@@ -452,8 +593,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
@@ -515,6 +665,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#hema-的推荐框架"><span class="nav-number">1.</span> <span class="nav-text">hema 的推荐框架</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#学习IDs的表示"><span class="nav-number">2.</span> <span class="nav-text">学习IDs的表示</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#用户交互序列的Skip-gram模型"><span class="nav-number">2.1.</span> <span class="nav-text">用户交互序列的Skip-gram模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Log-uniform-负采样"><span class="nav-number">2.2.</span> <span class="nav-text">Log-uniform 负采样</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IDs-以及他们他们之间的结构连接"><span class="nav-number">2.3.</span> <span class="nav-text">IDs 以及他们他们之间的结构连接</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Item-ID-以及它的属性IDs"><span class="nav-number">2.3.1.</span> <span class="nav-text">Item ID 以及它的属性IDs</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#User-ID"><span class="nav-number">2.3.2.</span> <span class="nav-text">User ID</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#属性IDs的联合嵌入"><span class="nav-number">2.4.</span> <span class="nav-text">属性IDs的联合嵌入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#嵌入用户ID"><span class="nav-number">2.5.</span> <span class="nav-text">嵌入用户ID</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#利用ID的表示"><span class="nav-number">3.</span> <span class="nav-text">利用ID的表示</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#item相似性度量"><span class="nav-number">3.1.</span> <span class="nav-text">item相似性度量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#从已知item迁移到未知item"><span class="nav-number">3.2.</span> <span class="nav-text">从已知item迁移到未知item</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#从不同的领域迁移"><span class="nav-number">3.3.</span> <span class="nav-text">从不同的领域迁移</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#迁移到不同的任务"><span class="nav-number">3.4.</span> <span class="nav-text">迁移到不同的任务</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -664,6 +830,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
