@@ -7,7 +7,7 @@
 
 <html class="theme-next gemini use-motion" lang="zh-Hans">
 <head><meta name="generator" content="Hexo 3.8.0">
-  <meta charset="UTF-8">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="theme-color" content="#222">
@@ -106,7 +106,7 @@
 <meta property="og:image" content="http://tfeima.github.io/2019/03/08/xDeepFM/crossNet.png">
 <meta property="og:image" content="http://tfeima.github.io/2019/03/08/xDeepFM/CIN.png">
 <meta property="og:image" content="http://tfeima.github.io/2019/03/08/xDeepFM/xdeepfm.png">
-<meta property="og:updated_time" content="2019-03-19T07:32:03.200Z">
+<meta property="og:updated_time" content="2019-03-19T07:47:39.035Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="xDeepFM--Combining Explicit and Implicit Feature Interactions for Recommender Systems阅读笔记">
 <meta name="twitter:description" content="构造特征、特征之间的组合往往是推荐系统成功的关键，而人工构造特征是一件费时费力的事情，所以已经有一些模型用来构造特征之间的交叉组合，比如FM模型可以学习到二阶交叉特征，基于DNN的模型能够学到更高阶的特征，而DeepFM和Wide&amp;Deep等模型同时利用低阶和高阶特征，所以这篇论文的目标也是希望能够同时学习低阶和高阶的特征而不需要太多地人工构造特征。这篇论文提出了一种新的网络结构---CIN（Co">
@@ -146,7 +146,7 @@
 
 
 
-  <title>xDeepFM--Combining Explicit and Implicit Feature Interactions for Recommender Systems阅读笔记 | phi的博客</title>
+  <title>xDeepFM--Combining Explicit and Implicit Feature Interactions for Recommender Systems阅读笔记 | phi的博客</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
   
 
 
@@ -165,7 +165,7 @@
     
   
 
-  <div class="container sidebar-position-left page-post-detail">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 	<a href="https://github.com/TFeiMa"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"></a>
     <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
@@ -458,7 +458,7 @@
 <p>可以看出这是一个二阶特征交叉。第二层的第h个特征映射为：<br>$$<br>\begin{array}{c l}<br>x^2_h &amp;= \sum_{i,j}^m W_{i,j}^{2,h}(x_i^1\circ x_j^0),\<br>      &amp;= \sum_{i,j}^m \sum_{l,k}^m W_{i,j}^{2,h}W_{l,k}^{1,i}(x_l^0 \circ x_k^0 \circ x_j^0)<br>\end{array}<br>$$</p>
 <p>容易看出这是输入特征的3阶特征交互。能够推出第k层的特征为输入特征的k+1阶特征交互，这也叫做CIN的显示高阶特征交互的特性。</p>
 <h2 id="与隐式网络的组合"><a href="#与隐式网络的组合" class="headerlink" title="与隐式网络的组合"></a>与隐式网络的组合</h2><p>​    DNN能够学习出隐式高阶特征，所以DNN与CIN再加上线性模型就一起构成了xDeepFM，如下图所示即为xDeepFM的结构。<br><img src="/2019/03/08/xDeepFM/xdeepfm.png" alt="xdeepfm"></p>
-<p>整个xDeepFM的输出单元为<br>$$<br>\hat{y}=\sigma(w_{linear}^Ta + w_{dnn}^Tx_{dnn}^k+w_{cin}^Tp^+ + b)<br>$$<br>损失函数为<br>$$<br>L = -\frac{1}{N}\sum_{i=1}^N \lbrace y_{i} \log\hat{y}<em>{i} + (1-y</em>{i}) \log(1-\hat{y}_i)\rbrace +\lambda^{\ast}\Vert\Theta \Vert<br>$$<br>后面一项为正则项。</p>
+<p>整个xDeepFM的输出单元为<br>$$<br>\hat{y}=\sigma(w_{linear}^Ta + w_{dnn}^Tx_{dnn}^k+w_{cin}^Tp^+ + b)<br>$$<br>损失函数为<br>$<br>L = -\frac{1}{N}\sum_{i=1}^N \lbrace yi \log\hat{y}i + (1-yi) \log(1-\hat{y}i)\rbrace +\lambda^{\ast}\Vert\Theta \Vert<br>​$<br>后面一项为正则项。</p>
 
       
     </div>
@@ -1248,7 +1248,7 @@ var jiathis_config={
         }
       });
     </script>
-    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
   
 
 
