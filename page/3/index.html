@@ -304,7 +304,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://TFeiMa.github.io/2018/03/12/逻辑回归/">
+    <link itemprop="mainEntityOfPage" href="http://TFeiMa.github.io/2018/06/20/LeetCode-DFS/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="phi">
@@ -323,7 +323,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/03/12/逻辑回归/" itemprop="url">逻辑回归</a></h1>
+                <a class="post-title-link" href="/2018/06/20/LeetCode-DFS/" itemprop="url">LeetCode-DFS</a></h1>
         
 
         <div class="post-meta">
@@ -335,8 +335,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-12T19:10:22+08:00">
-                2018-03-12
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-20T19:49:29+08:00">
+                2018-06-20
               </time>
             
 
@@ -358,173 +358,8 @@
               
               
                 <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/学习/" itemprop="url" rel="index">
-                    <span itemprop="name">学习</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  993
-                </span>
-              
-
-              
-
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          本文首先介绍了**Sigmoid**函数作为逻辑回归输出概率的来历；其次介绍如何通过极大似然估计来求参数；最后介绍了逻辑回归的loss function.
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/03/12/逻辑回归/">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://TFeiMa.github.io/2018/03/06/overfit/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="phi">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/me.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="phi的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/03/06/overfit/" itemprop="url">过拟合与欠拟合</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-06T19:04:32+08:00">
-                2018-03-06
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/学习/" itemprop="url" rel="index">
-                    <span itemprop="name">学习</span>
+                  <a href="/categories/计算机基础/" itemprop="url" rel="index">
+                    <span itemprop="name">计算机基础</span>
                   </a>
                 </span>
 
@@ -580,15 +415,10 @@
 
       
         
-          
-          [toc]
-过拟合与欠拟合，偏差与方差过拟合与欠拟合过拟合直观理解就是模型在训练集上表现很好，但是对于没见过的样本，或者在测试集上的表现很差，过拟合产生的原因很有可能是模型不止学习到了数据分布的一般特征，还学习到了训练集特殊特征，通常这种模型对应着高方差的模型。
-欠拟合与过拟合相反，欠拟合在训练集上的表现就很差，一般这种模型相对于数据而言表示能力不够强，或者复杂度比较低。对应着高偏差的模型。
-方差与偏差以回归为例来解释，给定了一个数据集D，并且假设D是存在一个完美的函数F(x)产生了数据的子集，我们希望通过D来拟合推测F(x),一个模型在数据D上拟合出来的函数$ g(x;D)$,我们肯定是希望
-          ...
+          持续更新。。。
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2018/03/06/overfit/#more" rel="contents">
+            <a class="btn" href="/2018/06/20/LeetCode-DFS/">
               阅读全文 &raquo;
             </a>
           </div>
@@ -639,7 +469,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://TFeiMa.github.io/2018/03/02/决策树/">
+    <link itemprop="mainEntityOfPage" href="http://TFeiMa.github.io/2018/06/20/LeetCode-链表/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="phi">
@@ -658,7 +488,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/03/02/决策树/" itemprop="url">决策树</a></h1>
+                <a class="post-title-link" href="/2018/06/20/LeetCode-链表/" itemprop="url">LeetCode-链表</a></h1>
         
 
         <div class="post-meta">
@@ -670,8 +500,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-02T18:59:08+08:00">
-                2018-03-02
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-20T19:49:29+08:00">
+                2018-06-20
               </time>
             
 
@@ -693,8 +523,8 @@
               
               
                 <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/学习/" itemprop="url" rel="index">
-                    <span itemprop="name">学习</span>
+                  <a href="/categories/计算机基础/" itemprop="url" rel="index">
+                    <span itemprop="name">计算机基础</span>
                   </a>
                 </span>
 
@@ -724,7 +554,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  1.2k
+                  1.1k
                 </span>
               
 
@@ -750,14 +580,10 @@
 
       
         
-          
-          [toc]
-决策树##分类树&emsp;&emsp;分类树的生成过程：当前节点，特征集A，数据集D，先判断能不能分裂节点，数据集中只有一种类别，或者特征集中的特征在数据集上的类别表现一样，没办法分再或者数据集的样本比较少了，达到了预先设定的最小分裂数目，前面一种情况就停止分裂，直接当做叶子节点，类别直接是数据集样本类别，后两种情况类别取决于哪种类别多。在能节点能够分裂的前提下，要先判断选择哪种特征进行节点分裂，这一步是决策树最重要的一步，不同的分裂手段产生了不同的决策树，分裂后继续递归。
-节点分裂标准&emsp;&emsp;首先熵的概念：$Ent(D) = -\sum_{i=1}^C p_i 
-          ...
+          持续更新。。。
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2018/03/02/决策树/#more" rel="contents">
+            <a class="btn" href="/2018/06/20/LeetCode-链表/">
               阅读全文 &raquo;
             </a>
           </div>
@@ -808,7 +634,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://TFeiMa.github.io/2018/03/01/evalution/">
+    <link itemprop="mainEntityOfPage" href="http://TFeiMa.github.io/2018/06/20/LeetCode-数组/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="phi">
@@ -827,7 +653,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/03/01/evalution/" itemprop="url">机器学习模型评价指标</a></h1>
+                <a class="post-title-link" href="/2018/06/20/LeetCode-数组/" itemprop="url">LeetCode-数组</a></h1>
         
 
         <div class="post-meta">
@@ -839,8 +665,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-01T18:55:02+08:00">
-                2018-03-01
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-20T19:49:29+08:00">
+                2018-06-20
               </time>
             
 
@@ -862,8 +688,8 @@
               
               
                 <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/学习/" itemprop="url" rel="index">
-                    <span itemprop="name">学习</span>
+                  <a href="/categories/计算机基础/" itemprop="url" rel="index">
+                    <span itemprop="name">计算机基础</span>
                   </a>
                 </span>
 
@@ -893,7 +719,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  1.2k
+                  843
                 </span>
               
 
@@ -919,13 +745,10 @@
 
       
         
-          
-          机器学习模型评价指标分类模型的评价指标，准确率P、召回率R、F1、PR曲线、ROC、AUC混淆矩阵 假设问题为二分类问题，样本中有一部分正例和一部分反例，用一个模型F对这组样本预测，预测的结果中有正例（P）有反例（N），有的预测对了，有的预测错了，若一个正（反）样本预测成了正（反）值，这时候就叫做真正例、真反例（TP，TN），但是有的正样本预测成了反样本，反样本预测成了正样本，这是就分别叫做假反例和假正例（FN，FP），我们就基于这些值来评估一个模型的好坏。
-查准率与查全率 评估模型的好坏，首先要知道我们主要关注的是什么，先说P和R的定义。$ P = \frac{TP}{TP+FP} $,意思
-          ...
+          持续更新。。。
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2018/03/01/evalution/#more" rel="contents">
+            <a class="btn" href="/2018/06/20/LeetCode-数组/">
               阅读全文 &raquo;
             </a>
           </div>
@@ -976,7 +799,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://TFeiMa.github.io/2018/01/23/hands-sklearn1/">
+    <link itemprop="mainEntityOfPage" href="http://TFeiMa.github.io/2018/06/20/LeetCode-排列组合题/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="phi">
@@ -995,7 +818,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/01/23/hands-sklearn1/" itemprop="url">《Hands on sklearn & TensorFlow》读书笔记--end to end machine learning project</a></h1>
+                <a class="post-title-link" href="/2018/06/20/LeetCode-排列组合题/" itemprop="url">LeetCode-排列组合题</a></h1>
         
 
         <div class="post-meta">
@@ -1007,8 +830,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-23T18:45:42+08:00">
-                2018-01-23
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-20T19:49:29+08:00">
+                2018-06-20
               </time>
             
 
@@ -1030,8 +853,8 @@
               
               
                 <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/读书笔记/" itemprop="url" rel="index">
-                    <span itemprop="name">读书笔记</span>
+                  <a href="/categories/计算机基础/" itemprop="url" rel="index">
+                    <span itemprop="name">计算机基础</span>
                   </a>
                 </span>
 
@@ -1061,7 +884,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  1.8k
+                  924
                 </span>
               
 
@@ -1087,14 +910,10 @@
 
       
         
-          
-          [toc]
-end to end machine learning project这一章主要介绍了整个机器学习的过程，从获取数据处理数据开始，然后到应用到模型，调整模型。本章数据为加州某个时期房价的数据，所以主要的任务是一个回归任务，下面具体总结一下作者在这一章主要传授的观点和自己的一些收获。
-Look at the big picture也就是说，在可是意向任务之前，需要思考一下，你需要解决一个什么样的问题？期望得到的结果是什么？为了得到这样的结果需要做哪些工作？手头有哪些数据？需不需要获取额外的data？可以把这个问题抽象成一个什么样的问题？supervised or unsupervis
-          ...
+          持续更新。。。
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2018/01/23/hands-sklearn1/#more" rel="contents">
+            <a class="btn" href="/2018/06/20/LeetCode-排列组合题/">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1145,7 +964,7 @@ Look at the big picture也就是说，在可是意向任务之前，需要思考
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://TFeiMa.github.io/2017/12/27/cnn/">
+    <link itemprop="mainEntityOfPage" href="http://TFeiMa.github.io/2018/06/20/LeetCode-动态规划/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="phi">
@@ -1164,7 +983,7 @@ Look at the big picture也就是说，在可是意向任务之前，需要思考
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/12/27/cnn/" itemprop="url">卷积神经网络（CNN）</a></h1>
+                <a class="post-title-link" href="/2018/06/20/LeetCode-动态规划/" itemprop="url">LeetCode-动态规划</a></h1>
         
 
         <div class="post-meta">
@@ -1176,8 +995,8 @@ Look at the big picture也就是说，在可是意向任务之前，需要思考
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-27T20:58:46+08:00">
-                2017-12-27
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-20T19:49:29+08:00">
+                2018-06-20
               </time>
             
 
@@ -1199,8 +1018,8 @@ Look at the big picture也就是说，在可是意向任务之前，需要思考
               
               
                 <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/读书笔记/" itemprop="url" rel="index">
-                    <span itemprop="name">读书笔记</span>
+                  <a href="/categories/计算机基础/" itemprop="url" rel="index">
+                    <span itemprop="name">计算机基础</span>
                   </a>
                 </span>
 
@@ -1230,7 +1049,7 @@ Look at the big picture也就是说，在可是意向任务之前，需要思考
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  838
+                  2k
                 </span>
               
 
@@ -1256,23 +1075,835 @@ Look at the big picture也就是说，在可是意向任务之前，需要思考
 
       
         
-          
-          [TOC]
-卷积神经网络（CNN）卷积的定义卷积的数学定义
-连续形式 $ s(t)= \int x(a)w(t-a)da$, 记作$s(t)=(x\ast w)(t) $
-离散形式 $ s(t)=\sum_a x(a)w(t-a)$
-
-x通常叫做输入，w称为核函数，输出一般叫做特征映射。卷积有对称性质，即$ (x\ast w)(t) = (w\ast x)(t)$, 这个根据定义，然后对积分变量换元一下很容易证明。
-
-神经网络中的卷积 这里的卷积其实就是一个矩阵，放到每一层的神经网络中就是网络中的部分权重。
-
-Why CNN？cnn与图像之间有几点相似性：
-
-图像中的一些特征要比整个图像小很多
-          ...
+          持续更新。。。
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017/12/27/cnn/#more" rel="contents">
+            <a class="btn" href="/2018/06/20/LeetCode-动态规划/">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://TFeiMa.github.io/2018/06/20/LeetCode-栈和队列/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="phi">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/me.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="phi的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/06/20/LeetCode-栈和队列/" itemprop="url">LeetCode-栈和队列</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-20T19:49:29+08:00">
+                2018-06-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/计算机基础/" itemprop="url" rel="index">
+                    <span itemprop="name">计算机基础</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  782
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          持续更新。。。
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/06/20/LeetCode-栈和队列/">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://TFeiMa.github.io/2018/06/20/LeetCode-字符串/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="phi">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/me.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="phi的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/06/20/LeetCode-字符串/" itemprop="url">LeetCode-字符串</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-20T19:49:29+08:00">
+                2018-06-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/计算机基础/" itemprop="url" rel="index">
+                    <span itemprop="name">计算机基础</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1.1k
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          持续更新。。。
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/06/20/LeetCode-字符串/">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://TFeiMa.github.io/2018/06/20/LeetCode-奇技淫巧题/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="phi">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/me.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="phi的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/06/20/LeetCode-奇技淫巧题/" itemprop="url">LeetCode-奇技淫巧题</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-20T19:49:29+08:00">
+                2018-06-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/计算机基础/" itemprop="url" rel="index">
+                    <span itemprop="name">计算机基础</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  727
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          持续更新。。。
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/06/20/LeetCode-奇技淫巧题/">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://TFeiMa.github.io/2018/06/20/LeetCode-BFS/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="phi">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/me.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="phi的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/06/20/LeetCode-BFS/" itemprop="url">LeetCode-BFS</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-20T19:49:29+08:00">
+                2018-06-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/计算机基础/" itemprop="url" rel="index">
+                    <span itemprop="name">计算机基础</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  494
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          持续更新。。。
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/06/20/LeetCode-BFS/">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://TFeiMa.github.io/2018/06/20/LeetCode-二叉树/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="phi">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/me.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="phi的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/06/20/LeetCode-二叉树/" itemprop="url">LeetCode-二叉树</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-20T19:49:29+08:00">
+                2018-06-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/计算机基础/" itemprop="url" rel="index">
+                    <span itemprop="name">计算机基础</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  709
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          持续更新。。。
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/06/20/LeetCode-二叉树/">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1314,7 +1945,7 @@ Why CNN？cnn与图像之间有几点相似性：
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/2/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span>
+    <a class="extend prev" rel="prev" href="/page/2/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/4/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1362,7 +1993,7 @@ Why CNN？cnn与图像之间有几点相似性：
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">26</span>
+                  <span class="site-state-item-count">39</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
