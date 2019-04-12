@@ -100,12 +100,15 @@
 <meta property="og:site_name" content="phi的博客">
 <meta property="og:description" content="Deep Neural Networks for YouTube Recommendations 阅读">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://faithlove.github.io/pic/2018/HexoThumb/topPicPre.png">
-<meta property="og:updated_time" content="2019-04-12T08:03:28.938Z">
+<meta property="og:image" content="http://tfeima.github.io/2019/04/08/YouTube_recsys/struct.png">
+<meta property="og:image" content="http://tfeima.github.io/2019/04/08/YouTube_recsys/candidate.png">
+<meta property="og:image" content="http://tfeima.github.io/2019/04/08/YouTube_recsys/label-context.png">
+<meta property="og:image" content="http://tfeima.github.io/2019/04/08/YouTube_recsys/ranking.png">
+<meta property="og:updated_time" content="2019-04-12T08:18:49.240Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Deep Neural Networks for YouTube Recommendations 论文笔记">
 <meta name="twitter:description" content="Deep Neural Networks for YouTube Recommendations 阅读">
-<meta name="twitter:image" content="https://faithlove.github.io/pic/2018/HexoThumb/topPicPre.png">
+<meta name="twitter:image" content="http://tfeima.github.io/2019/04/08/YouTube_recsys/struct.png">
 
 
 
@@ -420,23 +423,10 @@
 
       
       
-        <div class="post-gallery" itemscope="" itemtype="http://schema.org/ImageGallery">
-          
-          
-            <div class="post-gallery-row">
-              <a class="post-gallery-img fancybox" href="https://faithlove.github.io/pic/2018/HexoThumb/topPicPre.png" rel="gallery_cjudsbkha00005yof2w5jyvlo" itemscope="" itemtype="http://schema.org/ImageObject" itemprop="url">
-                <img src="https://faithlove.github.io/pic/2018/HexoThumb/topPicPre.png" itemprop="contentUrl">
-              </a>
-            
-          
-
-          
-          </div>
-        </div>
-      
 
       
-        <p>YouTube的推荐系统架构主要有两部分组成，首先是从百万级数据中产生一个候选集，这个候选集可能只包含数百个待推荐的视频，其次是对这个候选集中的视频进行排序，如下图所示：<img src="/2019/04/08/YouTube_recsys/struct.png" alt="struct"></p>
+        <p>YouTube的推荐系统架构主要有两部分组成，首先是从百万级数据中产生一个候选集，这个候选集可能只包含数百个待推荐的视频，其次是对这个候选集中的视频进行排序，如下图所示：</p>
+<p><img src="/2019/04/08/YouTube_recsys/struct.png" alt="struct"></p>
 <p>这个系统的每一部分都对应着一个推荐模型，首先看一下产生候选集的模型。</p>
 <h1 id="候选集生成模型"><a href="#候选集生成模型" class="headerlink" title="候选集生成模型"></a>候选集生成模型</h1><p>生成候选集的这一模型将推荐视为一个多分类问题，用户u在时间t观看视频i的概率可用公式计算：<br>$$<br>P(w_t=i | U, C) = \frac{e^{v_iu}}{\sum_{j \in V} e^{v_ju}}<br>$$<br>其中$u,v_i$分别是用户和视频的embedding向量，是在模型的训练过程中产生的，正如下面的架构图所示的，u应该是三层全连接网络的输出，而v是softmax层的权重。这一模型的整体架构如下图所示</p>
 <p><img src="/2019/04/08/YouTube_recsys/candidate.png" alt="candidate"></p>
