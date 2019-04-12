@@ -104,7 +104,7 @@
 <meta property="og:image" content="http://tfeima.github.io/2019/03/30/YouTube_recsys/candidate.png">
 <meta property="og:image" content="http://tfeima.github.io/2019/03/30/YouTube_recsys/label-context.png">
 <meta property="og:image" content="http://tfeima.github.io/2019/03/30/YouTube_recsys/ranking.png">
-<meta property="og:updated_time" content="2019-04-12T07:43:06.035Z">
+<meta property="og:updated_time" content="2019-04-12T07:54:14.287Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="phi的博客">
 <meta name="twitter:description" content="title: Deep Neural Networks for YouTube Recommendations 论文笔记date: 2019-04-08tags:   推荐系统  数据挖掘categories: “论文阅读”description:photos:    YouTube的推荐系统架构主要有两部分组成，首先是从百万级数据中产生一个候选集，这个候选集可能只包含数百个待推荐的视频，其次是">
@@ -403,10 +403,9 @@
 <p>title: Deep Neural Networks for YouTube Recommendations 论文笔记<br>date: 2019-04-08<br>tags: </p>
 <ul>
 <li>推荐系统 </li>
-<li>数据挖掘<br>categories: “论文阅读”<br>description:<br>photos:</li>
+<li>数据挖掘<br>categories: “论文阅读”<br>description:<br>photos: </li>
 <li><img src="/2019/03/30/YouTube_recsys/struct.png" alt="struct"></li>
 </ul>
-<hr>
 <p>YouTube的推荐系统架构主要有两部分组成，首先是从百万级数据中产生一个候选集，这个候选集可能只包含数百个待推荐的视频，其次是对这个候选集中的视频进行排序，如下图所示：<img src="/2019/03/30/YouTube_recsys/struct.png" alt="struct"></p>
 <p>这个系统的每一部分都对应着一个推荐模型，首先看一下产生候选集的模型。</p>
 <h1 id="候选集生成模型"><a href="#候选集生成模型" class="headerlink" title="候选集生成模型"></a>候选集生成模型</h1><p>生成候选集的这一模型将推荐视为一个多分类问题，用户u在时间t观看视频i的概率可用公式计算：<br>$$<br>P(w_t=i | U, C) = \frac{e^{v_iu}}{\sum_{j \in V} e^{v_ju}}<br>$$<br>其中$u,v_i$分别是用户和视频的embedding向量，是在模型的训练过程中产生的，正如下面的架构图所示的，u应该是三层全连接网络的输出，而v是softmax层的权重。这一模型的整体架构如下图所示</p>
