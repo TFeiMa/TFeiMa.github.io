@@ -81,7 +81,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT">
+  <meta name="keywords" content="数据挖掘,推荐系统,">
 
 
 
@@ -92,14 +92,20 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="categories">
-<meta property="og:url" content="http://TFeiMa.github.io/categories/index.html">
+<meta name="description" content="这篇论文提出了一种list和user嵌入方法，用于实时的个性化搜索排序和list相似性推荐，并且针对Airbnb所设计的模型能够刻画顾客的长期和短期兴趣。">
+<meta name="keywords" content="数据挖掘,推荐系统">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Real-time Personalization using Embeddings for Search Ranking at Airbnb 论文学习笔记">
+<meta property="og:url" content="http://TFeiMa.github.io/2019/04/15/Airbnb/index.html">
 <meta property="og:site_name" content="phi的博客">
+<meta property="og:description" content="这篇论文提出了一种list和user嵌入方法，用于实时的个性化搜索排序和list相似性推荐，并且针对Airbnb所设计的模型能够刻画顾客的长期和短期兴趣。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-06-25T08:07:20.000Z">
+<meta property="og:image" content="http://tfeima.github.io/2019/04/15/Airbnb/TFeiMa.github.io/2019/04/13/Airbnb/struct.png">
+<meta property="og:updated_time" content="2019-04-15T13:02:42.249Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="categories">
+<meta name="twitter:title" content="Real-time Personalization using Embeddings for Search Ranking at Airbnb 论文学习笔记">
+<meta name="twitter:description" content="这篇论文提出了一种list和user嵌入方法，用于实时的个性化搜索排序和list相似性推荐，并且针对Airbnb所设计的模型能够刻画顾客的长期和短期兴趣。">
+<meta name="twitter:image" content="http://tfeima.github.io/2019/04/15/Airbnb/TFeiMa.github.io/2019/04/13/Airbnb/struct.png">
 
 
 
@@ -129,13 +135,13 @@
 
 
 
-  <link rel="canonical" href="http://TFeiMa.github.io/categories/">
+  <link rel="canonical" href="http://TFeiMa.github.io/2019/04/15/Airbnb/">
 
 
 
 
 
-  <title>categories | phi的博客</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  <title>Real-time Personalization using Embeddings for Search Ranking at Airbnb 论文学习笔记 | phi的博客</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
   
 
 
@@ -292,40 +298,260 @@
 
   <div id="posts" class="posts-expand">
     
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://TFeiMa.github.io/2019/04/15/Airbnb/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="phi">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/me.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="phi的博客">
+    </span>
+
     
-    
-    <div class="post-block page">
       <header class="post-header">
 
-	<h1 class="post-title" itemprop="name headline">categories</h1>
-
-
-
-</header>
-
-      
-      
-      
-      <div class="post-body">
         
         
-          <div class="category-all-page">
-            <div class="category-all-title">
-                目前共计 5 个分类
+          <h1 class="post-title" itemprop="name headline">Real-time Personalization using Embeddings for Search Ranking at Airbnb 论文学习笔记</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-15T00:00:00+08:00">
+                2019-04-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/论文阅读/" itemprop="url" rel="index">
+                    <span itemprop="name">论文阅读</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1.3k
+                </span>
+              
+
+              
+
+              
             </div>
-            <div class="category-all">
-              <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/学习/">学习</a><span class="category-list-count">12</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/我的研究/">我的研究</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/计算机基础/">计算机基础</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/论文阅读/">论文阅读</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/读书笔记/">读书笔记</a><span class="category-list-count">9</span></li></ul>
-            </div>
+          
+
+          
+              <div class="post-description">
+                  这篇论文提出了一种list和user嵌入方法，用于实时的个性化搜索排序和list相似性推荐，并且针对Airbnb所设计的模型能够刻画顾客的长期和短期兴趣。
+              </div>
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+        <div class="post-gallery" itemscope="" itemtype="http://schema.org/ImageGallery">
+          
+          
+            <div class="post-gallery-row">
+              <a class="post-gallery-img fancybox" href="/TFeiMa.github.io/2019/04/13/Airbnb/struct.png" rel="gallery_cjuidbvgo0000wmm5r9uqs597" itemscope="" itemtype="http://schema.org/ImageObject" itemprop="url">
+                <img src="/TFeiMa.github.io/2019/04/13/Airbnb/struct.png" itemprop="contentUrl">
+              </a>
+            
+          
+
+          
           </div>
-        
-      </div>
+        </div>
       
+
       
+        <h2 id="listing-embedding"><a href="#listing-embedding" class="headerlink" title="listing embedding"></a>listing embedding</h2><p>这里的listing应该是一个item。假设$s = (l_1, l_2, \cdots,l_M) \in S$是一个用户点击listing的序列，其中S是表示所有用户点击序列的集合，给定这样一个序列集合，我们的目标是学习每个$l_i$的一个d维嵌入，为了学习这样一个嵌入表示，论文借鉴了skip-gram模型的方法，可以得到最大化这样一个目标函数：<br>$$<br>L = \sum_{s \in S} \sum_{l_i \in s}(\sum_{-m \leq j \leq m}\log P(l_{i+j}|l_i))<br>$$<br>其中<br>$$<br>P(l_{i+j} | l_i) = \frac{\exp(v^T_{l_i}v^{‘}_{l_{i+j}})}{\sum_{i=1}^V \exp(v^T_{l_i}v^{‘}_{l})}<br>$$<br>$v_l$和$v^{‘}<em>l$分别是listing l的输入和输出表示。观察上式概率定义中的分母，它是关于所有的listing表示求和，在实际计算时，效率较低，所以论文中采用负采样的方法来解决这一问题。若使用负采样方法，则目标函数变为<br>$$<br>\max \sum</em>{(l,c) \in D_p} \log \frac{1}{1+e^{-v_c^{‘}v_l}} + \sum_{(l,c) \in D_n} \log \frac{1}{1+e^{v_c^{‘}v_l}}<br>$$<br>其中$D_p$是被点击的l和它的上下文listing c 对组成的集合，$D_p$是被点击的l以及随机采样的c构成负采样集合,关于负采样的损失函数为什么是上式，可以参考[1], [2]。</p>
+<h3 id="被订购listing作为全局的context"><a href="#被订购listing作为全局的context" class="headerlink" title="被订购listing作为全局的context"></a>被订购listing作为全局的context</h3><p>可以把被点击的listing分成两类，一类是点击并且被订购的listing，一类是只点击，并没有发生订购的listing。所以为了区分产生订购的序列和没有发生订购的序列，并且希望对于发生订购的序列能够学习出更好的嵌入表示，论文将订购的listing作为整个序列（有订购listing产生的序列）全局的context，即不管这个被订购的listing在不在中心listing的滑窗范围内，都把它当做中心listing的context。这样的话，对于产生订购行为的序列，目标函数变为：<br>$$<br>\max \sum_{(l,c) \in D_p} \log \frac{1}{1+e^{-v_c^{‘}v_l}} + \sum_{(l,c) \in D_n} \log \frac{1}{1+e^{v_c^{‘}v_l}} + \log \frac{1}{1+e^{-v_{lb}^{‘}v_l}}<br>$$</p>
+<p>其中$v_{lb}$表示订购listing的嵌入表示。如下图所示表示了这一模型。</p>
+<p><img src="/2019/04/15/Airbnb/struct.png" alt="struct">                    </p>
+<h3 id="Adapting-Training-for-congregated-Search"><a href="#Adapting-Training-for-congregated-Search" class="headerlink" title="Adapting Training for congregated Search"></a>Adapting Training for congregated Search</h3><p>在做采样时，$D_p$中包含的样本往往都是和中心listing在相同的城市或区域，而$D_n$中采样的样本是从所有的训练集中得到的，往往与中心listing不在一个区域，这样就引入了一定的偏差，为了缓解这一问题，论文中提出引入另一个负采样集合$D_{mn}$,它是由和中心listing在相同区域的负样本随机采样得到。这样的话损失函数就可以修改为：<br>$$<br>\max \sum_{(l,c) \in D_p} \log \frac{1}{1+e^{-v_c^{‘}v_l}} + \sum_{(l,c) \in D_n} \log \frac{1}{1+e^{v_c^{‘}v_l}} + \log \frac{1}{1+e^{-v_{lb}^{‘}v_l}} + \sum_{(l,mn) \in D_{mn}} \log \frac{1}{1+e^{-v_{mn}^{‘}v_l}}<br>$$</p>
+<h3 id="冷启动问题"><a href="#冷启动问题" class="headerlink" title="冷启动问题"></a>冷启动问题</h3><p>对于新加入的新的listing，通过listing的基本信息计算与它相似的几个listing，然后利用与它相似的listing的embedding的平均值作为新的listing的embedding。</p>
+<h2 id="User-type和listing-type-embedding"><a href="#User-type和listing-type-embedding" class="headerlink" title="User-type和listing-type embedding"></a>User-type和listing-type embedding</h2><p>上面计算每个listing的embedding，通过embedding计算listing的相似性，可以用来度量用户的短期兴趣，即当用户点击了某个listing，可以实时地基于这个listing给用户推荐下一个listing。论文中提到希望能够基于用户过去订购的历史对用户的长期兴趣进行建模，但是存在几个问题：用户订购的样本远远的少于用户点击的样本、很多用户过去仅仅只有一个订单、用户两个订单之间往往相隔的时间跨度很大、学习一个有效的embedding这个listing往往需要至少在数据中出现5-10次。为处理数据稀疏性带来的问题，论文提出学习user-type和listing-type的embedding，而不是学习user—id和listing-id的embedding，所以论文就提出根据user和listing的属性性质使用一定的规则对user和listing进行聚类，这样每个user-type和listing-type就包含了多个样本在序列中。</p>
+<p>为学习user-type和listing-type的embedding，论文采用了与上文所讲的类似的损失函数：<br>$$<br>\max \sum_{(ut,c) \in D_{book}} \log \frac{1}{1+e^{-v_c^{‘}v_{ut}}} + \sum_{(ut,c) \in D_{neg}} \log \frac{1}{1+e^{v_c^{‘}v_{ut}}}<br>$$<br>和<br>$$<br>\max \sum_{(lt,c) \in D_{book}} \log \frac{1}{1+e^{-v_c^{‘}v_{lt}}} + \sum_{(lt,c) \in D_{neg}} \log \frac{1}{1+e^{v_c^{‘}v_{lt}}}<br>$$</p>
+<h3 id="对房东拒绝订单建模"><a href="#对房东拒绝订单建模" class="headerlink" title="对房东拒绝订单建模"></a>对房东拒绝订单建模</h3><p>顾客订购了listing，但是有可能被房东拒绝掉，所以为了体现出这一特点，在损失函数中引入了一个和房东拒绝相关的项：<br>$$<br>\max \sum_{(ut,c) \in D_{book}} \log \frac{1}{1+e^{-v_c^{‘}v_{ut}}} + \sum_{(ut,c) \in D_{neg}} \log \frac{1}{1+e^{v_c^{‘}v_{ut}}}+\sum_{(ut,lt) \in D_{reject}} \log \frac{1}{1+e^{-v_{lt}^{‘}v_{ut}}}<br>$$<br>和<br>$$<br>\max \sum_{(lt,c) \in D_{book}} \log \frac{1}{1+e^{-v_c^{‘}v_{lt}}} + \sum_{(lt,c) \in D_{neg}} \log \frac{1}{1+e^{v_c^{‘}v_{lt}}}+\sum_{(ut,lt) \in D_{reject}} \log \frac{1}{1+e^{-v_{lt}^{‘}v_{ut}}}<br>$$</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p>[1] <a href="https://arxiv.org/pdf/1402.3722" target="_blank" rel="noopener">word2vec Explained: Deriving Mikolov et al.’s Negative-Sampling Word-Embedding Method</a></p>
+<p>[2] <a href="https://blog.csdn.net/itplus/article/details/37998797" target="_blank" rel="noopener">word2vec 中的数学原理详解（五）基于 Negative Sampling 的模型</a></p>
+<p>[3] <a href="https://dl.acm.org/citation.cfm?id=3219885" target="_blank" rel="noopener">Real-time Personalization using Embeddings for Search Ranking at Airbnb</a></p>
+
       
     </div>
     
     
     
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    phi
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://TFeiMa.github.io/2019/04/15/Airbnb/" title="Real-time Personalization using Embeddings for Search Ranking at Airbnb 论文学习笔记">http://TFeiMa.github.io/2019/04/15/Airbnb/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/数据挖掘/" rel="tag"><i class="fa fa-tag"></i> 数据挖掘</a>
+          
+            <a href="/tags/推荐系统/" rel="tag"><i class="fa fa-tag"></i> 推荐系统</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/04/08/YouTube_recsys/" rel="next" title="Deep Neural Networks for YouTube Recommendations 论文笔记">
+                <i class="fa fa-chevron-left"></i> Deep Neural Networks for YouTube Recommendations 论文笔记
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+<span class="jiathis_txt">分享到：</span>
+<a class="jiathis_button_fav">收藏夹</a>
+<a class="jiathis_button_copy">复制网址</a>
+<a class="jiathis_button_email">邮件</a>
+<a class="jiathis_button_weixin">微信</a>
+<a class="jiathis_button_qzone">QQ空间</a>
+<a class="jiathis_button_tqq">腾讯微博</a>
+<a class="jiathis_button_douban">豆瓣</a>
+<a class="jiathis_button_share">一键分享</a>
+
+<a href="http://www.jiathis.com/share?uid=2140465" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+<a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript">
+var jiathis_config={
+  data_track_clickback:true,
+  summary:"",
+  shortUrl:false,
+  hideMore:false
+}
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+      
+    </div>
   </div>
 
 
@@ -358,8 +584,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
@@ -421,6 +656,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#listing-embedding"><span class="nav-number">1.</span> <span class="nav-text">listing embedding</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#被订购listing作为全局的context"><span class="nav-number">1.1.</span> <span class="nav-text">被订购listing作为全局的context</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Adapting-Training-for-congregated-Search"><span class="nav-number">1.2.</span> <span class="nav-text">Adapting Training for congregated Search</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#冷启动问题"><span class="nav-number">1.3.</span> <span class="nav-text">冷启动问题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#User-type和listing-type-embedding"><span class="nav-number">2.</span> <span class="nav-text">User-type和listing-type embedding</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#对房东拒绝订单建模"><span class="nav-number">2.1.</span> <span class="nav-text">对房东拒绝订单建模</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考"><span class="nav-number">3.</span> <span class="nav-text">参考</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
